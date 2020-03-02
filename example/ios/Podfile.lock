@@ -1,0 +1,35 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutterrealm (0.0.1):
+    - Flutter
+    - RealmSwift (= 4.3.2)
+  - Realm (4.3.2):
+    - Realm/Headers (= 4.3.2)
+  - Realm/Headers (4.3.2)
+  - RealmSwift (4.3.2):
+    - Realm (= 4.3.2)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutterrealm (from `.symlinks/plugins/flutterrealm/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Realm
+    - RealmSwift
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutterrealm:
+    :path: ".symlinks/plugins/flutterrealm/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutterrealm: 3f4be48d0eadcb9db94bdc6be85aa6b441dcaffa
+  Realm: 5e92902e2875dff4bb0fd02f67bb737c3d5db2bc
+  RealmSwift: 9a360fc7bae04fc2e308a34fbd899d5faa2d6b22
+
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+
+COCOAPODS: 1.8.4
