@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'object.dart';
 import 'types.dart';
 import 'syncUser.dart';
+import 'dart:collection';
 
 typedef T ItemCreator<T>();
 
@@ -9,13 +10,14 @@ typedef T ItemCreator<T>();
 /// we need to call list for translate objects into flutter
 class Results<T extends RLMObject> {
   String _query;
+  String _databaseUrl;
   int _limit;
   SyncUser _syncUser;
 
   final MethodChannel _channel;
   final ItemCreator<T> _creator;
 
-  Results(this._channel, this._creator, this._syncUser);
+  Results(this._channel, this._creator, this._syncUser, this._databaseUrl);
 
   set query(String query) {
     _query = query;
@@ -27,15 +29,21 @@ class Results<T extends RLMObject> {
 
   /// Fetch list with given parameters.
   Future<List<T>> list() async {
-    List<Map<String, dynamic>> maps =
+    LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': _query,
       'limit': _limit,
-      'type': _runTimeType(),
-      'identity': _syncUser.identity
+      'type': T.toString(),
+      'identity': _syncUser.identity,
+      'databaseUrl': _databaseUrl,
     });
 
-    return maps.map((map) => _creator().fromJson(map));
+    if (map["error"] != null) {
+      throw Exception("fetch list finished with exception ${map["error"]}");
+    }
+
+    List results = map["results"];
+    return results.map<T>((map) => _creator().fromJson(map)).toList();
   }
 
   String _runTimeType() {

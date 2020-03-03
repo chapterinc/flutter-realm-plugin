@@ -20,7 +20,7 @@ class Realm {
   ///
   /// [param] _creator required for make object for given generic type
   Results objects<T extends RLMObject>(ItemCreator _creator) {
-    return Results<T>(_channel, _creator, _syncUser);
+    return Results<T>(_channel, _creator, _syncUser, _databaseUrl);
   }
 
   /// Create object by given policy.
@@ -28,7 +28,7 @@ class Realm {
   /// [param] _creator required for make object for given generic type
   Future<T> create<T extends RLMObject>(ItemCreator _creator, T value,
       {UpdatePolicy policy = UpdatePolicy.error}) async {
-    Map <String, dynamic> values = {
+    Map<String, dynamic> values = {
       'value': value.toJson(),
       'policy': policy.value,
       'identity': _syncUser.identity,
@@ -46,9 +46,13 @@ class Realm {
   }
 
   static Future<List<LinkedHashMap<String, SyncUser>>> all() async {
-    List<dynamic> userKeyDictionaries =
+    LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.allUsers.name);
 
+    if (map["error"] != null) {
+      throw Exception("create object finished with exception ${map["error"]}");
+    }
+    List<dynamic> userKeyDictionaries = map["results"];
     List linkedHashMaps = List<LinkedHashMap<String, SyncUser>>();
     linkedHashMaps = userKeyDictionaries.map((value) {
       LinkedHashMap<String, SyncUser> linkedHashMap = new LinkedHashMap();
@@ -62,5 +66,4 @@ class Realm {
 
     return linkedHashMaps;
   }
-
 }

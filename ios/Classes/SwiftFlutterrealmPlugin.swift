@@ -8,6 +8,7 @@ enum Action: String {
     case objects
     case create
     case login
+    case logout
     case allUsers
 }
 
@@ -47,6 +48,8 @@ public class SwiftFlutterrealmPlugin: NSObject, FlutterPlugin {
               try commitWrite(call)
           case .login:
               try login(call, result: result)
+          case .logout:
+              try logout(call, result: result)
           case .allUsers:
               try allUsers(call, result: result)
           }
@@ -76,22 +79,22 @@ public class SwiftFlutterrealmPlugin: NSObject, FlutterPlugin {
 
         let realm = try Realm.realm(user: user, databaseUrl: databaseUrl)
         var objects = realm.dynamicObjects(type)
-  
+
         if let query = dictionary["query"] as? String{
             let predicate = NSPredicate(format: query)
             objects = objects.filter(predicate)
         }
-        
+
         if let limit = dictionary["limit"] as? Int{
             let limitedObjects =  objects.limited(limit).map { $0.toDictionary() }
             result(limitedObjects)
             return
         }
-        
+
         var dictionaries = [[String: Any]]()
         objects.forEach { dictionaries.append($0.toDictionary()) }
-        
-        result( dictionaries )
+
+        result( ["results": dictionaries] )
     }
 
     private func create(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
@@ -176,12 +179,30 @@ public class SwiftFlutterrealmPlugin: NSObject, FlutterPlugin {
         }
     }
 
+    private func logout(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealmPlugin.noArgumentsWasPassesError)
+        }
+
+        guard let identity = dictionary["identity"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealmPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let user = Realm.user(identifier: identity) else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealmPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        user.logOut()
+
+        result([String: Any]())
+    }
+
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         let dictionaries = SyncUser.all.map { (key: String, syncUser: SyncUser) -> [String: [String: Any]] in
             return [key: ["identity": syncUser.identity ?? ""]]
         }
 
-        result(dictionaries)
+        result(["results": dictionaries])
     }
 
 

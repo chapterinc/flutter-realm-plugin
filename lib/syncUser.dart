@@ -27,6 +27,16 @@ class SyncUser {
 
     return syncUser;
   }
+
+  Future<void> logout({credentials: SyncCredentials, server: String}) async {
+    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+        Action.logout.name, <String, dynamic>{'identity': _identity});
+    if (map["error"] != null) {
+      throw Exception("create object finished with exception ${map["error"]}");
+    }
+
+    return;
+  }
 }
 
 enum SyncCredentialsType { jwt }

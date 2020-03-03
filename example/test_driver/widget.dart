@@ -72,7 +72,7 @@ void main() {
       Realm realm = Realm(user, "");
 
       Photo createdPhoto = await realm.create<Photo>(() {
-        return Photo();
+        return new Photo();
       }, photo);
 
       assert(createdPhoto.id != photo.id);

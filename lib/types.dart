@@ -1,4 +1,12 @@
-enum Action { objects, create, beginWrite, commitWrite, login, allUsers }
+enum Action {
+  objects,
+  create,
+  beginWrite,
+  commitWrite,
+  login,
+  logout,
+  allUsers
+}
 
 enum UpdatePolicy {
   ///Throw an exception. This is the default when no policy is specified for `add()` or `create()`.
@@ -47,6 +55,8 @@ extension ActionExtension on Action {
         return "commitWrite";
       case Action.login:
         return "login";
+      case Action.logout:
+        return "logout";
       case Action.allUsers:
         return 'allUsers';
     }

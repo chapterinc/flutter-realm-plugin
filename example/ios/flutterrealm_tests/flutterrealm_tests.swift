@@ -64,7 +64,7 @@ class flutterrealm_tests: XCTestCase {
     
     func testCreatePhoto() {
         func getPhotoDictionary() -> [String: Any]{
-            let value: [String: Any] = ["id": "1234ff", "burstIdentifier": "ssss", "createdDate": Date(), "creationDate": Date(), "sortedDate": Date(), "mediaType": "sss", "modificationDate": Date(), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidth": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201]
+            let value: [String: Any] = ["id": "1234ff", "burstIdentifier": "ssss", "createdDate": Int64(Date().timeIntervalSince1970 * 1000), "creationDate": Int64(Date().timeIntervalSince1970 * 1000), "sortedDate": Int64(Date().timeIntervalSince1970 * 1000), "mediaType": "sss", "modificationDate": Int64(Date().timeIntervalSince1970 * 1000), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidth": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201, "photoDetail" : ["centerx" : 10]]
 
             return value
         }
@@ -77,9 +77,9 @@ class flutterrealm_tests: XCTestCase {
                 assert(false, "error = \(error)")
             }
 
-            if let users = result as? [[String: [String: Any]]], let identity = users.first?.first?.key{
-                    let beginWrite = FlutterMethodCall.init(methodName: "beginWrite", arguments: ["identity": identity, "databaseUrl": self.realmDatabasePath])
-                        SwiftFlutterrealmPlugin().handle(beginWrite) { (result) in
+            let _users = result as? [String: Any]
+            let _identity = _users?["results"] as? [[String: [String: Any]]]
+            if let identity = _identity?.first?.first?.key{
                             if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                                 assert(false, "error = \(error)")
                             }
@@ -102,17 +102,9 @@ class flutterrealm_tests: XCTestCase {
                                        assert(false, "users result have not correct type")
                                     }
 
-                                    // Commit write
-                                    let commitWrite = FlutterMethodCall.init(methodName: "commitWrite", arguments: ["identity": identity, "databaseUrl": self.realmDatabasePath])
-                                        SwiftFlutterrealmPlugin().handle(commitWrite) { (result) in
-                                            if let dictionary = result as? [String: Any], let error = dictionary["error"]{
-                                                assert(false, "error = \(error)")
-                                            }
 
-                                            expectation.fulfill()
-                                    }
+                                    expectation.fulfill()
                                 }
-                }
             }else{
                assert(false, "users result have not correct type")
             }

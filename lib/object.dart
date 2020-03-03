@@ -1,6 +1,8 @@
 // Those classes as representation of base object inside native realm
 class RLMObject extends RLMObjectBase {
-  fromJson(Map json) {}
+  RLMObject fromJson(Map json) {
+    return this;
+  }
   Map toJson() {
     return Map();
   }

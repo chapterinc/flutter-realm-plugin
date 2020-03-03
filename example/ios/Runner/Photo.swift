@@ -19,8 +19,8 @@ public final class Photo: Object {
     @objc dynamic var isUploaded: Bool = false
     @objc dynamic var isTrashed: Bool = false
     @objc dynamic var isSorted: Bool = false
-//    dynamic var photoDetail: PhotoDetailRealm?
-//    dynamic var userPhotoDetail: PhotoDetailRealm?
+    @objc dynamic var photoDetail: PhotoDetail?
+    @objc dynamic var userPhotoDetail: PhotoDetail?
     @objc dynamic var userId: String?
     
     let sortIndex = RealmOptional<Double>()

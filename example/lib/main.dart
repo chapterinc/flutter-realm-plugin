@@ -2,70 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutterrealm/realm.dart';
-import 'package:flutterrealm/object.dart';
 import 'package:flutterrealm/syncUser.dart';
 import 'package:flutterrealm/results.dart';
 import 'package:flutterrealm/types.dart';
+import 'package:flutterrealm_example/photo_detail.dart';
 
 import 'dart:collection';
+import 'photo.dart';
 
 void main() => runApp(MyApp());
-
-class Photo extends RLMObject {
-  String id = "";
-  String burstIdentifier;
-
-  int type = 1;
-  int subType = 0;
-  String mediaType;
-
-  bool isUploaded = false;
-  bool isTrashed = false;
-  bool isSorted = false;
-
-  String userId;
-
-  double duration;
-  int pixelWidth;
-  int pixelHeight;
-  double startTime;
-  double endTime;
-  int timeScale;
-
-  int year;
-  int month;
-
-  int createdDateTimestamp;
-  int creationDateTimestamp;
-  int sortedDateTimeStamp;
-  int modificationDate;
-
-  @override
-  Map toJson() {
-    Map map = super.toJson();
-    map["id"] = id;
-    map["burstIdentifier"] = burstIdentifier;
-    map["type"] = type;
-    map["subType"] = subType;
-    map["mediaType"] = mediaType;
-    map["isUploaded"] = isUploaded;
-    map["isTrashed"] = isTrashed;
-    map["isSorted"] = isSorted;
-    map["userId"] = userId;
-    map["duration"] = duration;
-    map["pixelWidth"] = pixelWidth;
-    map["pixelHeight"] = pixelHeight;
-    map["startTime"] = startTime;
-    map["endTime"] = endTime;
-    map["timeScale"] = timeScale;
-    map["year"] = year;
-    map["month"] = month;
-    map["createdDateTimestamp"] = createdDateTimestamp;
-    map["creationDateTimestamp"] = creationDateTimestamp;
-    map["modificationDate"] = modificationDate;
-    return map;
-  }
-}
 
 class MyApp extends StatefulWidget {
   @override
@@ -73,11 +18,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  String _jwtString =
-      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlR0pRbU11ZUtxV1pPRGJ4T1Fkb0czQUR1M3cxIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNTgyODk4NjkxfQ.P1asfb3nYdjNrUZIQ0OSEiiNh0N1inKVTdUcinrVXWGAnsOu-GRKWx-iuurzR0lvS-JsLK-GTg0WW1Vt1KNh0_v5xBlNVQsnrUQFgFKnoZpNQXuNGr9xDYj1QEeHhMz13xHJ0DCzutUZqDagMbL6GwxNikaPvz-VhNxzS9zPPXQQMa0pnIfE8SXfsAhj9r4Nwz8hPhqe_BoZg4nm8vA58bSF55Z0uEm34dfTWjGvLIz4SgTCKTKR7dJbRIiJxilSGmYka3ckLK9ZmwL1HaF9P6t34seECdK-6fjRNFtCFYeOKL8L-2GGuU3xyB32raq0fl-CbBt1dASCw-Kr_idczg';
-  String _authenticationPath = 'http://5.188.160.116:9080';
-  String _databasePath = 'realm://5.188.160.116:9080/~/database';
+  String _jwtString = '';
+  String _authenticationPath = '';
+  String _databasePath = '';
 
   @override
   void initState() {
@@ -104,6 +47,8 @@ class _MyAppState extends State<MyApp> {
 
     List<Photo> photos = await _getPhotos(syncUser);
     print("Photos count: ${photos.length}");
+
+    await syncUser.logout();
   }
 
   @override
@@ -135,16 +80,20 @@ class _MyAppState extends State<MyApp> {
     return user;
   }
 
-
   Future<Photo> _createPhoto(SyncUser syncUser) async {
     Photo photo = Photo();
     photo.id = "12398234";
+
+    PhotoDetail photoDetail = new PhotoDetail();
+    photoDetail.centerx = 11;
+    photoDetail.id = "111sss";
+    photo.photoDetail = photoDetail;
 
     Realm realm = Realm(syncUser, _databasePath);
 
     Photo createdPhoto = await realm.create<Photo>(() {
       return new Photo();
-    }, photo, policy: UpdatePolicy.all);
+    }, photo, policy: UpdatePolicy.modified);
 
     return createdPhoto;
   }

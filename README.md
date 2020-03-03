@@ -1,14 +1,43 @@
-# flutterrealm
+# [fluttertoast](https://pub.dartlang.org/packages/fluttertoast)
 
-A new flutter plugin project.
+Android and iOS Toast Library for Flutter
 
-## Getting Started
+> Supported Platforms
+>
+> - IOS
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## How to Use
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+```yaml
+# add this line to your dependencies
+fluterrealm: ^0.1.0
+```
+
+```dart
+import 'package:fluterrealm/fluterrealm.dart';
+```
+
+```dart
+    SyncCredentials syncCredentials =
+        SyncCredentials(jwt, SyncCredentialsType.jwt);
+    SyncUser user =
+        await SyncUser.login(credentials: syncCredentials, server: server);
+```
+
+| property        | description                                                        |
+| --------------- | ------------------------------------------------------------------ |
+| msg             | String (Not Null)(required)                                        |
+| toastLength     | Toast.LENGTH_SHORT or Toast.LENGTH_LONG (optional)                 |
+| gravity         | ToastGravity.TOP (or) ToastGravity.CENTER (or) ToastGravity.BOTTOM |
+| timeInSecForIos | int (only for ios)                                                 |
+| bgcolor         | Colors.red                                                         |
+| textcolor       | Colors.white                                                       |
+| fontSize        | 16.0 (float)                                                       |
+
+### To logout
+
+```dart
+syncUser.logout()
+```
+
+## If you need any features suggest
