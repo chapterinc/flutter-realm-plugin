@@ -45,8 +45,4 @@ class Results<T extends RLMObject> {
     List results = map["results"];
     return results.map<T>((map) => _creator().fromJson(map)).toList();
   }
-
-  String _runTimeType() {
-    return T.runtimeType.toString();
-  }
 }

@@ -1,4 +1,4 @@
-import 'package:flutterrealm/object.dart';
+import 'package:flutterrealm_light/object.dart';
 import 'package:flutterrealm_example/photo_detail.dart';
 
 class Photo extends RLMObject {

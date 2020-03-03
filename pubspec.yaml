@@ -1,8 +1,7 @@
-name: flutterrealm
-description: A new flutter plugin project.
-version: 0.0.1+1
-author:
-homepage: com.chapter.flutterrealm
+name: flutterrealm_light
+description: Flutter plugin which mostly like native sdk of iOS
+version: 0.0.3+1
+homepage: https://sortedhq.com
 
 environment:
   sdk: ">=2.6.0 <3.0.0"

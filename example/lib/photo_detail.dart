@@ -1,4 +1,4 @@
-import 'package:flutterrealm/object.dart';
+import 'package:flutterrealm_light/object.dart';
 
 class PhotoDetail extends RLMObject {
   String id = "";

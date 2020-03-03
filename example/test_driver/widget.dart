@@ -8,9 +8,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_driver/flutter_driver.dart';
 
-import 'package:flutterrealm/realm.dart';
-import 'package:flutterrealm/object.dart';
-import 'package:flutterrealm/syncUser.dart';
+import 'package:flutterrealm_light/realm.dart';
+import 'package:flutterrealm_light/object.dart';
+import 'package:flutterrealm_light/syncUser.dart';
 
 import 'dart:collection';
 

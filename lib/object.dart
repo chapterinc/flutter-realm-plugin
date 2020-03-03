@@ -3,6 +3,7 @@ class RLMObject extends RLMObjectBase {
   RLMObject fromJson(Map json) {
     return this;
   }
+
   Map toJson() {
     return Map();
   }

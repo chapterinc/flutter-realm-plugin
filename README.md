@@ -1,6 +1,6 @@
-# [fluttertoast](https://pub.dartlang.org/packages/fluttertoast)
+# [flutterrealm-light](https://pub.dartlang.org/packages/flutterrealm_light)
 
-Android and iOS Toast Library for Flutter
+Android and iOS Library for Realm
 
 > Supported Platforms
 >
@@ -10,11 +10,11 @@ Android and iOS Toast Library for Flutter
 
 ```yaml
 # add this line to your dependencies
-fluterrealm: ^0.1.0
+fluterrealm: ^0.0.3
 ```
 
 ```dart
-import 'package:fluterrealm/fluterrealm.dart';
+import 'package:flutterrealm_light/realm.dart';
 ```
 
 ```dart
@@ -24,20 +24,8 @@ import 'package:fluterrealm/fluterrealm.dart';
         await SyncUser.login(credentials: syncCredentials, server: server);
 ```
 
-| property        | description                                                        |
-| --------------- | ------------------------------------------------------------------ |
-| msg             | String (Not Null)(required)                                        |
-| toastLength     | Toast.LENGTH_SHORT or Toast.LENGTH_LONG (optional)                 |
-| gravity         | ToastGravity.TOP (or) ToastGravity.CENTER (or) ToastGravity.BOTTOM |
-| timeInSecForIos | int (only for ios)                                                 |
-| bgcolor         | Colors.red                                                         |
-| textcolor       | Colors.white                                                       |
-| fontSize        | 16.0 (float)                                                       |
-
 ### To logout
 
 ```dart
 syncUser.logout()
 ```
-
-## If you need any features suggest
