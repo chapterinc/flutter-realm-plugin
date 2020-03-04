@@ -42,8 +42,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "88D1FE99240553160095B2F7"
-               BuildableName = "flutterrealm_tests.xctest"
-               BlueprintName = "flutterrealm_tests"
+               BuildableName = "flutterrealm_light_tests.xctest"
+               BlueprintName = "flutterrealm_light_tests"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
          </TestableReference>

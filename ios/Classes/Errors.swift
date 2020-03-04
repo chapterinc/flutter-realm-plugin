@@ -1,6 +1,6 @@
 //
 //  RealmExtension.swift
-//  flutterrealm
+//  flutterrealm_light
 //
 //  Created by Grigori on 2/24/20.
 //

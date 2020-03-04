@@ -14,7 +14,7 @@
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		846E7CD64E54A75C6C8CF553 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C2574FB9A07C24CF83A2FD /* Pods_Runner.framework */; };
 		88BC7905240E440200A1737E /* PhotoDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BC7904240E440200A1737E /* PhotoDetail.swift */; };
-		88D1FE9D240553160095B2F7 /* flutterrealm_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D1FE9C240553160095B2F7 /* flutterrealm_tests.swift */; };
+		88D1FE9D240553160095B2F7 /* flutterrealm_light_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D1FE9C240553160095B2F7 /* flutterrealm_light_tests.swift */; };
 		88D1FEA72405572D0095B2F7 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
 		88D1FEA8240557450095B2F7 /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		88D1FEAD24069A040095B2F7 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D1FEAA240696BF0095B2F7 /* Photo.swift */; };
@@ -60,10 +60,9 @@
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		88BC7904240E440200A1737E /* PhotoDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetail.swift; sourceTree = "<group>"; };
-		88D1FE9A240553160095B2F7 /* flutterrealm_tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flutterrealm_tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		88D1FE9C240553160095B2F7 /* flutterrealm_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flutterrealm_tests.swift; sourceTree = "<group>"; };
+		88D1FE9A240553160095B2F7 /* flutterrealm_light_light_tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flutterrealm_light_tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D1FE9C240553160095B2F7 /* flutterrealm_light_light_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flutterrealm_tests.swift; sourceTree = "<group>"; };
 		88D1FE9E240553160095B2F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		88D1FEA52405570B0095B2F7 /* flutterrealm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = flutterrealm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D1FEAA240696BF0095B2F7 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		95961F33BE63DEB0280CA0DB /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
@@ -101,13 +100,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		88D1FE9B240553160095B2F7 /* flutterrealm_tests */ = {
+		88D1FE9B240553160095B2F7 /* flutterrealm_light_tests */ = {
 			isa = PBXGroup;
 			children = (
-				88D1FE9C240553160095B2F7 /* flutterrealm_tests.swift */,
+				88D1FE9C240553160095B2F7 /* flutterrealm_light_tests.swift */,
 				88D1FE9E240553160095B2F7 /* Info.plist */,
 			);
-			path = flutterrealm_tests;
+			path = flutterrealm_light_tests;
 			sourceTree = "<group>";
 		};
 		88D1FEA9240696900095B2F7 /* Models */ = {
@@ -137,7 +136,7 @@
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
-				88D1FE9B240553160095B2F7 /* flutterrealm_tests */,
+				88D1FE9B240553160095B2F7 /* flutterrealm_light_tests */,
 				97C146EF1CF9000F007C117D /* Products */,
 				C66F39B77CB178C878804E5B /* Pods */,
 				C068030728795859B617F04D /* Frameworks */,
@@ -148,7 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
-				88D1FE9A240553160095B2F7 /* flutterrealm_tests.xctest */,
+				88D1FE9A240553160095B2F7 /* flutterrealm_light_tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,7 +179,6 @@
 		C068030728795859B617F04D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88D1FEA52405570B0095B2F7 /* flutterrealm.framework */,
 				A5C2574FB9A07C24CF83A2FD /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
@@ -199,9 +197,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		88D1FE99240553160095B2F7 /* flutterrealm_tests */ = {
+		88D1FE99240553160095B2F7 /* flutterrealm_light_tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 88D1FEA1240553160095B2F7 /* Build configuration list for PBXNativeTarget "flutterrealm_tests" */;
+			buildConfigurationList = 88D1FEA1240553160095B2F7 /* Build configuration list for PBXNativeTarget "flutterrealm_light_tests" */;
 			buildPhases = (
 				88D1FE96240553160095B2F7 /* Sources */,
 				88D1FE97240553160095B2F7 /* Frameworks */,
@@ -212,9 +210,9 @@
 			dependencies = (
 				88D1FEA0240553160095B2F7 /* PBXTargetDependency */,
 			);
-			name = flutterrealm_tests;
-			productName = flutterrealm_tests;
-			productReference = 88D1FE9A240553160095B2F7 /* flutterrealm_tests.xctest */;
+			name = flutterrealm_light_tests;
+			productName = flutterrealm_light_tests;
+			productReference = 88D1FE9A240553160095B2F7 /* flutterrealm_light_tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
@@ -275,7 +273,7 @@
 			projectRoot = "";
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
-				88D1FE99240553160095B2F7 /* flutterrealm_tests */,
+				88D1FE99240553160095B2F7 /* flutterrealm_light_tests */,
 			);
 		};
 /* End PBXProject section */
@@ -374,7 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88D1FE9D240553160095B2F7 /* flutterrealm_tests.swift in Sources */,
+				88D1FE9D240553160095B2F7 /* flutterrealm_light_tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,12 +514,12 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = flutterrealm_tests/Info.plist;
+				INFOPLIST_FILE = flutterrealm_light_tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm_light-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -547,11 +545,11 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = flutterrealm_tests/Info.plist;
+				INFOPLIST_FILE = flutterrealm_light_tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm_light-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -575,11 +573,11 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = flutterrealm_tests/Info.plist;
+				INFOPLIST_FILE = flutterrealm_light_tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm_light-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -751,7 +749,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		88D1FEA1240553160095B2F7 /* Build configuration list for PBXNativeTarget "flutterrealm_tests" */ = {
+		88D1FEA1240553160095B2F7 /* Build configuration list for PBXNativeTarget "flutterrealm_light_tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88D1FEA2240553160095B2F7 /* Debug */,

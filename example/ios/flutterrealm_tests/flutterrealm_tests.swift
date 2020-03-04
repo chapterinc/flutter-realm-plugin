@@ -1,6 +1,6 @@
 //
-//  flutterrealm_tests.swift
-//  flutterrealm_tests
+//  flutterrealm_light_tests.swift
+//  flutterrealm_light_tests
 //
 //  Created by Grigori on 2/25/20.
 //  Copyright © 2020 The Chromium Authors. All rights reserved.
@@ -8,9 +8,9 @@
 
 import XCTest
 import Flutter
-import flutterrealm;
+import flutterrealm_light;
 
-class flutterrealm_tests: XCTestCase {
+class flutterrealm_light_tests: XCTestCase {
 
     /// Add enviroment variables inside Xcode project for start test
     var realmJwt = ""
@@ -24,14 +24,14 @@ class flutterrealm_tests: XCTestCase {
     }
 
     override func tearDown() {
-        
+
     }
 
     func testFetchAll() {
         let expectation = self.expectation(description: #function)
 
         let call = FlutterMethodCall.init(methodName: "allUsers", arguments: [])
-        SwiftFlutterrealmPlugin().handle(call) { (result) in
+        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
             if let users = result as? [[String: [String: Any]]]{
                 print("users count is: \(users.count)")
             }else{
@@ -39,15 +39,15 @@ class flutterrealm_tests: XCTestCase {
             }
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 10)
     }
-    
+
     func testLogin() {
         let expectation = self.expectation(description: #function)
 
         let call = FlutterMethodCall.init(methodName: "login", arguments: ["jwt": realmJwt, "server": realmServerPath])
-        SwiftFlutterrealmPlugin().handle(call) { (result) in
+        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
             if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                 assert(false, "error = \(error)")
             }
@@ -58,10 +58,10 @@ class flutterrealm_tests: XCTestCase {
 
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 120)
     }
-    
+
     func testCreatePhoto() {
         func getPhotoDictionary() -> [String: Any]{
             let value: [String: Any] = ["id": "1234ff", "burstIdentifier": "ssss", "createdDate": Int64(Date().timeIntervalSince1970 * 1000), "creationDate": Int64(Date().timeIntervalSince1970 * 1000), "sortedDate": Int64(Date().timeIntervalSince1970 * 1000), "mediaType": "sss", "modificationDate": Int64(Date().timeIntervalSince1970 * 1000), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidth": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201, "photoDetail" : ["centerx" : 10]]
@@ -72,7 +72,7 @@ class flutterrealm_tests: XCTestCase {
         let expectation = self.expectation(description: #function)
 
         let call = FlutterMethodCall.init(methodName: "allUsers", arguments: [])
-        SwiftFlutterrealmPlugin().handle(call) { (result) in
+        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
             if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                 assert(false, "error = \(error)")
             }
@@ -91,7 +91,7 @@ class flutterrealm_tests: XCTestCase {
                             let value: [String: Any] = getPhotoDictionary()
                             let policy = 2
                             let create = FlutterMethodCall.init(methodName: "create", arguments: ["type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
-                                SwiftFlutterrealmPlugin().handle(create) { (result) in
+                                SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
                                     if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                                         assert(false, "error = \(error)")
                                     }
@@ -111,7 +111,7 @@ class flutterrealm_tests: XCTestCase {
         }
         waitForExpectations(timeout: 120)
     }
-    
+
     /// Test load data on different predicates
     func testQueries() {
         let expectation = self.expectation(description: #function)
@@ -119,19 +119,19 @@ class flutterrealm_tests: XCTestCase {
 
         testQuery()
         sleep(2)
-        
+
         testQuery(query: "type == 1")
         sleep(2)
 
         testQuery(query: "type == 2", limit: 1)
         sleep(2)
-        
+
         expectation.fulfill()
     }
-    
+
     func testQuery(query: String? = nil, limit: Int? = nil) {
         let call = FlutterMethodCall.init(methodName: "allUsers", arguments: [])
-        SwiftFlutterrealmPlugin().handle(call) { (result) in
+        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
             if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                 assert(false, "error = \(error)")
             }
@@ -143,7 +143,7 @@ class flutterrealm_tests: XCTestCase {
                 let type = "Photo"
 
                 let create = FlutterMethodCall.init(methodName: "objects", arguments: ["type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
-                    SwiftFlutterrealmPlugin().handle(create) { (result) in
+                    SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
                         if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                             assert(false, "error = \(error)")
                         }
@@ -155,8 +155,8 @@ class flutterrealm_tests: XCTestCase {
             }
         }
     }
-    
-    
+
+
 
     func testPerforsmanceExample() {
         // This is an example of a performance test case.

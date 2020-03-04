@@ -5,7 +5,7 @@ import 'package:flutterrealm_light/realm.dart';
 import 'package:flutterrealm_light/syncUser.dart';
 import 'package:flutterrealm_light/results.dart';
 import 'package:flutterrealm_light/types.dart';
-import 'package:flutterrealm_example/photo_detail.dart';
+import 'package:flutterrealm_light_example/photo_detail.dart';
 
 import 'dart:collection';
 import 'photo.dart';

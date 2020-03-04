@@ -1,4 +1,4 @@
-package com.example.flutterrealm_example
+package com.example.flutterrealm_light_example
 
 import android.os.Bundle
 import io.flutter.app.FlutterActivity

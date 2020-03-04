@@ -1,5 +1,5 @@
-name: flutterrealm_example
-description: Demonstrates how to use the flutterrealm plugin.
+name: flutterrealm_light_example
+description: Demonstrates how to use the flutterrealm_light plugin.
 publish_to: 'none'
 
 environment:

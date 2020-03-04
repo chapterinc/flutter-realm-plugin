@@ -1,4 +1,4 @@
-# [flutterrealm-light](https://pub.dartlang.org/packages/flutterrealm_light)
+# [flutterrealm_light](https://pub.dartlang.org/packages/flutterrealm_light)
 
 Android and iOS Library for Realm
 

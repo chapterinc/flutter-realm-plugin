@@ -1,6 +1,6 @@
 //
 //  RealmExtension.swift
-//  flutterrealm
+//  flutterrealm_light
 //
 //  Created by Grigori on 2/24/20.
 //
@@ -24,23 +24,23 @@ extension Realm{
             throw FluterRealmError.runtimeError("Was not able create realm \(error)")
         }
     }
-    
+
     static func user(identifier: String) -> SyncUser?{
         return SyncUser.all.first { (key: String, value: SyncUser) -> Bool in
             return key.contains(identifier)
             }?.value
     }
-    
+
 }
 
 
 extension Results {
     func limited(_ limit: Int?) -> Slice<Results> {
-        
+
         guard let limit = limit else {
             return self[0..<count]
         }
-        
+
         if count > limit {
             return self[0..<limit]
         } else {
@@ -54,7 +54,7 @@ extension Object {
     func toDictionary() -> [String: Any] {
         let properties = self.objectSchema.properties.map { $0.name }
         var mutabledic = self.dictionaryWithValues(forKeys: properties)
-        
+
         for prop in self.objectSchema.properties as [Property] {
             // find lists
             if let relationShip = self[prop.name] as? Object {

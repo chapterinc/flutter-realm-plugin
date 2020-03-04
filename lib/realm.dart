@@ -10,7 +10,7 @@ import 'syncUser.dart';
 ///
 /// [param] _channel required for make call to native library
 class Realm {
-  static const MethodChannel _channel = const MethodChannel('flutterrealm');
+  static const MethodChannel _channel = const MethodChannel('flutterrealm_light');
   SyncUser _syncUser;
   String _databaseUrl;
 

@@ -1,5 +1,5 @@
 import 'package:flutterrealm_light/object.dart';
-import 'package:flutterrealm_example/photo_detail.dart';
+import 'package:flutterrealm_light_example/photo_detail.dart';
 
 class Photo extends RLMObject {
   String id = "";

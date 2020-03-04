@@ -1,6 +1,6 @@
-# flutterrealm_example
+# flutterrealm_light_example
 
-Demonstrates how to use the flutterrealm plugin.
+Demonstrates how to use the flutterrealm_light plugin.
 
 ## Getting Started
 

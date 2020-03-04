@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutterrealm (0.0.1):
+  - flutterrealm_light (0.0.1):
     - Flutter
     - RealmSwift (= 4.3.2)
   - Realm (4.3.2):
@@ -11,7 +11,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutterrealm (from `.symlinks/plugins/flutterrealm/ios`)
+  - flutterrealm_light (from `.symlinks/plugins/flutterrealm_light/ios`)
 
 SPEC REPOS:
   trunk:
@@ -21,12 +21,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutterrealm:
-    :path: ".symlinks/plugins/flutterrealm/ios"
+  flutterrealm_light:
+    :path: ".symlinks/plugins/flutterrealm_light/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutterrealm: 3f4be48d0eadcb9db94bdc6be85aa6b441dcaffa
+  flutterrealm_light: 6ad83325f787170057cc673e8dafcd282df7b94e
   Realm: 5e92902e2875dff4bb0fd02f67bb737c3d5db2bc
   RealmSwift: 9a360fc7bae04fc2e308a34fbd899d5faa2d6b22
 

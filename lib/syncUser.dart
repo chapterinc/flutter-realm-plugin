@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'types.dart';
 
 class SyncUser {
-  static const MethodChannel _channel = const MethodChannel('flutterrealm');
+  static const MethodChannel _channel = const MethodChannel('flutterrealm_light');
 
   String _identity;
 

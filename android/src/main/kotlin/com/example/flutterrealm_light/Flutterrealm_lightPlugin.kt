@@ -1,4 +1,4 @@
-package com.example.flutterrealm
+package com.example.flutterrealm_light
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -6,12 +6,12 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
-class FlutterrealmPlugin: MethodCallHandler {
+class Flutterrealm_lightPlugin: MethodCallHandler {
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "flutterrealm")
-      channel.setMethodCallHandler(FlutterrealmPlugin())
+      val channel = MethodChannel(registrar.messenger(), "flutterrealm_light")
+      channel.setMethodCallHandler(Flutterrealm_lightPlugin())
     }
   }
 
