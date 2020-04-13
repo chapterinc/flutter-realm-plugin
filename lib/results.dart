@@ -10,8 +10,11 @@ typedef T ItemCreator<T>();
 /// we need to call list for translate objects into flutter
 class Results<T extends RLMObject> {
   String _query;
-  String _databaseUrl;
   int _limit;
+  String _sorted;
+  bool _ascending = true;
+
+  String _databaseUrl;
   SyncUser _syncUser;
 
   final MethodChannel _channel;
@@ -27,12 +30,22 @@ class Results<T extends RLMObject> {
     _limit = limit;
   }
 
+  set sorted(String sorted) {
+    _sorted = sorted;
+  }
+
+  set ascending(bool ascending) {
+    _ascending = ascending;
+  }
+
   /// Fetch list with given parameters.
   Future<List<T>> list() async {
     LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': _query,
       'limit': _limit,
+      'ascending': _ascending,
+      'sorted': _sorted,
       'type': T.toString(),
       'identity': _syncUser.identity,
       'databaseUrl': _databaseUrl,

@@ -64,13 +64,110 @@ class flutterrealm_light_tests: XCTestCase {
 
     func testCreatePhoto() {
         func getPhotoDictionary() -> [String: Any]{
-            let value: [String: Any] = ["id": "1234ff", "burstIdentifier": "ssss", "createdDate": Int64(Date().timeIntervalSince1970 * 1000), "creationDate": Int64(Date().timeIntervalSince1970 * 1000), "sortedDate": Int64(Date().timeIntervalSince1970 * 1000), "mediaType": "sss", "modificationDate": Int64(Date().timeIntervalSince1970 * 1000), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidth": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201, "photoDetail" : ["centerx" : 10]]
+            let value: [String: Any] = ["id": "1234ff", "burstIdentifier": "ssss", "createdDate": Int64(Date().timeIntervalSince1970 * 1000), "creationDate": Int64(Date().timeIntervalSince1970 * 1000), "sortedDate": Int64(Date().timeIntervalSince1970 * 1000), "mediaType": "sss", "modificationDate": Int64(Date().timeIntervalSince1970 * 1000), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidth": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201, "photoDetail" : ["centerx" : 10], "albums":[["id": "ttttt"]]]
 
             return value
         }
 
         let expectation = self.expectation(description: #function)
 
+        userIdentity(success: { (identity) in
+            // Begin write
+            let type = "Photo"
+
+            // Add required property in dictionary
+            let value: [String: Any] = getPhotoDictionary()
+            let policy = 2
+            let create = FlutterMethodCall.init(methodName: "create", arguments: ["type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
+            SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
+                if let dictionary = result as? [String: Any], let error = dictionary["error"]{
+                    assert(false, "error = \(error)")
+                }
+
+                if let photo = result as? [String: Any]{
+                    assert(NSDictionary(dictionary: photo).isEqual(to: value), "users result have not correct type")
+                }else{
+                    assert(false, "users result have not correct type")
+                }
+
+                expectation.fulfill()
+            }
+        }, error: {
+               assert(false, "users result have not correct type")
+            })
+        
+        waitForExpectations(timeout: 120)
+    }
+    
+    func testDeletePhoto() {
+        let expectation = self.expectation(description: "delete photo")
+
+        testQuery(success: {dictionary in
+            guard let id = dictionary?.first?["id"] as? String else{
+                return
+            }
+            self.deleteObject(primaryKey: id) { () in
+                expectation.fulfill()
+            }
+        })
+
+        waitForExpectations(timeout: 10)
+    }
+
+    func testQueries() {
+        let expectation = self.expectation(description: #function)
+        waitForExpectations(timeout: 10)
+
+        testQuery(success: {_ in })
+        sleep(2)
+
+        testQuery(query: "type == 1", success: {_ in })
+        sleep(2)
+
+        testQuery(query: "type == 2", limit: 1, success: {_ in })
+        sleep(2)
+
+        expectation.fulfill()
+    }
+    
+    func deleteObject(primaryKey: String, success: @escaping () -> ()) {
+        userIdentity(success: { (identity) in
+            let type = "Photo"
+
+            let deleteQuery = FlutterMethodCall.init(methodName: "delete", arguments: ["primaryKey": primaryKey, "type": type, "identity": identity, "databaseUrl": self.realmDatabasePath])
+                SwiftFlutterrealm_lightPlugin().handle(deleteQuery) { (result) in
+                    success()
+                }
+            
+        }, error: {
+            assert(false, "users result have not correct type")
+        })
+    }
+    
+    func testQuery(query: String? = nil, limit: Int? = nil, success: @escaping ([[String: Any]]?) -> ()) {
+        userIdentity(success: { (identity) in
+            let value = [String: Any]()
+            let policy = 2
+            let type = "Photo"
+
+            let create = FlutterMethodCall.init(methodName: "objects", arguments: ["type": type, "value": value, "limit": limit ?? 0, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
+            SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
+                if let dictionary = result as? [String: Any], let error = dictionary["error"]{
+                    assert(false, "error = \(error)")
+                }
+
+//                assert(result is [String: Any], "users result have not correct type")
+
+                if let dictionary = result as? [String: Any]{
+                    success(dictionary["results"] as? [[String: Any]])
+                }
+            }
+        }, error: {
+               assert(false, "users result have not correct type")
+        })
+    }
+
+    func userIdentity(success: @escaping (String) -> (), error: @escaping () -> ()){
         let call = FlutterMethodCall.init(methodName: "allUsers", arguments: [])
         SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
             if let dictionary = result as? [String: Any], let error = dictionary["error"]{
@@ -80,97 +177,20 @@ class flutterrealm_light_tests: XCTestCase {
             let _users = result as? [String: Any]
             let _identity = _users?["results"] as? [[String: [String: Any]]]
             if let identity = _identity?.first?.first?.key{
-                            if let dictionary = result as? [String: Any], let error = dictionary["error"]{
-                                assert(false, "error = \(error)")
-                            }
-
-                            // Begin write
-                            let type = "Photo"
-
-                            // Add required property in dictionary
-                            let value: [String: Any] = getPhotoDictionary()
-                            let policy = 2
-                            let create = FlutterMethodCall.init(methodName: "create", arguments: ["type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
-                                SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
-                                    if let dictionary = result as? [String: Any], let error = dictionary["error"]{
-                                        assert(false, "error = \(error)")
-                                    }
-
-                                    if let photo = result as? [String: Any]{
-                                        assert(NSDictionary(dictionary: photo).isEqual(to: value), "users result have not correct type")
-                                    }else{
-                                       assert(false, "users result have not correct type")
-                                    }
-
-
-                                    expectation.fulfill()
-                                }
+                success(identity)
             }else{
-               assert(false, "users result have not correct type")
-            }
-        }
-        waitForExpectations(timeout: 120)
-    }
-
-    /// Test load data on different predicates
-    func testQueries() {
-        let expectation = self.expectation(description: #function)
-        waitForExpectations(timeout: 10)
-
-        testQuery()
-        sleep(2)
-
-        testQuery(query: "type == 1")
-        sleep(2)
-
-        testQuery(query: "type == 2", limit: 1)
-        sleep(2)
-
-        expectation.fulfill()
-    }
-
-    func testQuery(query: String? = nil, limit: Int? = nil) {
-        let call = FlutterMethodCall.init(methodName: "allUsers", arguments: [])
-        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
-            if let dictionary = result as? [String: Any], let error = dictionary["error"]{
-                assert(false, "error = \(error)")
-            }
-
-            if let users = result as? [[String: [String: Any]]], let identity = users.first?.first?.key{
-
-                let value = [String: Any]()
-                let policy = 2
-                let type = "Photo"
-
-                let create = FlutterMethodCall.init(methodName: "objects", arguments: ["type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
-                    SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
-                        if let dictionary = result as? [String: Any], let error = dictionary["error"]{
-                            assert(false, "error = \(error)")
-                        }
-
-                        assert(result is [[String: Any]], "users result have not correct type")
-                    }
-            }else{
-               assert(false, "users result have not correct type")
+                error()
             }
         }
     }
-
-
 
     func testPerforsmanceExample() {
-        // This is an example of a performance test case.
         measure {
-
-            // Put the code you want to measure the time of here.
         }
     }
 
     func testPerformanceExample() {
-        // This is an example of a performance test case.
         measure {
-
-            // Put the code you want to measure the time of here.
         }
     }
 

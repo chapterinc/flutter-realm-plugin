@@ -9,24 +9,21 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
-		3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		846E7CD64E54A75C6C8CF553 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C2574FB9A07C24CF83A2FD /* Pods_Runner.framework */; };
 		88BC7905240E440200A1737E /* PhotoDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BC7904240E440200A1737E /* PhotoDetail.swift */; };
-		88D1FE9D240553160095B2F7 /* flutterrealm_light_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D1FE9C240553160095B2F7 /* flutterrealm_light_tests.swift */; };
-		88D1FEA72405572D0095B2F7 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
-		88D1FEA8240557450095B2F7 /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
 		88D1FEAD24069A040095B2F7 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D1FEAA240696BF0095B2F7 /* Photo.swift */; };
-		9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; };
-		9705A1C71CF904A300538489 /* Flutter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9740EEBA1CF902C7004384FC /* Flutter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88D6E32E2436005E00E4994D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6E32C2436005E00E4994D /* User.swift */; };
+		88D6E32F2436005E00E4994D /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6E32D2436005E00E4994D /* Album.swift */; };
+		88D6E33F243607E000E4994D /* flutterrealm_light_exampleTests1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6E33E243607E000E4994D /* flutterrealm_light_exampleTests1.swift */; };
+		88D6E347243607E900E4994D /* flutterrealm_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6E3302436008F00E4994D /* flutterrealm_tests.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		88D1FE9F240553160095B2F7 /* PBXContainerItemProxy */ = {
+		88D6E341243607E000E4994D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
 			proxyType = 1;
@@ -42,8 +39,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3B80C3951E831B6300D905FE /* App.framework in Embed Frameworks */,
-				9705A1C71CF904A300538489 /* Flutter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,20 +49,23 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
-		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		3E418B917FEB659369B4042F /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		88BC7904240E440200A1737E /* PhotoDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetail.swift; sourceTree = "<group>"; };
-		88D1FE9A240553160095B2F7 /* flutterrealm_light_light_tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flutterrealm_light_tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		88D1FE9C240553160095B2F7 /* flutterrealm_light_light_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flutterrealm_tests.swift; sourceTree = "<group>"; };
-		88D1FE9E240553160095B2F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88D1FEAA240696BF0095B2F7 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		88D6E32C2436005E00E4994D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		88D6E32D2436005E00E4994D /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
+		88D6E3302436008F00E4994D /* flutterrealm_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = flutterrealm_tests.swift; path = flutterrealm_tests/flutterrealm_tests.swift; sourceTree = SOURCE_ROOT; };
+		88D6E332243600DF00E4994D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		88D6E336243602C700E4994D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = flutterrealm_tests/Info.plist; sourceTree = SOURCE_ROOT; };
+		88D6E33C243607E000E4994D /* flutterrealm_light_exampleTests1.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flutterrealm_light_exampleTests1.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D6E33E243607E000E4994D /* flutterrealm_light_exampleTests1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flutterrealm_light_exampleTests1.swift; sourceTree = "<group>"; };
+		88D6E340243607E000E4994D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95961F33BE63DEB0280CA0DB /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
-		9740EEBA1CF902C7004384FC /* Flutter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Flutter.framework; path = Flutter/Flutter.framework; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C146FB1CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,12 +76,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		88D1FE97240553160095B2F7 /* Frameworks */ = {
+		88D6E339243607E000E4994D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88D1FEA72405572D0095B2F7 /* Flutter.framework in Frameworks */,
-				88D1FEA8240557450095B2F7 /* App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,8 +87,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
-				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
 				846E7CD64E54A75C6C8CF553 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,8 +97,8 @@
 		88D1FE9B240553160095B2F7 /* flutterrealm_light_tests */ = {
 			isa = PBXGroup;
 			children = (
-				88D1FE9C240553160095B2F7 /* flutterrealm_light_tests.swift */,
-				88D1FE9E240553160095B2F7 /* Info.plist */,
+				88D6E3302436008F00E4994D /* flutterrealm_tests.swift */,
+				88D6E336243602C700E4994D /* Info.plist */,
 			);
 			path = flutterrealm_light_tests;
 			sourceTree = "<group>";
@@ -112,18 +106,27 @@
 		88D1FEA9240696900095B2F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				88D6E32D2436005E00E4994D /* Album.swift */,
+				88D6E32C2436005E00E4994D /* User.swift */,
 				88D1FEAA240696BF0095B2F7 /* Photo.swift */,
 				88BC7904240E440200A1737E /* PhotoDetail.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
 		};
+		88D6E33D243607E000E4994D /* flutterrealm_light_exampleTests1 */ = {
+			isa = PBXGroup;
+			children = (
+				88D6E33E243607E000E4994D /* flutterrealm_light_exampleTests1.swift */,
+				88D6E340243607E000E4994D /* Info.plist */,
+			);
+			path = flutterrealm_light_exampleTests1;
+			sourceTree = "<group>";
+		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
-				3B80C3931E831B6300D905FE /* App.framework */,
 				3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */,
-				9740EEBA1CF902C7004384FC /* Flutter.framework */,
 				9740EEB21CF90195004384FC /* Debug.xcconfig */,
 				7AFA3C8E1D35360C0083082E /* Release.xcconfig */,
 				9740EEB31CF90195004384FC /* Generated.xcconfig */,
@@ -137,6 +140,7 @@
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				88D1FE9B240553160095B2F7 /* flutterrealm_light_tests */,
+				88D6E33D243607E000E4994D /* flutterrealm_light_exampleTests1 */,
 				97C146EF1CF9000F007C117D /* Products */,
 				C66F39B77CB178C878804E5B /* Pods */,
 				C068030728795859B617F04D /* Frameworks */,
@@ -147,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
-				88D1FE9A240553160095B2F7 /* flutterrealm_light_tests.xctest */,
+				88D6E33C243607E000E4994D /* flutterrealm_light_exampleTests1.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,6 +183,7 @@
 		C068030728795859B617F04D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88D6E332243600DF00E4994D /* XCTest.framework */,
 				A5C2574FB9A07C24CF83A2FD /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
@@ -197,22 +202,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		88D1FE99240553160095B2F7 /* flutterrealm_light_tests */ = {
+		88D6E33B243607E000E4994D /* flutterrealm_light_exampleTests1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 88D1FEA1240553160095B2F7 /* Build configuration list for PBXNativeTarget "flutterrealm_light_tests" */;
+			buildConfigurationList = 88D6E343243607E000E4994D /* Build configuration list for PBXNativeTarget "flutterrealm_light_exampleTests1" */;
 			buildPhases = (
-				88D1FE96240553160095B2F7 /* Sources */,
-				88D1FE97240553160095B2F7 /* Frameworks */,
-				88D1FE98240553160095B2F7 /* Resources */,
+				88D6E338243607E000E4994D /* Sources */,
+				88D6E339243607E000E4994D /* Frameworks */,
+				88D6E33A243607E000E4994D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				88D1FEA0240553160095B2F7 /* PBXTargetDependency */,
+				88D6E342243607E000E4994D /* PBXTargetDependency */,
 			);
-			name = flutterrealm_light_tests;
-			productName = flutterrealm_light_tests;
-			productReference = 88D1FE9A240553160095B2F7 /* flutterrealm_light_tests.xctest */;
+			name = flutterrealm_light_exampleTests1;
+			productName = flutterrealm_light_exampleTests1;
+			productReference = 88D6E33C243607E000E4994D /* flutterrealm_light_exampleTests1.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
@@ -247,7 +252,7 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "The Chromium Authors";
 				TargetAttributes = {
-					88D1FE99240553160095B2F7 = {
+					88D6E33B243607E000E4994D = {
 						CreatedOnToolsVersion = 11.3.1;
 						DevelopmentTeam = 59U2NX868L;
 						ProvisioningStyle = Automatic;
@@ -255,6 +260,7 @@
 					};
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 59U2NX868L;
 						LastSwiftMigration = 1100;
 					};
 				};
@@ -273,13 +279,13 @@
 			projectRoot = "";
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
-				88D1FE99240553160095B2F7 /* flutterrealm_light_tests */,
+				88D6E33B243607E000E4994D /* flutterrealm_light_exampleTests1 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		88D1FE98240553160095B2F7 /* Resources */ = {
+		88D6E33A243607E000E4994D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -312,7 +318,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" thin\n";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
 		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -368,11 +374,12 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		88D1FE96240553160095B2F7 /* Sources */ = {
+		88D6E338243607E000E4994D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88D1FE9D240553160095B2F7 /* flutterrealm_light_tests.swift in Sources */,
+				88D6E347243607E900E4994D /* flutterrealm_tests.swift in Sources */,
+				88D6E33F243607E000E4994D /* flutterrealm_light_exampleTests1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,17 +390,19 @@
 				88D1FEAD24069A040095B2F7 /* Photo.swift in Sources */,
 				88BC7905240E440200A1737E /* PhotoDetail.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				88D6E32E2436005E00E4994D /* User.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				88D6E32F2436005E00E4994D /* Album.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		88D1FEA0240553160095B2F7 /* PBXTargetDependency */ = {
+		88D6E342243607E000E4994D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 97C146ED1CF9000F007C117D /* Runner */;
-			targetProxy = 88D1FE9F240553160095B2F7 /* PBXContainerItemProxy */;
+			targetProxy = 88D6E341243607E000E4994D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -477,7 +486,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 59U2NX868L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -498,7 +507,7 @@
 			};
 			name = Profile;
 		};
-		88D1FEA2240553160095B2F7 /* Debug */ = {
+		88D6E344243607E000E4994D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -509,17 +518,13 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 59U2NX868L;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Flutter",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = flutterrealm_light_tests/Info.plist;
+				INFOPLIST_FILE = flutterrealm_light_exampleTests1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm_light-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm-light-exampleTests1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -529,7 +534,7 @@
 			};
 			name = Debug;
 		};
-		88D1FEA3240553160095B2F7 /* Release */ = {
+		88D6E345243607E000E4994D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -540,16 +545,12 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 59U2NX868L;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Flutter",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = flutterrealm_light_tests/Info.plist;
+				INFOPLIST_FILE = flutterrealm_light_exampleTests1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm_light-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm-light-exampleTests1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -557,7 +558,7 @@
 			};
 			name = Release;
 		};
-		88D1FEA4240553160095B2F7 /* Profile */ = {
+		88D6E346243607E000E4994D /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -568,16 +569,12 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 59U2NX868L;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Flutter",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = flutterrealm_light_tests/Info.plist;
+				INFOPLIST_FILE = flutterrealm_light_exampleTests1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm_light-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chapter.flutterrealm-light-exampleTests1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -700,6 +697,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 59U2NX868L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -727,6 +725,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 59U2NX868L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -749,12 +748,12 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		88D1FEA1240553160095B2F7 /* Build configuration list for PBXNativeTarget "flutterrealm_light_tests" */ = {
+		88D6E343243607E000E4994D /* Build configuration list for PBXNativeTarget "flutterrealm_light_exampleTests1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				88D1FEA2240553160095B2F7 /* Debug */,
-				88D1FEA3240553160095B2F7 /* Release */,
-				88D1FEA4240553160095B2F7 /* Profile */,
+				88D6E344243607E000E4994D /* Debug */,
+				88D6E345243607E000E4994D /* Release */,
+				88D6E346243607E000E4994D /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

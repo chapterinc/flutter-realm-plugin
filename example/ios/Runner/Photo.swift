@@ -1,5 +1,5 @@
 //
-//  PhotoRealm.swift
+//  Photo.swift
 //  Sorted
 //
 //  Created by Grigori on 4/9/19.
@@ -38,6 +38,8 @@ public final class Photo: Object {
     let creationDateTimestamp = RealmOptional<Int32>()
     let sortedDateTimeStamp = RealmOptional<Int32>()
     let modificationDate = RealmOptional<Int32>()
+
+    var albums = List<Album>()
 
     override public class func primaryKey() -> String? {
         return "id"

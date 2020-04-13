@@ -46,6 +46,8 @@ class _MyAppState extends State<MyApp> {
     Photo photo = await _createPhoto(syncUser);
     print("Photo id: ${photo.id}");
 
+    await _deletePhoto(syncUser, photo.id);
+
     List<Photo> photos = await _getPhotos(syncUser);
     print("Photos count: ${photos.length}");
 
@@ -97,6 +99,12 @@ class _MyAppState extends State<MyApp> {
     }, photo, policy: UpdatePolicy.modified);
 
     return createdPhoto;
+  }
+
+  Future<void> _deletePhoto(SyncUser syncUser, String primaryKey) async {
+    Realm realm = Realm(syncUser, _databasePath);
+    // Delete photo
+    realm.delete<Photo>(primaryKey);
   }
 
   Future<List<Photo>> _getPhotos(SyncUser syncUser) async {

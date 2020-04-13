@@ -10,7 +10,8 @@ import 'syncUser.dart';
 ///
 /// [param] _channel required for make call to native library
 class Realm {
-  static const MethodChannel _channel = const MethodChannel('flutterrealm_light');
+  static const MethodChannel _channel =
+      const MethodChannel('flutterrealm_light');
   SyncUser _syncUser;
   String _databaseUrl;
 
@@ -65,5 +66,23 @@ class Realm {
     }).toList();
 
     return linkedHashMaps;
+  }
+
+  /// Delete object from primaryKey.
+  Future<void> delete<T extends RLMObject>(String primaryKey) async {
+    Map<String, dynamic> values = {
+      'primaryKey': primaryKey,
+      'identity': _syncUser.identity,
+      'databaseUrl': _databaseUrl,
+      "type": T.toString()
+    };
+    LinkedHashMap<dynamic, dynamic> map =
+        await _channel.invokeMethod(Action.delete.name, values);
+
+    if (map["error"] != null) {
+      throw Exception("create object finished with exception ${map["error"]}");
+    }
+
+    return;
   }
 }

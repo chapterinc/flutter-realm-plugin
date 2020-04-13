@@ -1,6 +1,7 @@
 enum Action {
   objects,
   create,
+  delete,
   beginWrite,
   commitWrite,
   login,
@@ -59,6 +60,9 @@ extension ActionExtension on Action {
         return "logout";
       case Action.allUsers:
         return 'allUsers';
+      case Action.delete:
+        return 'delete';
+        break;
     }
 
     return "";

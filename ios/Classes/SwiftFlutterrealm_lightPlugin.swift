@@ -7,6 +7,7 @@ import Realm.Private
 enum Action: String {
     case objects
     case create
+    case delete
     case login
     case logout
     case allUsers
@@ -17,6 +18,7 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
     static let oneOffArgumentsNotPassesError = "one of arguments not passed correctly"
     static let databaseUrlWasNotSet = "database url was not set"
     static let notFoundForGivenIdentityError = "user not found for given identity"
+    static let objectNotFoundForGivenIdentity = "object not found for given identity"
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "flutterrealm_light", binaryMessenger: registrar.messenger())
@@ -52,6 +54,10 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
               try logout(call, result: result)
           case .allUsers:
               try allUsers(call, result: result)
+        case .delete:
+            try beginWrite(call)
+            try delete(call, result: result)
+            try commitWrite(call)
           }
     }
 
@@ -85,16 +91,55 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
             objects = objects.filter(predicate)
         }
 
-        if let limit = dictionary["limit"] as? Int{
-            let limitedObjects =  objects.limited(limit).map { $0.toDictionary() }
-            result(limitedObjects)
-            return
+        if let sorted = dictionary["sorted"] as? String, let ascending = dictionary["ascending"] as? Bool{
+            objects = objects.sorted(byKeyPath: sorted, ascending: ascending)
         }
 
         var dictionaries = [[String: Any]]()
+        if let limit = dictionary["limit"] as? Int{
+            objects.limited(limit).forEach { dictionaries.append($0.toDictionary())  }
+            result( ["results": dictionaries] )
+            return
+        }
+
         objects.forEach { dictionaries.append($0.toDictionary()) }
 
         result( ["results": dictionaries] )
+    }
+
+    private func delete(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+
+        guard let identity = dictionary["identity"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let databaseUrl = dictionary["databaseUrl"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.databaseUrlWasNotSet)
+        }
+
+        guard let user = Realm.user(identifier: identity) else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let type = dictionary["type"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        
+        guard let primaryKey = dictionary["primaryKey"] as? String  else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        let realm = try Realm.realm(user: user, databaseUrl: databaseUrl)
+        let object = realm.dynamicObject(ofType: type, forPrimaryKey: primaryKey)
+        
+        guard let requiredObject = object else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.objectNotFoundForGivenIdentity)
+        }
+        realm.delete(requiredObject)
+        result([String: Any]())
     }
 
     private func create(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
@@ -204,6 +249,4 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
 
         result(["results": dictionaries])
     }
-
-
 }

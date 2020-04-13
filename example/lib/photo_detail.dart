@@ -1,7 +1,7 @@
 import 'package:flutterrealm_light/object.dart';
 
 class PhotoDetail extends RLMObject {
-  String id = "";
+  String id = '';
 
   /// This parameters must be calculated relatively
   /// ``` centerx = realCenterx / containerWidth ```
@@ -17,13 +17,13 @@ class PhotoDetail extends RLMObject {
 
   @override
   PhotoDetail fromJson(Map json) {
-    id = json["id"];
+    id = json['id'];
 
-    centerx = json["centerx"];
-    centery = json["centery"];
-    rotate = json["rotate"];
-    timestamp = json["timestamp"];
-    zoom = json["zoom"];
+    centerx = json['centerx'];
+    centery = json['centery'];
+    rotate = json['rotate'];
+    timestamp = json['timestamp'];
+    zoom = json['zoom'];
 
     return this;
   }
@@ -31,12 +31,12 @@ class PhotoDetail extends RLMObject {
   @override
   Map toJson() {
     Map map = super.toJson();
-    map["id"] = id;
-    map["centerx"] = centerx;
-    map["centery"] = centery;
-    map["rotate"] = rotate;
-    map["timestamp"] = timestamp;
-    map["zoom"] = zoom;
+    map['id'] = id;
+    map['centerx'] = centerx;
+    map['centery'] = centery;
+    map['rotate'] = rotate;
+    map['timestamp'] = timestamp;
+    map['zoom'] = zoom;
     return map;
   }
 }

@@ -59,7 +59,14 @@ extension Object {
             // find lists
             if let relationShip = self[prop.name] as? Object {
                 mutabledic[prop.name] = relationShip.toDictionary()
-            } else if let _ = self[prop.name] as? ListBase {
+            } else if let list = self[prop.name] as? ListBase {
+                var dictionaries = [[String: Any]]()
+                for i in 0..<list.count{
+                    dictionaries.append((list._rlmArray.object(at: UInt(i)) as! Object).toDictionary())
+                }
+                mutabledic[prop.name] = dictionaries
+
+            } else if let _ = self[prop.name] as? LinkingObjects {
             } else {
                 mutabledic[prop.name] = self[prop.name]
             }
@@ -67,3 +74,4 @@ extension Object {
         return mutabledic
     }
 }
+

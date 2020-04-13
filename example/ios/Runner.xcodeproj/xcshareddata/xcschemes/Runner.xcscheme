@@ -47,6 +47,16 @@
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "88D6E33B243607E000E4994D"
+               BuildableName = "flutterrealm_light_exampleTests1.xctest"
+               BlueprintName = "flutterrealm_light_exampleTests1"
+               ReferencedContainer = "container:Runner.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -82,7 +92,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "realmJwt"
-            value = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlR0pRbU11ZUtxV1pPRGJ4T1Fkb0czQUR1M3cxIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNTgyODk4NjkxfQ.P1asfb3nYdjNrUZIQ0OSEiiNh0N1inKVTdUcinrVXWGAnsOu-GRKWx-iuurzR0lvS-JsLK-GTg0WW1Vt1KNh0_v5xBlNVQsnrUQFgFKnoZpNQXuNGr9xDYj1QEeHhMz13xHJ0DCzutUZqDagMbL6GwxNikaPvz-VhNxzS9zPPXQQMa0pnIfE8SXfsAhj9r4Nwz8hPhqe_BoZg4nm8vA58bSF55Z0uEm34dfTWjGvLIz4SgTCKTKR7dJbRIiJxilSGmYka3ckLK9ZmwL1HaF9P6t34seECdK-6fjRNFtCFYeOKL8L-2GGuU3xyB32raq0fl-CbBt1dASCw-Kr_idczg"
+            value = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxNTAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE1ODY0MjExMjV9.OKSBD9rFCvySH3Apxr3tR-N3lNKriQYMb4JUvs6pOtmVUaqmJ01yPK_Nru4Aa41mR3U7mGvJBhAVqy0Cnt4CHDO5J3iPughm8obyQACaIZcqrLxauG7WkCHJOqwf4pErq_4gMglWu-jdr-wBcEbOxU8_6AFHadlqp9rGEO6v1MArH2kE29_YKmUmylDGuz3bEcGBYvPTBYj37nH6kVjjxljEFaXRfVL8mx72ZSsddmj-QVBtDXhCf13c8ZKGjg5cEfvxM-ooWWMDG_BeVRsLGyiGRt1Ir1D-0UAG-nGiCjMolDI3yic1PyWHsPcPA9IBN8DOjHxdIz3q4igESXZ8SA"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
