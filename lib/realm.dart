@@ -69,7 +69,7 @@ class Realm {
   }
 
   /// Delete object from primaryKey.
-  Future<void> delete<T extends RLMObject>(String primaryKey) async {
+  Future<void> delete<T extends RLMObject>(dynamic primaryKey) async {
     Map<String, dynamic> values = {
       'primaryKey': primaryKey,
       'identity': _syncUser.identity,

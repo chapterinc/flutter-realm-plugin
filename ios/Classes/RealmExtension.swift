@@ -27,7 +27,7 @@ extension Realm{
 
     static func user(identifier: String) -> SyncUser?{
         return SyncUser.all.first { (key: String, value: SyncUser) -> Bool in
-            return key.contains(identifier)
+            return key == identifier
             }?.value
     }
 

@@ -6,7 +6,10 @@ enum Action {
   commitWrite,
   login,
   logout,
-  allUsers
+  allUsers,
+  subscribe,
+  unSubscribe
+
 }
 
 enum UpdatePolicy {
@@ -62,6 +65,10 @@ extension ActionExtension on Action {
         return 'allUsers';
       case Action.delete:
         return 'delete';
+      case Action.subscribe:
+        return 'subscribe';
+      case Action.unSubscribe:
+        return 'unSubscribe';
         break;
     }
 

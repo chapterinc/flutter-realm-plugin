@@ -43,13 +43,15 @@ class _MyAppState extends State<MyApp> {
       syncUser = fetchAllUsers[0].values.first;
     }
 
+    _listenPhotoChange(syncUser);
+
     Photo photo = await _createPhoto(syncUser);
     print("Photo id: ${photo.id}");
 
     await _deletePhoto(syncUser, photo.id);
 
-    List<Photo> photos = await _getPhotos(syncUser);
-    print("Photos count: ${photos.length}");
+    // List<Photo> photos = await _getPhotos(syncUser);
+    // print("Photos count: ${photos.length}");
 
     await syncUser.logout();
   }
@@ -116,5 +118,21 @@ class _MyAppState extends State<MyApp> {
     List<Photo> photos = await photoResult.list();
 
     return photos;
+  }
+
+  Results _listener;
+  StreamController<List<NotificationObject>> controller;
+  _listenPhotoChange(SyncUser syncUser) async {
+    Realm realm = Realm(syncUser, _databasePath);
+
+    _listener = realm.objects<Photo>(() {
+      return new Photo();
+    });
+
+    controller = await _listener.subscribe();
+    controller.stream.listen((event) async {
+      print(event);
+      await _listener.unSubscribe();
+    });
   }
 }

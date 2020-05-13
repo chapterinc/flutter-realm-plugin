@@ -27,11 +27,11 @@ class flutterrealm_light_tests: XCTestCase {
 
     }
 
-    func testFetchAll() {
+    func test1FetchAll() {
         let expectation = self.expectation(description: #function)
 
         let call = FlutterMethodCall.init(methodName: "allUsers", arguments: [])
-        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
+        SwiftFlutterrealm_lightPlugin(channel: nil).handle(call) { (result) in
             if let users = result as? [[String: [String: Any]]]{
                 print("users count is: \(users.count)")
             }else{
@@ -43,11 +43,11 @@ class flutterrealm_light_tests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
 
-    func testLogin() {
+    func test2Login() {
         let expectation = self.expectation(description: #function)
 
         let call = FlutterMethodCall.init(methodName: "login", arguments: ["jwt": realmJwt, "server": realmServerPath])
-        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
+        SwiftFlutterrealm_lightPlugin(channel: nil).handle(call) { (result) in
             if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                 assert(false, "error = \(error)")
             }
@@ -62,9 +62,9 @@ class flutterrealm_light_tests: XCTestCase {
         waitForExpectations(timeout: 120)
     }
 
-    func testCreatePhoto() {
+    func test3CreatePhoto() {
         func getPhotoDictionary() -> [String: Any]{
-            let value: [String: Any] = ["id": "1234ff", "burstIdentifier": "ssss", "createdDate": Int64(Date().timeIntervalSince1970 * 1000), "creationDate": Int64(Date().timeIntervalSince1970 * 1000), "sortedDate": Int64(Date().timeIntervalSince1970 * 1000), "mediaType": "sss", "modificationDate": Int64(Date().timeIntervalSince1970 * 1000), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidth": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201, "photoDetail" : ["centerx" : 10], "albums":[["id": "ttttt"]]]
+            let value: [String: Any] = ["id": "1234ff", "burstIdentifier": "ssss", "createdDate": Int64(Date().timeIntervalSince1970 * 1000), "creationDate": Int64(Date().timeIntervalSince1970 * 1000), "sortedDate": Int64(Date().timeIntervalSince1970 * 1000), "mediaType": "sss", "modificationDate": Int64(Date().timeIntervalSince1970 * 1000), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidtha": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201, "photoDetail" : ["centerx" : 10], "albums":[["id": "ttttt"]]]
 
             return value
         }
@@ -79,15 +79,9 @@ class flutterrealm_light_tests: XCTestCase {
             let value: [String: Any] = getPhotoDictionary()
             let policy = 2
             let create = FlutterMethodCall.init(methodName: "create", arguments: ["type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
-            SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
+            SwiftFlutterrealm_lightPlugin(channel: nil).handle(create) { (result) in
                 if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                     assert(false, "error = \(error)")
-                }
-
-                if let photo = result as? [String: Any]{
-                    assert(NSDictionary(dictionary: photo).isEqual(to: value), "users result have not correct type")
-                }else{
-                    assert(false, "users result have not correct type")
                 }
 
                 expectation.fulfill()
@@ -99,11 +93,12 @@ class flutterrealm_light_tests: XCTestCase {
         waitForExpectations(timeout: 120)
     }
     
-    func testDeletePhoto() {
+    func test4DeletePhoto() {
         let expectation = self.expectation(description: "delete photo")
 
         testQuery(success: {dictionary in
             guard let id = dictionary?.first?["id"] as? String else{
+                expectation.fulfill()
                 return
             }
             self.deleteObject(primaryKey: id) { () in
@@ -114,7 +109,7 @@ class flutterrealm_light_tests: XCTestCase {
         waitForExpectations(timeout: 10)
     }
 
-    func testQueries() {
+    func test5Queries() {
         let expectation = self.expectation(description: #function)
         waitForExpectations(timeout: 10)
 
@@ -130,12 +125,37 @@ class flutterrealm_light_tests: XCTestCase {
         expectation.fulfill()
     }
     
+    func test6ListenData() {
+        let expectation = self.expectation(description: #function)
+        waitForExpectations(timeout: 5)
+
+        userIdentity(success: { (identity) in
+            let value = [String: Any]()
+            let policy = 2
+            let type = "Photo"
+
+            let listenMethod = FlutterMethodCall.init(methodName: "listen", arguments: ["listenId": 4, "type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
+            SwiftFlutterrealm_lightPlugin(channel: nil).handle(listenMethod) { (result) in
+                if let dictionary = result as? [String: Any], let error = dictionary["error"]{
+                    assert(false, "error = \(error)")
+                }
+
+                self.createSimplePhoto()
+                sleep(10)
+                expectation.fulfill()
+            }
+        }, error: {
+               assert(false, "users result have not correct type")
+        })
+    }
+
+    
     func deleteObject(primaryKey: String, success: @escaping () -> ()) {
         userIdentity(success: { (identity) in
             let type = "Photo"
 
             let deleteQuery = FlutterMethodCall.init(methodName: "delete", arguments: ["primaryKey": primaryKey, "type": type, "identity": identity, "databaseUrl": self.realmDatabasePath])
-                SwiftFlutterrealm_lightPlugin().handle(deleteQuery) { (result) in
+                SwiftFlutterrealm_lightPlugin(channel: nil).handle(deleteQuery) { (result) in
                     success()
                 }
             
@@ -151,12 +171,10 @@ class flutterrealm_light_tests: XCTestCase {
             let type = "Photo"
 
             let create = FlutterMethodCall.init(methodName: "objects", arguments: ["type": type, "value": value, "limit": limit ?? 0, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
-            SwiftFlutterrealm_lightPlugin().handle(create) { (result) in
+            SwiftFlutterrealm_lightPlugin(channel: nil).handle(create) { (result) in
                 if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                     assert(false, "error = \(error)")
                 }
-
-//                assert(result is [String: Any], "users result have not correct type")
 
                 if let dictionary = result as? [String: Any]{
                     success(dictionary["results"] as? [[String: Any]])
@@ -169,7 +187,7 @@ class flutterrealm_light_tests: XCTestCase {
 
     func userIdentity(success: @escaping (String) -> (), error: @escaping () -> ()){
         let call = FlutterMethodCall.init(methodName: "allUsers", arguments: [])
-        SwiftFlutterrealm_lightPlugin().handle(call) { (result) in
+        SwiftFlutterrealm_lightPlugin(channel: nil).handle(call) { (result) in
             if let dictionary = result as? [String: Any], let error = dictionary["error"]{
                 assert(false, "error = \(error)")
             }
@@ -184,15 +202,32 @@ class flutterrealm_light_tests: XCTestCase {
         }
     }
 
-    func testPerforsmanceExample() {
-        measure {
+    func createSimplePhoto() {
+        func getPhotoDictionary() -> [String: Any]{
+            let value: [String: Any] = ["id": "1234ff43333", "burstIdentifier": "ssss", "createdDate": Int64(Date().timeIntervalSince1970 * 1000), "creationDate": Int64(Date().timeIntervalSince1970 * 1000), "sortedDate": Int64(Date().timeIntervalSince1970 * 1000), "mediaType": "sss", "modificationDate": Int64(Date().timeIntervalSince1970 * 1000), "subType": 1, "type": 0, "isUploaded": true, "isTrashed": true, "isSorted": true, "userId": "2", "sortIndex": 1.0, "duration": 0.0, "pixelWidtha": 2, "pixelHeight": 100, "startTime": 0.0, "endTime": 0.0, "timeScale": 2, "year": 2000, "month": 201, "photoDetail" : ["centerx" : 10], "albums":[["id": "ttttt"]]]
+
+            return value
         }
+
+        userIdentity(success: { (identity) in
+            // Begin write
+            let type = "Photo"
+
+            // Add required property in dictionary
+            let value: [String: Any] = getPhotoDictionary()
+            let policy = 2
+            let create = FlutterMethodCall.init(methodName: "create", arguments: ["type": type, "value": value, "policy": policy, "identity": identity, "databaseUrl": self.realmDatabasePath])
+            SwiftFlutterrealm_lightPlugin(channel: nil).handle(create) { (result) in
+                if let dictionary = result as? [String: Any], let error = dictionary["error"]{
+                    assert(false, "error = \(error)")
+                }
+            }
+        }, error: {
+               assert(false, "users result have not correct type")
+            })
+        
     }
 
-    func testPerformanceExample() {
-        measure {
-        }
-    }
 
 }
 
