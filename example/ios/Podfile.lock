@@ -2,12 +2,12 @@ PODS:
   - Flutter (1.0.0)
   - flutterrealm_light (0.0.1):
     - Flutter
-    - RealmSwift (= 4.3.2)
-  - Realm (4.3.2):
-    - Realm/Headers (= 4.3.2)
-  - Realm/Headers (4.3.2)
-  - RealmSwift (4.3.2):
-    - Realm (= 4.3.2)
+    - RealmSwift (= 10.0.0-beta.2)
+  - Realm (10.0.0-beta.2):
+    - Realm/Headers (= 10.0.0-beta.2)
+  - Realm/Headers (10.0.0-beta.2)
+  - RealmSwift (10.0.0-beta.2):
+    - Realm (= 10.0.0-beta.2)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -26,10 +26,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutterrealm_light: 6ad83325f787170057cc673e8dafcd282df7b94e
-  Realm: 5e92902e2875dff4bb0fd02f67bb737c3d5db2bc
-  RealmSwift: 9a360fc7bae04fc2e308a34fbd899d5faa2d6b22
+  flutterrealm_light: 9ac3e2ffe2cb8afab2625893f3815452dda85c05
+  Realm: 211e32e680c354c9b1a2bdc0e3aeb01c25849641
+  RealmSwift: f9043abf9b6821ad5c3032c2a36b5ddfc90b4ce3
 
 PODFILE CHECKSUM: 50a84a99bd9cf8de73e02f1c84e0dafb48b734d4
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.0.beta.1

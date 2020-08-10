@@ -10,14 +10,14 @@ import RealmSwift
 import Realm.Dynamic
 
 extension Realm{
-    static private func configuration(user: SyncUser, server: String) -> Realm.Configuration {
-        let configuration = user.configuration(realmURL: URL(string: server), fullSynchronization: true)
+    static private func configuration(user: SyncUser) -> Realm.Configuration {
+        let configuration = user.configuration(partitionValue: 0)
         return configuration
     }
 
-    static func realm(user: SyncUser, databaseUrl: String) throws -> Realm{
+    static func realm(user: SyncUser) throws -> Realm{
         do {
-            let conf = configuration(user: user, server: databaseUrl)
+            let conf = configuration(user: user)
             let realm = try Realm(configuration: conf)
             return realm
         } catch {
@@ -25,9 +25,9 @@ extension Realm{
         }
     }
 
-    static func user(identifier: String) -> SyncUser?{
-        return SyncUser.all.first { (key: String, value: SyncUser) -> Bool in
-            return key == identifier
+    static func user(app: RealmApp, identifier: String) -> SyncUser?{
+        return app.allUsers().first { (key: String, user: SyncUser) -> Bool in
+            return user.identities().first?.identity == identifier
             }?.value
     }
 
@@ -66,7 +66,6 @@ extension Object {
                 }
                 mutabledic[prop.name] = dictionaries
 
-            } else if let _ = self[prop.name] as? LinkingObjects {
             } else {
                 mutabledic[prop.name] = self[prop.name]
             }
