@@ -107,10 +107,6 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let databaseUrl = dictionary["databaseUrl"] as? String else{
-            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.databaseUrlWasNotSet)
-        }
-
         guard let user = Realm.user(app: realmApp, identifier: identity) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }

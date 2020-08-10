@@ -18,7 +18,6 @@ enum Action: String {
 public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
     static let noArgumentsWasPassesError = "no arguments was passed"
     static let oneOffArgumentsNotPassesError = "one of arguments not passed correctly"
-    static let databaseUrlWasNotSet = "database url was not set"
     static let notFoundForGivenIdentityError = "user not found for given identity"
     static let objectNotFoundForGivenIdentity = "object not found for given identity"
 
