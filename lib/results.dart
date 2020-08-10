@@ -17,7 +17,7 @@ class Results<T extends RLMObject> {
   String _sorted;
   bool _ascending = true;
 
-  String _databaseUrl;
+  String _appId;
   SyncUser _syncUser;
 
   final MethodChannel _channel;
@@ -27,7 +27,7 @@ class Results<T extends RLMObject> {
   StreamController _streamController;
   int uniqueListenerId = new Random().nextInt(1000000000);
 
-  Results(this._channel, this._creator, this._syncUser, this._databaseUrl);
+  Results(this._channel, this._creator, this._syncUser, this._appId);
 
   set query(String query) {
     _query = query;
@@ -55,7 +55,7 @@ class Results<T extends RLMObject> {
       'sorted': _sorted,
       'type': T.toString(),
       'identity': _syncUser.identity,
-      'databaseUrl': _databaseUrl,
+      'appId': _appId,
     });
 
     if (map["error"] != null) {
@@ -80,7 +80,7 @@ class Results<T extends RLMObject> {
       'sorted': _sorted,
       'type': T.toString(),
       'identity': _syncUser.identity,
-      'databaseUrl': _databaseUrl,
+      'appId': _appId,
     });
     if (map["error"] != null) {
       throw Exception("fetch list finished with exception ${map["error"]}");
@@ -94,6 +94,7 @@ class Results<T extends RLMObject> {
     // Call to native method
     await _channel.invokeMethod(Action.unSubscribe.name, <String, dynamic>{
       'listenId': uniqueListenerId,
+      'appId': _appId,
     });
 
     // Close stream

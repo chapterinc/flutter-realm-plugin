@@ -42,7 +42,7 @@ void main() {
     });
 
     testWidgets('Fetch all users', (WidgetTester tester) async {
-      List<LinkedHashMap<String, SyncUser>> users = await Realm.all();
+      List<LinkedHashMap<String, SyncUser>> users = await Realm.all("");
     });
 
     testWidgets('Login with jwt', (WidgetTester tester) async {
@@ -51,7 +51,7 @@ void main() {
       SyncCredentials syncCredentials =
           SyncCredentials(jwt, SyncCredentialsType.jwt);
       SyncUser user =
-          await SyncUser.login(credentials: syncCredentials, server: server);
+          await SyncUser.login(credentials: syncCredentials, appId: "");
 
       assert(user != null);
       return user;
@@ -64,7 +64,7 @@ void main() {
       SyncCredentials syncCredentials =
           SyncCredentials(jwt, SyncCredentialsType.jwt);
       SyncUser user =
-          await SyncUser.login(credentials: syncCredentials, server: server);
+          await SyncUser.login(credentials: syncCredentials, appId: "");
 
       Photo photo = Photo();
       photo.id = "123";

@@ -19,9 +19,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _jwtString =
-      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlR0pRbU11ZUtxV1pPRGJ4T1Fkb0czQUR1M3cxIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNTgyODk4NjkxfQ.P1asfb3nYdjNrUZIQ0OSEiiNh0N1inKVTdUcinrVXWGAnsOu-GRKWx-iuurzR0lvS-JsLK-GTg0WW1Vt1KNh0_v5xBlNVQsnrUQFgFKnoZpNQXuNGr9xDYj1QEeHhMz13xHJ0DCzutUZqDagMbL6GwxNikaPvz-VhNxzS9zPPXQQMa0pnIfE8SXfsAhj9r4Nwz8hPhqe_BoZg4nm8vA58bSF55Z0uEm34dfTWjGvLIz4SgTCKTKR7dJbRIiJxilSGmYka3ckLK9ZmwL1HaF9P6t34seECdK-6fjRNFtCFYeOKL8L-2GGuU3xyB32raq0fl-CbBt1dASCw-Kr_idczg';
-  String _authenticationPath = 'http://5.188.160.116:9080';
-  String _databasePath = 'realm://5.188.160.116:9080/~/database';
+      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzb3J0ZWQtZmN0d2IiLCJleHAiOjI1MTYyMzkwMjIsInN1YiI6IjZkRWY2UzM3eGdRYlhXR09iMHVTNHBhMWhzQTIiLCJ1c2VyX2RhdGEiOnsibmFtZSI6IkFub255bW91cyJ9LCJpYXQiOjE1OTcwNjUzNjB9.aUjbxO_xLKrzTjypIvtZ_GIAH84QPESUKva9TB6pXO_nV1nrcDAXUbUaK-YBK_Qs2_Z-eiVbtiXBA69nsCxQVYpqMQLGM9XJl26MMhP1CYP99Ek7-Ni7kZBbcCc3Plj2NRRHY11vItclgG6nff3KBHMPxY66gxPKG7Uxw01K0lZ5VRjdM-a1U2Acxj7rBRyYXr8IPWrLldVtwWve3YfEc-a9CVKXfhX6-3Lo3AevTP1tCuiC7C7aYoUpDB8kyAxPDSPWfFaZID15Mv1AiL6PTi5-NO16KN0CaPiJf02q3TMJyNEdDoHMvVH5_LOGSHhwRP3jfbnt7EnYIvGW_daGJA';
+
+  String _appId = 'sorted-fctwb';
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
     SyncUser syncUser;
 
     if (fetchAllUsers.length == 0) {
-      syncUser = await _login(_jwtString, _authenticationPath);
+      syncUser = await _login(_jwtString, _appId);
       print("${syncUser.identity}");
     } else {
       syncUser = fetchAllUsers[0].values.first;
@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<List<LinkedHashMap<String, SyncUser>>> fetchAll() async {
-    List<LinkedHashMap<String, SyncUser>> users = await Realm.all();
+    List<LinkedHashMap<String, SyncUser>> users = await Realm.all(_appId);
     return users;
   }
 
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
     SyncCredentials syncCredentials =
         SyncCredentials(jwt, SyncCredentialsType.jwt);
     SyncUser user =
-        await SyncUser.login(credentials: syncCredentials, server: server);
+        await SyncUser.login(credentials: syncCredentials, appId: _appId);
 
     assert(user != null);
     return user;
@@ -94,7 +94,7 @@ class _MyAppState extends State<MyApp> {
     photoDetail.id = "111sss";
     photo.photoDetail = photoDetail;
 
-    Realm realm = Realm(syncUser, _databasePath);
+    Realm realm = Realm(syncUser, _appId);
 
     Photo createdPhoto = await realm.create<Photo>(() {
       return new Photo();
@@ -104,13 +104,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _deletePhoto(SyncUser syncUser, String primaryKey) async {
-    Realm realm = Realm(syncUser, _databasePath);
+    Realm realm = Realm(syncUser, _appId);
     // Delete photo
     realm.delete<Photo>(primaryKey);
   }
 
   Future<List<Photo>> _getPhotos(SyncUser syncUser) async {
-    Realm realm = Realm(syncUser, _databasePath);
+    Realm realm = Realm(syncUser, _appId);
 
     Results photoResult = realm.objects<Photo>(() {
       return new Photo();
@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
   Results _listener;
   StreamController<List<NotificationObject>> controller;
   _listenPhotoChange(SyncUser syncUser) async {
-    Realm realm = Realm(syncUser, _databasePath);
+    Realm realm = Realm(syncUser, _appId);
 
     _listener = realm.objects<Photo>(() {
       return new Photo();

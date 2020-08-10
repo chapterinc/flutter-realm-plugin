@@ -13,15 +13,15 @@ class Realm {
   static const MethodChannel _channel =
       const MethodChannel('flutterrealm_light');
   SyncUser _syncUser;
-  String _databaseUrl;
+  String _appId;
 
-  Realm(this._syncUser, this._databaseUrl) : assert(_channel != null);
+  Realm(this._syncUser, this._appId) : assert(_channel != null);
 
   /// Fetch list of objects.
   ///
   /// [param] _creator required for make object for given generic type
   Results objects<T extends RLMObject>(ItemCreator _creator) {
-    return Results<T>(_channel, _creator, _syncUser, _databaseUrl);
+    return Results<T>(_channel, _creator, _syncUser, _appId);
   }
 
   /// Create object by given policy.
@@ -33,7 +33,7 @@ class Realm {
       'value': value.toJson(),
       'policy': policy.value,
       'identity': _syncUser.identity,
-      'databaseUrl': _databaseUrl,
+      'appId': _appId,
       "type": T.toString()
     };
     LinkedHashMap<dynamic, dynamic> map =
@@ -46,9 +46,13 @@ class Realm {
     return _creator().fromJson(map);
   }
 
-  static Future<List<LinkedHashMap<String, SyncUser>>> all() async {
+  static Future<List<LinkedHashMap<String, SyncUser>>> all(String appId) async {
+    Map<String, dynamic> values = {
+      'appId': appId,
+    };
+
     LinkedHashMap<dynamic, dynamic> map =
-        await _channel.invokeMethod(Action.allUsers.name);
+        await _channel.invokeMethod(Action.allUsers.name, values);
 
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
@@ -73,7 +77,7 @@ class Realm {
     Map<String, dynamic> values = {
       'primaryKey': primaryKey,
       'identity': _syncUser.identity,
-      'databaseUrl': _databaseUrl,
+      'appId': _appId,
       "type": T.toString()
     };
     LinkedHashMap<dynamic, dynamic> map =

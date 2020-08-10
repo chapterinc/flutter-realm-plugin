@@ -58,7 +58,7 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
         }
         
         let realmQuery = rootQueries[appId]
-        assert(realmQuery == nil, "Query cannot be null in this case")
+        assert(realmQuery != nil, "Query cannot be null in this case")
         
         do {
             try realmQuery?.continueAction(action: action, call: call, result: result)
