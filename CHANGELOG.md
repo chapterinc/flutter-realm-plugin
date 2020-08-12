@@ -6,3 +6,8 @@
 ## 0.0.18+1
 
 * TODO: Use Mongodb realm instead of realm.
+
+
+## 0.0.19+1
+
+* TODO: Changed all user load format.
