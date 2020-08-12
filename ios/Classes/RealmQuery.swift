@@ -236,7 +236,8 @@ class RealmQuery{
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         let dictionaries = realmApp.allUsers().map { (key: String, syncUser: SyncUser) -> [String: [String: Any]] in
             
-            return [key: ["identity": identity(id: syncUser.identity ?? "")]]
+            let ident = identity(id: syncUser.identity ?? "")
+            return [ident: ["identity": ident]]
         }
 
         result(["results": dictionaries])
