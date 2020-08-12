@@ -63,6 +63,7 @@ class Realm {
       LinkedHashMap<String, SyncUser> linkedHashMap = new LinkedHashMap();
       LinkedHashMap<dynamic, dynamic> map = value;
       if (map.keys.length > 0) {
+        map[map.keys.first]['appId'] = appId;
         linkedHashMap[map.keys.first] = SyncUser.fromMap(map[map.keys.first]);
       }
 

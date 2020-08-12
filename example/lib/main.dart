@@ -19,9 +19,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _jwtString =
-      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzb3J0ZWQtZmN0d2IiLCJleHAiOjI1MTYyMzkwMjIsInN1YiI6IjZkRWY2UzM3eGdRYlhXR09iMHVTNHBhMWhzQTIiLCJ1c2VyX2RhdGEiOnsibmFtZSI6IkFub255bW91cyJ9LCJpYXQiOjE1OTcwNjUzNjB9.aUjbxO_xLKrzTjypIvtZ_GIAH84QPESUKva9TB6pXO_nV1nrcDAXUbUaK-YBK_Qs2_Z-eiVbtiXBA69nsCxQVYpqMQLGM9XJl26MMhP1CYP99Ek7-Ni7kZBbcCc3Plj2NRRHY11vItclgG6nff3KBHMPxY66gxPKG7Uxw01K0lZ5VRjdM-a1U2Acxj7rBRyYXr8IPWrLldVtwWve3YfEc-a9CVKXfhX6-3Lo3AevTP1tCuiC7C7aYoUpDB8kyAxPDSPWfFaZID15Mv1AiL6PTi5-NO16KN0CaPiJf02q3TMJyNEdDoHMvVH5_LOGSHhwRP3jfbnt7EnYIvGW_daGJA';
+      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzb3J0ZWQtZmx1dHRlci1tdGZwcyIsImV4cCI6MjUxNjIzOTAyMiwic3ViIjoiMTExMSIsInVzZXJfZGF0YSI6eyJuYW1lIjoiSmVhbiBWYWxqZWFuIiwiYWxpYXNlcyI6WyJNb25zaWV1ciBNYWRlbGVpbmUiLCJVbHRpbWUgRmF1Y2hlbGV2ZW50IiwiVXJiYWluIEZhYnJlIl19LCJpYXQiOjE1OTcxNDczMDB9.EztS069aiSCdGgiAMH8u2dOAtV_p2Z2kQey-2_Q6dhQEYY5dQeWtPWU1IIrbH8oM84Sa_zj5oW9v8AtOssopmF4SD__-tCB45otQqh2UljmQWHyBK4PdIoC7gjMs6Dhhw5aJlCF-hKRzYQruqsBnIq85sHR9o2QtC66-L4uu4PItDQQvr4gItQrYHsfplCnZrSC-PMlp8MleFq83lov-F4mblAJaluTxMQW8tYxv3XIGiIsoSRrP00dmxwYyl61s5-AOFBPQm29EmTb185M5IxU3pLBkuU_T7RvIGsod-x75b7PkD-cirOVYMpdYpHq3NCugAwTVZ81m_CtISNTibw';
 
-  String _appId = 'sorted-fctwb';
+  String _appId = 'sorted-flutter-mtfps';
 
   @override
   void initState() {
@@ -50,8 +50,8 @@ class _MyAppState extends State<MyApp> {
 
     await _deletePhoto(syncUser, photo.id);
 
-    // List<Photo> photos = await _getPhotos(syncUser);
-    // print("Photos count: ${photos.length}");
+    List<Photo> photos = await _getPhotos(syncUser);
+    print("Photos count: ${photos.length}");
 
     await syncUser.logout();
   }
@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
     return users;
   }
 
-  Future<SyncUser> _login(String jwt, String server) async {
+  Future<SyncUser> _login(String jwt, String _appId) async {
     SyncCredentials syncCredentials =
         SyncCredentials(jwt, SyncCredentialsType.jwt);
     SyncUser user =

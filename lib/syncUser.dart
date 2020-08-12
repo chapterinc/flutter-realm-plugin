@@ -31,7 +31,7 @@ class SyncUser {
     return syncUser;
   }
 
-  Future<void> logout({credentials: SyncCredentials, server: String}) async {
+  Future<void> logout({credentials: SyncCredentials}) async {
     LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
         Action.logout.name,
         <String, dynamic>{'identity': _identity, 'appId': _appId});

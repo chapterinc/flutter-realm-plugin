@@ -204,7 +204,12 @@ class RealmQuery{
         let jwtCredentials = AppCredentials.init(jwt: jwt)
 
         realmApp.login(withCredential: jwtCredentials) { (syncUser, e) in
-            result(["identity": syncUser?.identity])
+            let identity = syncUser?.identities().first?.identity ?? ""
+            let id = syncUser?.identity ?? ""
+
+            self.setIdentity(id: id, identity: identity)
+
+            result(["identity": identity])
         }
     }
 
@@ -230,10 +235,23 @@ class RealmQuery{
 
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         let dictionaries = realmApp.allUsers().map { (key: String, syncUser: SyncUser) -> [String: [String: Any]] in
-            return [key: ["identity": syncUser.identities().first?.identity ?? ""]]
+            
+            return [key: ["identity": identity(id: syncUser.identity ?? "")]]
         }
 
         result(["results": dictionaries])
     }
 
+}
+
+/// Realm sdk don't save identities for fix that bug we save it manually
+private extension RealmQuery{
+    func setIdentity(id: String, identity: String){
+        UserDefaults.standard.set(identity, forKey: id)
+        UserDefaults.standard.synchronize()
+    }
+    
+    func identity(id: String) -> String{
+        return UserDefaults.standard.string(forKey: id) ?? ""
+    }
 }
