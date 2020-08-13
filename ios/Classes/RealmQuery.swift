@@ -14,14 +14,14 @@ class RealmQuery{
     var notifications = [Int: Notification]()
 
     var realmApp: RealmApp
-    
+
     var channel: FlutterMethodChannel?
 
     init(realmApp: RealmApp, channel: FlutterMethodChannel?){
         self.realmApp = realmApp
         self.channel = channel
     }
-    
+
     func continueAction(action: Action, call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         switch action {
           case .objects:
@@ -47,8 +47,8 @@ class RealmQuery{
         guard let dictionary = call.arguments as? NSDictionary else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
         }
-        
-        
+
+
         let objects = try results(call, result: result)
         guard let listenId = dictionary["listenId"] as? Int else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
@@ -59,13 +59,13 @@ class RealmQuery{
         notifications[listenId] = notification
         result( ["results": [String: Any]()] )
     }
-    
+
     private func unSubscribe(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         guard let dictionary = call.arguments as? NSDictionary else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
         }
-        
-        
+
+
         guard let listenId = dictionary["listenId"] as? Int else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
@@ -84,7 +84,7 @@ class RealmQuery{
         }
 
         let objects = try results(call, result: result)
-        
+
         var dictionaries = [[String: Any]]()
         if let limit = dictionary["limit"] as? Int{
             objects.limited(limit).forEach { dictionaries.append($0.toDictionary())  }
@@ -96,7 +96,7 @@ class RealmQuery{
 
         result( ["results": dictionaries] )
     }
-    
+
     private func results(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws -> Results<DynamicObject>{
         // open realm in autoreleasepool to create tables and then dispose
         guard let dictionary = call.arguments as? NSDictionary else{
@@ -107,7 +107,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let user = Realm.user(app: realmApp, identifier: identity) else{
+        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
@@ -126,7 +126,7 @@ class RealmQuery{
         if let sorted = dictionary["sorted"] as? String, let ascending = dictionary["ascending"] as? Bool{
             objects = objects.sorted(byKeyPath: sorted, ascending: ascending)
         }
-        
+
         return objects
     }
 
@@ -139,7 +139,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let user = Realm.user(app: realmApp, identifier: identity) else{
+        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
@@ -175,7 +175,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let user = Realm.user(app: realmApp, identifier: identity) else{
+        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
@@ -222,12 +222,12 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let user = Realm.user(app: realmApp, identifier: identity) else{
+        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
-        
+
         realmApp.logOut(user) { (error) in
-            
+
         }
 
         result([String: Any]())
@@ -235,7 +235,7 @@ class RealmQuery{
 
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         let dictionaries = realmApp.allUsers().map { (key: String, syncUser: SyncUser) -> [String: [String: Any]] in
-            
+
             let ident = identity(id: syncUser.identity ?? "")
             return [ident: ["identity": ident]]
         }
@@ -248,11 +248,21 @@ class RealmQuery{
 /// Realm sdk don't save identities for fix that bug we save it manually
 private extension RealmQuery{
     func setIdentity(id: String, identity: String){
+        if(identity.isEmpty){
+            return
+        }
+
         UserDefaults.standard.set(identity, forKey: id)
+        UserDefaults.standard.set(id, forKey: identity)
         UserDefaults.standard.synchronize()
     }
-    
+
     func identity(id: String) -> String{
         return UserDefaults.standard.string(forKey: id) ?? ""
     }
+
+    func id(identity: String) -> String{
+        return UserDefaults.standard.string(forKey: identity) ?? ""
+    }
+
 }

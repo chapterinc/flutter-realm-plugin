@@ -25,9 +25,9 @@ extension Realm{
         }
     }
 
-    static func user(app: RealmApp, identifier: String) -> SyncUser?{
+    static func user(app: RealmApp, id: String) -> SyncUser?{
         return app.allUsers().first { (key: String, user: SyncUser) -> Bool in
-            return user.identities().first?.identity == identifier
+            return user.identity == id
             }?.value
     }
 
