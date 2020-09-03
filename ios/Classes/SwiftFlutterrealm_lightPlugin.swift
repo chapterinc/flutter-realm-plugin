@@ -54,7 +54,7 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
         }
         
         if(rootQueries[appId] == nil){
-            rootQueries[appId] = RealmQuery(realmApp: RealmApp(id: appId), channel: channel)
+            rootQueries[appId] = RealmQuery(realmApp: RLMApp(id: appId), channel: channel)
         }
         
         let realmQuery = rootQueries[appId]

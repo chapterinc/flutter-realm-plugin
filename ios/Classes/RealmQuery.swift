@@ -13,11 +13,11 @@ import Realm.Private
 class RealmQuery{
     var notifications = [Int: Notification]()
 
-    var realmApp: RealmApp
+    var realmApp: App
 
     var channel: FlutterMethodChannel?
 
-    init(realmApp: RealmApp, channel: FlutterMethodChannel?){
+    init(realmApp: App, channel: FlutterMethodChannel?){
         self.realmApp = realmApp
         self.channel = channel
     }
@@ -201,9 +201,9 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let jwtCredentials = AppCredentials.init(jwt: jwt)
+        let jwtCredentials = Credentials.init(jwt: jwt)
 
-        realmApp.login(withCredential: jwtCredentials) { (syncUser, e) in
+        realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
             let identity = syncUser?.identities().first?.identity ?? ""
             let id = syncUser?.identity ?? ""
 
@@ -226,15 +226,15 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        realmApp.logOut(user) { (error) in
-
+        user.logOut { (error) in
+            
         }
-
+        
         result([String: Any]())
     }
 
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
-        let dictionaries = realmApp.allUsers().map { (key: String, syncUser: SyncUser) -> [String: [String: Any]] in
+        let dictionaries = realmApp.allUsers().filter{ $0.value.state == .loggedIn }.map { (key: String, syncUser: User) -> [String: [String: Any]] in
 
             let ident = identity(id: syncUser.identity ?? "")
             return [ident: ["identity": ident]]

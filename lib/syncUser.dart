@@ -19,7 +19,7 @@ class SyncUser {
     LinkedHashMap<dynamic, dynamic> syncUserMap = await _channel.invokeMethod(
         Action.login.name,
         <String, dynamic>{'appId': appId, 'jwt': credentials.jwt});
-
+    syncUserMap["appId"] = appId;
     return SyncUser.fromMap(syncUserMap);
   }
 

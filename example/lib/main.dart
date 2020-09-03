@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
     List<Photo> photos = await _getPhotos(syncUser);
     print("Photos count: ${photos.length}");
 
-    await syncUser.logout();
+    // await syncUser.logout();
   }
 
   @override

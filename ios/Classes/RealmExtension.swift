@@ -10,12 +10,12 @@ import RealmSwift
 import Realm.Dynamic
 
 extension Realm{
-    static private func configuration(user: SyncUser) -> Realm.Configuration {
+    static private func configuration(user: User) -> Realm.Configuration {
         let configuration = user.configuration(partitionValue: 0)
         return configuration
     }
 
-    static func realm(user: SyncUser) throws -> Realm{
+    static func realm(user: User) throws -> Realm{
         do {
             let conf = configuration(user: user)
             let realm = try Realm(configuration: conf)
@@ -25,8 +25,8 @@ extension Realm{
         }
     }
 
-    static func user(app: RealmApp, id: String) -> SyncUser?{
-        return app.allUsers().first { (key: String, user: SyncUser) -> Bool in
+    static func user(app: App, id: String) -> User?{
+        return app.allUsers().filter{ $0.value.state == .loggedIn }.first { (key: String, user: User) -> Bool in
             return user.identity == id
             }?.value
     }
