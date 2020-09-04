@@ -11,7 +11,7 @@ import Realm.Dynamic
 
 extension Realm{
     static private func configuration(user: User) -> Realm.Configuration {
-        let configuration = user.configuration(partitionValue: 0)
+        let configuration = user.configuration(partitionValue: user.identity ?? "")
         return configuration
     }
 

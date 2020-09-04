@@ -16,3 +16,11 @@
 ## 0.0.20+1
 
 * TODO: Added reverse save identity realm id.
+
+## 0.0.21+1
+
+* TODO: Updated realm version
+
+## 0.0.22+1
+
+* TODO: Added dynamic partition
