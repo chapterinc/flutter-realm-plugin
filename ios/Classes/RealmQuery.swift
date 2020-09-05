@@ -106,8 +106,12 @@ class RealmQuery{
         guard let identity = dictionary["identity"] as? String else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
+        
+        guard let id = realmApp.user(id: identity)?.identity else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
 
-        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
+        guard let user = Realm.user(app: realmApp, id: id) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
@@ -138,8 +142,12 @@ class RealmQuery{
         guard let identity = dictionary["identity"] as? String else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
+        
+        guard let id = realmApp.user(id: identity)?.identity else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
 
-        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
+        guard let user = Realm.user(app: realmApp, id: id) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
@@ -175,7 +183,11 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
+        guard let id = realmApp.user(id: identity)?.identity else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
+
+        guard let user = Realm.user(app: realmApp, id: id) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
@@ -205,10 +217,7 @@ class RealmQuery{
 
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
             let identity = syncUser?.identities().first?.identity ?? ""
-            let id = syncUser?.identity ?? ""
-
-            self.setIdentity(id: id, identity: identity)
-
+           
             result(["identity": identity])
         }
     }
@@ -222,7 +231,11 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let user = Realm.user(app: realmApp, id: id(identity: identity)) else{
+        guard let id = realmApp.user(id: identity)?.identity else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
+
+        guard let user = Realm.user(app: realmApp, id: id) else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
@@ -236,7 +249,7 @@ class RealmQuery{
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         let dictionaries = realmApp.allUsers().filter{ $0.value.state == .loggedIn }.map { (key: String, syncUser: User) -> [String: [String: Any]] in
 
-            let ident = identity(id: syncUser.identity ?? "")
+            let ident = syncUser.id ?? ""
             return [ident: ["identity": ident]]
         }
 
@@ -245,24 +258,15 @@ class RealmQuery{
 
 }
 
-/// Realm sdk don't save identities for fix that bug we save it manually
-private extension RealmQuery{
-    func setIdentity(id: String, identity: String){
-        if(identity.isEmpty){
-            return
-        }
+private extension User{
+    var id: String? { identities().first?.identity }
+}
 
-        UserDefaults.standard.set(identity, forKey: id)
-        UserDefaults.standard.set(id, forKey: identity)
-        UserDefaults.standard.synchronize()
+private extension App{
+    func user(id: String) -> User?{
+        return allUsers().first {
+            let (_, value) = $0
+            return value.id == id
+            }?.value
     }
-
-    func identity(id: String) -> String{
-        return UserDefaults.standard.string(forKey: id) ?? ""
-    }
-
-    func id(identity: String) -> String{
-        return UserDefaults.standard.string(forKey: identity) ?? ""
-    }
-
 }
