@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
     photoDetail.id = "111sss";
     photo.photoDetail = photoDetail;
 
-    Realm realm = Realm(syncUser, _appId);
+    Realm realm = Realm(syncUser, _appId, syncUser.identity);
 
     Photo createdPhoto = await realm.create<Photo>(() {
       return new Photo();
@@ -115,13 +115,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _deletePhoto(SyncUser syncUser, String primaryKey) async {
-    Realm realm = Realm(syncUser, _appId);
+    Realm realm = Realm(syncUser, _appId, syncUser.identity);
     // Delete photo
     realm.delete<Photo>(primaryKey);
   }
 
   Future<List<Photo>> _getPhotos(SyncUser syncUser) async {
-    Realm realm = Realm(syncUser, _appId);
+    Realm realm = Realm(syncUser, _appId, syncUser.identity);
 
     Results photoResult = realm.objects<Photo>(() {
       return new Photo();
@@ -134,7 +134,7 @@ class _MyAppState extends State<MyApp> {
   Results _listener;
   StreamController<List<NotificationObject>> controller;
   _listenPhotoChange(SyncUser syncUser) async {
-    Realm realm = Realm(syncUser, _appId);
+    Realm realm = Realm(syncUser, _appId, syncUser.identity);
 
     _listener = realm.objects<Photo>(() {
       return new Photo();

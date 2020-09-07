@@ -14,14 +14,16 @@ class Realm {
       const MethodChannel('flutterrealm_light');
   SyncUser _syncUser;
   String _appId;
+  String _partition;
 
-  Realm(this._syncUser, this._appId) : assert(_channel != null);
+  Realm(this._syncUser, this._appId, this._partition)
+      : assert(_channel != null);
 
   /// Fetch list of objects.
   ///
   /// [param] _creator required for make object for given generic type
   Results objects<T extends RLMObject>(ItemCreator _creator) {
-    return Results<T>(_channel, _creator, _syncUser, _appId);
+    return Results<T>(_channel, _creator, _syncUser, _appId, _partition);
   }
 
   /// Create object by given policy.
@@ -34,6 +36,7 @@ class Realm {
       'policy': policy.value,
       'identity': _syncUser.identity,
       'appId': _appId,
+      'partition': _partition,
       "type": T.toString()
     };
     LinkedHashMap<dynamic, dynamic> map =
@@ -79,6 +82,7 @@ class Realm {
       'primaryKey': primaryKey,
       'identity': _syncUser.identity,
       'appId': _appId,
+      'partition': _partition,
       "type": T.toString()
     };
     LinkedHashMap<dynamic, dynamic> map =

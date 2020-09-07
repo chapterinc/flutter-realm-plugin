@@ -118,8 +118,12 @@ class RealmQuery{
         guard let type = dictionary["type"] as? String  else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
+        
+        guard let partition = dictionary["partition"] as? String  else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
 
-        let realm = try Realm.realm(user: user)
+        let realm = try Realm.realm(user: user, partition: partition)
         var objects = realm.dynamicObjects(type)
 
         if let query = dictionary["query"] as? String{
@@ -160,7 +164,11 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let realm = try Realm.realm(user: user)
+        guard let partition = dictionary["partition"] as? String  else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        let realm = try Realm.realm(user: user, partition: partition)
         let object = realm.dynamicObject(ofType: type, forPrimaryKey: primaryKey!)
 
         guard let requiredObject = object else{
@@ -195,7 +203,11 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let realm = try Realm.realm(user: user)
+        guard let partition = dictionary["partition"] as? String  else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        let realm = try Realm.realm(user: user, partition: partition)
 
         realm.beginWrite()
         let updatedObject = realm.dynamicCreate(type, value: value, update: policy)
@@ -213,6 +225,10 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
+        guard let partition = dictionary["partition"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
         let jwtCredentials = Credentials.init(jwt: jwt)
 
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
@@ -223,7 +239,7 @@ class RealmQuery{
                 return
            }
 
-            Realm.asyncOpen(configuration: Realm.configuration(user: user), callbackQueue: DispatchQueue.main) { (realm, error) in
+            Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { (realm, error) in
                 result(["identity": identity])
             }
         }

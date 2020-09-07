@@ -10,14 +10,14 @@ import RealmSwift
 import Realm.Dynamic
 
 extension Realm{
-    static func configuration(user: User) -> Realm.Configuration {
-        let configuration = user.configuration(partitionValue: user.identity ?? "")
+    static func configuration(user: User, partition: String) -> Realm.Configuration {
+        let configuration = user.configuration(partitionValue: partition)
         return configuration
     }
 
-    static func realm(user: User) throws -> Realm{
+    static func realm(user: User, partition: String) throws -> Realm{
         do {
-            let conf = configuration(user: user)
+            let conf = configuration(user: user, partition: partition)
             let realm = try Realm(configuration: conf)
             return realm
         } catch {

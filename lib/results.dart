@@ -18,6 +18,7 @@ class Results<T extends RLMObject> {
   bool _ascending = true;
 
   String _appId;
+  String _partition;
   SyncUser _syncUser;
 
   final MethodChannel _channel;
@@ -27,7 +28,8 @@ class Results<T extends RLMObject> {
   StreamController _streamController;
   int uniqueListenerId = new Random().nextInt(1000000000);
 
-  Results(this._channel, this._creator, this._syncUser, this._appId);
+  Results(this._channel, this._creator, this._syncUser, this._appId,
+      this._partition);
 
   set query(String query) {
     _query = query;
@@ -56,6 +58,7 @@ class Results<T extends RLMObject> {
       'type': T.toString(),
       'identity': _syncUser.identity,
       'appId': _appId,
+      'partition': _partition,
     });
 
     if (map["error"] != null) {
@@ -81,6 +84,7 @@ class Results<T extends RLMObject> {
       'type': T.toString(),
       'identity': _syncUser.identity,
       'appId': _appId,
+      'partition': _partition,
     });
     if (map["error"] != null) {
       throw Exception("fetch list finished with exception ${map["error"]}");
@@ -95,6 +99,7 @@ class Results<T extends RLMObject> {
     await _channel.invokeMethod(Action.unSubscribe.name, <String, dynamic>{
       'listenId': uniqueListenerId,
       'appId': _appId,
+      'partition': _partition,
     });
 
     // Close stream

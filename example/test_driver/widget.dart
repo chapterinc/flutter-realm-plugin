@@ -69,7 +69,7 @@ void main() {
       Photo photo = Photo();
       photo.id = "123";
 
-      Realm realm = Realm(user, "");
+      Realm realm = Realm(user, "", "");
 
       Photo createdPhoto = await realm.create<Photo>(() {
         return new Photo();
