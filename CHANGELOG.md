@@ -24,3 +24,7 @@
 ## 0.0.22+1
 
 * TODO: Added dynamic partition
+
+## 0.0.23+1
+
+* TODO: Update mongodb library

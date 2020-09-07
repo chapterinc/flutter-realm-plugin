@@ -232,7 +232,11 @@ class RealmQuery{
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
             let identity = syncUser?.identities().first?.identity ?? ""
             
-            result(["identity": identity])
+            if let error = e{
+                result(["error": error.localizedDescription])
+            }else{
+                result(["identity": identity])
+            }
         }
     }
     

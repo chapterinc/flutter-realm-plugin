@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
 
 // User with id -10
   String _jwtString1 =
-      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzb3J0ZWQtZmx1dHRlci1tdGZwcyIsImV4cCI6MjUxNjIzOTAyMiwic3ViIjotMTAsInVzZXJfZGF0YSI6eyJuYW1lIjoiQW5vbnltb3VzIn0sImlhdCI6MTU5OTMyMTgxMX0.Gnrj6Tv6WDUFpVvh8hofMMFUTvQEvBtefjewMxr6fbhlF3QnbE3tnGHHh8zNNVwrLl7nWMHgosdIptBOwVYI7h3VtMT6ZaHnvEY5ub_jM7oT2dSbf3t__hqMul4Vy-w9jKUBuLEB1pBdkXEUbntlpoHj9Cy9cXZcfjPOXPpU_nDUQhAin9k0XF-y0p-xzNPp0UDmueaO21B8B5FXojUrjkKxcwcciXeMqCFcQQWgALgqDkMcSO0NamIhCvAZyP5hNRPuvThdsScUkrgqiKFd2d704cIpPZkC6T7gFhLFNE0QefXvMgVy9rK7Ge0PH0UTzQ-cUxxLRU0PBvIw96sUJw';
+      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzb3J0ZWQtZmx1dHRlci1tdGZwcyIsImV4cCI6MjUxNjIzOTAyMiwic3ViIjoiMzMzMzMzMTMiLCJ1c2VyX2RhdGEiOnsibmFtZSI6IkFub255bW91cyJ9LCJpYXQiOjE1OTk0NzU3MDB9.NY7jtenBtOH64g6nwSGoMsw0l43HsQgxNOcK8ljr2ZgNAJKwxFOnceddNAV-SGz9zMVodYOGQtDB4o-KpkG5XKb5jRx-5_Q-NzlgfKab-H5buVZ5YmVIPR0yl7S2nqiy2eC1cy_E_5HM9SjskOe-XeHyfN4dXUdEa98PTBxkJKqyJtUCFM1EwgAVvS1XW3nsQOS-89_Kd__G3YmDPdtRIwmXUqHKRzaUBBstlZjFChNGX0OQsYDetACG-iB-ZE3ywbpQnd4Y5qchFcU2EVLaP3rk7RUzSzH0KhG8PP0BSKyTjYVAIH3hA60z1lBYwZTyRJdXVntdGuVzlAp1FwzSGQ';
 
   String _appId = 'sorted-flutter-mtfps';
 
@@ -36,26 +36,29 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    await testWithJwt(_jwtString);
-    await testWithJwt(_jwtString1);
+    await testWithJwt(_jwtString, "1111");
+    await testWithJwt(_jwtString1, "33333313");
   }
 
-  Future<void> testWithJwt(String jwt) async {
+  Future<void> testWithJwt(String jwt, String userId) async {
     // Check all users
     List<LinkedHashMap<String, SyncUser>> fetchAllUsers = await fetchAll();
     print("${fetchAllUsers.length}");
     SyncUser syncUser;
+    LinkedHashMap<String, SyncUser> map = fetchAllUsers
+        .firstWhere((element) => element[userId] != null, orElse: () {
+      return null;
+    });
 
-    // fetchAllUsers.firstWhere((element) => element[])
-    // if (fetchAllUsers.length == 0) {
-    syncUser = await _login(jwt, _appId);
-    syncUser.partition = syncUser.identity;
+    if (map == null) {
+      syncUser = await _login(jwt, _appId);
+      syncUser.partition = syncUser.identity;
 
-    await syncUser.asyncOpen();
-    //   print("${syncUser.identity}");
-    // } else {
-    //   syncUser = fetchAllUsers[0].values.first;
-    // }
+      await syncUser.asyncOpen();
+      print("${syncUser.identity}");
+    } else {
+      syncUser = map.values.first;
+    }
 
     _listenPhotoChange(syncUser);
 
