@@ -8,8 +8,8 @@ enum Action {
   logout,
   allUsers,
   subscribe,
-  unSubscribe
-
+  unSubscribe,
+  asyncOpen
 }
 
 enum UpdatePolicy {
@@ -69,6 +69,8 @@ extension ActionExtension on Action {
         return 'subscribe';
       case Action.unSubscribe:
         return 'unSubscribe';
+      case Action.asyncOpen:
+        return 'asyncOpen';
         break;
     }
 

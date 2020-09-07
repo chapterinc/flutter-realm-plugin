@@ -13,6 +13,7 @@ enum Action: String {
     case allUsers
     case subscribe
     case unSubscribe
+    case asyncOpen
 }
 
 public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {

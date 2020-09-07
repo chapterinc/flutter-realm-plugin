@@ -49,6 +49,9 @@ class _MyAppState extends State<MyApp> {
     // fetchAllUsers.firstWhere((element) => element[])
     // if (fetchAllUsers.length == 0) {
     syncUser = await _login(jwt, _appId);
+    syncUser.partition = syncUser.identity;
+
+    await syncUser.asyncOpen();
     //   print("${syncUser.identity}");
     // } else {
     //   syncUser = fetchAllUsers[0].values.first;

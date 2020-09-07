@@ -17,6 +17,7 @@
 		88D6E32F2436005E00E4994D /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6E32D2436005E00E4994D /* Album.swift */; };
 		88D6E33F243607E000E4994D /* flutterrealm_light_exampleTests1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6E33E243607E000E4994D /* flutterrealm_light_exampleTests1.swift */; };
 		88D6E347243607E900E4994D /* flutterrealm_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6E3302436008F00E4994D /* flutterrealm_tests.swift */; };
+		88F15C932506338A002C21B9 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F15C922506338A002C21B9 /* Tag.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
@@ -68,6 +69,7 @@
 		88D6E33C243607E000E4994D /* flutterrealm_light_exampleTests1.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flutterrealm_light_exampleTests1.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D6E33E243607E000E4994D /* flutterrealm_light_exampleTests1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flutterrealm_light_exampleTests1.swift; sourceTree = "<group>"; };
 		88D6E340243607E000E4994D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88F15C922506338A002C21B9 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tag.swift; path = "../../../../sorted-flutter/ios/Runner/Tag.swift"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +118,7 @@
 				88D6E32C2436005E00E4994D /* User.swift */,
 				88D1FEAA240696BF0095B2F7 /* Photo.swift */,
 				88BC7904240E440200A1737E /* PhotoDetail.swift */,
+				88F15C922506338A002C21B9 /* Tag.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				88D1FEAD24069A040095B2F7 /* Photo.swift in Sources */,
 				88BC7905240E440200A1737E /* PhotoDetail.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				88F15C932506338A002C21B9 /* Tag.swift in Sources */,
 				88D6E32E2436005E00E4994D /* User.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				88D6E32F2436005E00E4994D /* Album.swift in Sources */,

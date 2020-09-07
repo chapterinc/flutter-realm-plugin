@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 public final class PhotoDetail: Object {
-    @objc dynamic var id: String = ""
+    @objc dynamic var _id: String = ""
 
     /// This parameters must be calculated relatively
     /// ``` centerx = realCenterx / containerWidth ```
@@ -25,6 +25,6 @@ public final class PhotoDetail: Object {
     @objc dynamic var zoom: Double = 1
 
     override public class func primaryKey() -> String? {
-        return "id"
+        return "_id"
     }
 }

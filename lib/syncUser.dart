@@ -11,17 +11,20 @@ class SyncUser {
   String _appId;
   String _partition;
 
+  set partition(String partition) {
+    _partition = partition;
+  }
+
   String get identity {
     return _identity;
   }
 
   static Future<SyncUser> login(
-      {credentials: SyncCredentials, appId: String, partition: String}) async {
+      {credentials: SyncCredentials, appId: String}) async {
     LinkedHashMap<dynamic, dynamic> syncUserMap = await _channel.invokeMethod(
         Action.login.name,
         <String, dynamic>{'appId': appId, 'jwt': credentials.jwt});
     syncUserMap["appId"] = appId;
-    syncUserMap["partition"] = partition;
     return SyncUser.fromMap(syncUserMap);
   }
 
@@ -32,6 +35,20 @@ class SyncUser {
     syncUser._partition = map["partition"];
 
     return syncUser;
+  }
+
+  Future<void> asyncOpen() async {
+    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+        Action.asyncOpen.name, <String, dynamic>{
+      'identity': _identity,
+      'appId': _appId,
+      'partition': _partition
+    });
+    if (map["error"] != null) {
+      throw Exception("create object finished with exception ${map["error"]}");
+    }
+
+    return;
   }
 
   Future<void> logout({credentials: SyncCredentials}) async {

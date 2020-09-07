@@ -17,7 +17,7 @@ class PhotoDetail extends RLMObject {
 
   @override
   PhotoDetail fromJson(Map json) {
-    id = json['id'];
+    id = json['_id'];
 
     centerx = json['centerx'];
     centery = json['centery'];
@@ -31,7 +31,7 @@ class PhotoDetail extends RLMObject {
   @override
   Map toJson() {
     Map map = super.toJson();
-    map['id'] = id;
+    map['_id'] = id;
     map['centerx'] = centerx;
     map['centery'] = centery;
     map['rotate'] = rotate;
