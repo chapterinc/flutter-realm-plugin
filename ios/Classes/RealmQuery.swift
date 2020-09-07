@@ -217,8 +217,15 @@ class RealmQuery{
 
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
             let identity = syncUser?.identities().first?.identity ?? ""
-           
-            result(["identity": identity])
+
+           guard let user = syncUser else{
+                result(["identity": ""])
+                return
+           }
+
+            Realm.asyncOpen(configuration: Realm.configuration(user: user), callbackQueue: DispatchQueue.main) { (realm, error) in
+                result(["identity": identity])
+            }
         }
     }
 

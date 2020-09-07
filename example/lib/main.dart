@@ -18,8 +18,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // User with id 111
   String _jwtString =
       'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzb3J0ZWQtZmx1dHRlci1tdGZwcyIsImV4cCI6MjUxNjIzOTAyMiwic3ViIjoiMTExMSIsInVzZXJfZGF0YSI6eyJuYW1lIjoiSmVhbiBWYWxqZWFuIiwiYWxpYXNlcyI6WyJNb25zaWV1ciBNYWRlbGVpbmUiLCJVbHRpbWUgRmF1Y2hlbGV2ZW50IiwiVXJiYWluIEZhYnJlIl19LCJpYXQiOjE1OTcxNDczMDB9.EztS069aiSCdGgiAMH8u2dOAtV_p2Z2kQey-2_Q6dhQEYY5dQeWtPWU1IIrbH8oM84Sa_zj5oW9v8AtOssopmF4SD__-tCB45otQqh2UljmQWHyBK4PdIoC7gjMs6Dhhw5aJlCF-hKRzYQruqsBnIq85sHR9o2QtC66-L4uu4PItDQQvr4gItQrYHsfplCnZrSC-PMlp8MleFq83lov-F4mblAJaluTxMQW8tYxv3XIGiIsoSRrP00dmxwYyl61s5-AOFBPQm29EmTb185M5IxU3pLBkuU_T7RvIGsod-x75b7PkD-cirOVYMpdYpHq3NCugAwTVZ81m_CtISNTibw';
+
+// User with id -10
+  String _jwtString1 =
+      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzb3J0ZWQtZmx1dHRlci1tdGZwcyIsImV4cCI6MjUxNjIzOTAyMiwic3ViIjotMTAsInVzZXJfZGF0YSI6eyJuYW1lIjoiQW5vbnltb3VzIn0sImlhdCI6MTU5OTMyMTgxMX0.Gnrj6Tv6WDUFpVvh8hofMMFUTvQEvBtefjewMxr6fbhlF3QnbE3tnGHHh8zNNVwrLl7nWMHgosdIptBOwVYI7h3VtMT6ZaHnvEY5ub_jM7oT2dSbf3t__hqMul4Vy-w9jKUBuLEB1pBdkXEUbntlpoHj9Cy9cXZcfjPOXPpU_nDUQhAin9k0XF-y0p-xzNPp0UDmueaO21B8B5FXojUrjkKxcwcciXeMqCFcQQWgALgqDkMcSO0NamIhCvAZyP5hNRPuvThdsScUkrgqiKFd2d704cIpPZkC6T7gFhLFNE0QefXvMgVy9rK7Ge0PH0UTzQ-cUxxLRU0PBvIw96sUJw';
 
   String _appId = 'sorted-flutter-mtfps';
 
@@ -31,27 +36,33 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
+    await testWithJwt(_jwtString);
+    await testWithJwt(_jwtString1);
+  }
+
+  Future<void> testWithJwt(String jwt) async {
     // Check all users
     List<LinkedHashMap<String, SyncUser>> fetchAllUsers = await fetchAll();
     print("${fetchAllUsers.length}");
     SyncUser syncUser;
 
-    if (fetchAllUsers.length == 0) {
-      syncUser = await _login(_jwtString, _appId);
-      print("${syncUser.identity}");
-    } else {
-      syncUser = fetchAllUsers[0].values.first;
-    }
+    // fetchAllUsers.firstWhere((element) => element[])
+    // if (fetchAllUsers.length == 0) {
+    syncUser = await _login(jwt, _appId);
+    //   print("${syncUser.identity}");
+    // } else {
+    //   syncUser = fetchAllUsers[0].values.first;
+    // }
 
     _listenPhotoChange(syncUser);
 
     Photo photo = await _createPhoto(syncUser);
     print("Photo id: ${photo.id}");
 
-    await _deletePhoto(syncUser, photo.id);
-
     List<Photo> photos = await _getPhotos(syncUser);
     print("Photos count: ${photos.length}");
+
+    await _deletePhoto(syncUser, photo.id);
 
     // await syncUser.logout();
   }
