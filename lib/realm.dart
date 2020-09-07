@@ -10,14 +10,18 @@ import 'syncUser.dart';
 ///
 /// [param] _channel required for make call to native library
 class Realm {
+  Realm(this._syncUser, this._appId, this._partition)
+      : assert(_channel != null);
+
+  SyncUser get syncUser => _syncUser;
+  String get appId => _appId;
+  String get partition => _partition;
+
   static const MethodChannel _channel =
       const MethodChannel('flutterrealm_light');
   SyncUser _syncUser;
   String _appId;
   String _partition;
-
-  Realm(this._syncUser, this._appId, this._partition)
-      : assert(_channel != null);
 
   /// Fetch list of objects.
   ///

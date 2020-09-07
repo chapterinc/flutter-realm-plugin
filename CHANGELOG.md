@@ -28,3 +28,7 @@
 ## 0.0.23+1
 
 * TODO: Update mongodb library
+
+## 0.0.24+1
+
+* TODO: ADD getters to realm
