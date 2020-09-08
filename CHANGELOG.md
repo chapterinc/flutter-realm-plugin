@@ -32,3 +32,11 @@
 ## 0.0.24+1
 
 * TODO: ADD getters to realm
+
+## 0.0.25+1
+
+* TODO: ADD create with json
+
+## 0.0.26+1
+
+* TODO: MOD query private

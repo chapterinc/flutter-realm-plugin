@@ -12,7 +12,7 @@ typedef T ItemCreator<T>();
 /// This class uses in swift libary as lazy array, but since we cannot use lazy list
 /// we need to call list for translate objects into flutter
 class Results<T extends RLMObject> {
-  String _query;
+  String query;
   int _limit;
   String _sorted;
   bool _ascending = true;
@@ -31,10 +31,6 @@ class Results<T extends RLMObject> {
   Results(this._channel, this._creator, this._syncUser, this._appId,
       this._partition);
 
-  set query(String query) {
-    _query = query;
-  }
-
   set limit(int limit) {
     _limit = limit;
   }
@@ -51,7 +47,7 @@ class Results<T extends RLMObject> {
   Future<List<T>> list() async {
     LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
-      'query': _query,
+      'query': query,
       'limit': _limit,
       'ascending': _ascending,
       'sorted': _sorted,
@@ -76,7 +72,7 @@ class Results<T extends RLMObject> {
 
     LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.subscribe.name, <String, dynamic>{
-      'query': _query,
+      'query': query,
       'limit': _limit,
       'listenId': uniqueListenerId,
       'ascending': _ascending,
