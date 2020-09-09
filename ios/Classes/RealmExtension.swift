@@ -52,6 +52,10 @@ extension Results {
 
 extension Object {
     func toDictionary() -> [String: Any] {
+        if isInvalidated{
+            return [String: Any]()
+        }
+
         let properties = self.objectSchema.properties.map { $0.name }
         var mutabledic = self.dictionaryWithValues(forKeys: properties)
 
