@@ -40,3 +40,7 @@
 ## 0.0.26+1
 
 * TODO: MOD query private
+
+## 0.0.27+1
+
+* TODO: MOD sync user visibility

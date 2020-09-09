@@ -12,6 +12,10 @@ typedef T ItemCreator<T>();
 /// This class uses in swift libary as lazy array, but since we cannot use lazy list
 /// we need to call list for translate objects into flutter
 class Results<T extends RLMObject> {
+  Results(this._channel, this._creator, this._syncUser, this._appId,
+      this._partition);
+
+  SyncUser get syncUser => _syncUser;
   String query;
   int _limit;
   String _sorted;
@@ -27,9 +31,6 @@ class Results<T extends RLMObject> {
   // Observer properties
   StreamController _streamController;
   int uniqueListenerId = new Random().nextInt(1000000000);
-
-  Results(this._channel, this._creator, this._syncUser, this._appId,
-      this._partition);
 
   set limit(int limit) {
     _limit = limit;
