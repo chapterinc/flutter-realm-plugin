@@ -44,3 +44,11 @@
 ## 0.0.27+1
 
 * TODO: MOD sync user visibility
+
+## 0.0.28+1
+
+* TODO: FIX crash when object invalidated
+
+## 0.0.29+1
+
+* TODO: ADD id to syncUser

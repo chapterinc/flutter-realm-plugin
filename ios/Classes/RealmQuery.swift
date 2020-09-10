@@ -235,7 +235,7 @@ class RealmQuery{
             if let error = e{
                 result(["error": error.localizedDescription])
             }else{
-                result(["identity": identity])
+                result(["identity": identity, "id": syncUser?.identity ?? ""])
             }
         }
     }
@@ -301,7 +301,7 @@ class RealmQuery{
         let dictionaries = realmApp.allUsers().filter{ $0.value.state == .loggedIn }.map { (key: String, syncUser: User) -> [String: [String: Any]] in
             
             let ident = syncUser.id ?? ""
-            return [ident: ["identity": ident]]
+            return [ident: ["identity": ident, "id": syncUser.identity ?? ""]]
         }
         
         result(["results": dictionaries])

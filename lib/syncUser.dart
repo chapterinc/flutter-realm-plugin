@@ -10,6 +10,7 @@ class SyncUser {
   String _identity;
   String _appId;
   String _partition;
+  String _id;
 
   set partition(String partition) {
     _partition = partition;
@@ -17,6 +18,10 @@ class SyncUser {
 
   String get identity {
     return _identity;
+  }
+
+  String get id {
+    return _id;
   }
 
   static Future<SyncUser> login(
@@ -33,6 +38,7 @@ class SyncUser {
     syncUser._identity = map["identity"];
     syncUser._appId = map["appId"];
     syncUser._partition = map["partition"];
+    syncUser._id = map["id"];
 
     return syncUser;
   }
