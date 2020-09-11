@@ -44,6 +44,8 @@ class Realm {
   /// [param] _creator required for make object for given generic type
   Future<T> createWithJson<T extends RLMObject>(ItemCreator _creator, Map value,
       {UpdatePolicy policy = UpdatePolicy.error}) async {
+    assert(_partition == null || _partition.length == 0);
+
     Map<String, dynamic> values = {
       'value': value,
       'policy': policy.value,
@@ -79,8 +81,9 @@ class Realm {
       LinkedHashMap<String, SyncUser> linkedHashMap = new LinkedHashMap();
       LinkedHashMap<dynamic, dynamic> map = value;
       if (map.keys.length > 0) {
-        map[map.keys.first]['appId'] = appId;
-        linkedHashMap[map.keys.first] = SyncUser.fromMap(map[map.keys.first]);
+        Map m = map[map.keys.first];
+        m['appId'] = appId;
+        linkedHashMap[map.keys.first] = SyncUser.fromMap(m);
       }
 
       return linkedHashMap;
@@ -91,6 +94,8 @@ class Realm {
 
   /// Delete object from primaryKey.
   Future<void> delete<T extends RLMObject>(dynamic primaryKey) async {
+    assert(_partition == null || _partition.length == 0);
+
     Map<String, dynamic> values = {
       'primaryKey': primaryKey,
       'identity': _syncUser.identity,
