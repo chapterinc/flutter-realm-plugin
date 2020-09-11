@@ -59,7 +59,7 @@ class SyncUser {
     return;
   }
 
-  Future<void> logout({credentials: SyncCredentials}) async {
+  Future<void> logout() async {
     assert(_partition != null && _partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(

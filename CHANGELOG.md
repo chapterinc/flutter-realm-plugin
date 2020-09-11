@@ -60,3 +60,7 @@
 ## 0.0.31+1
 
 * TODO: ADD asserts
+
+## 0.0.32+1
+
+* TODO: ADD logout all

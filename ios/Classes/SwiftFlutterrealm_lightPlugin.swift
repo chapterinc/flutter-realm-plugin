@@ -10,6 +10,7 @@ enum Action: String {
     case delete
     case login
     case logout
+    case logoutAll
     case allUsers
     case subscribe
     case unSubscribe
@@ -22,9 +23,9 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
     static let notFoundForGivenIdentityError = "user not found for given identity"
     static let objectNotFoundForGivenIdentity = "object not found for given identity"
 
-    
+
     var channel: FlutterMethodChannel?
-    
+
     var rootQueries = [String: RealmQuery]()
 
     public init(channel: FlutterMethodChannel? = nil) {
@@ -35,7 +36,7 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
         let channel = FlutterMethodChannel(name: "flutterrealm_light", binaryMessenger: registrar.messenger())
         let instance = SwiftFlutterrealm_lightPlugin(channel: channel)
         registrar.addMethodCallDelegate(instance, channel: channel)
-        
+
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -43,24 +44,24 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
             result(["error": "Problem on parse action"])
             return
         }
-        
+
         guard let dictionary = call.arguments as? NSDictionary else{
             result(["error": SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError])
             return
         }
-        
+
         guard let appId = dictionary["appId"] as? String else{
             result(["error": "App id was not set"])
             return
         }
-        
+
         if(rootQueries[appId] == nil){
             rootQueries[appId] = RealmQuery(realmApp: RLMApp(id: appId), channel: channel)
         }
-        
+
         let realmQuery = rootQueries[appId]
         assert(realmQuery != nil, "Query cannot be null in this case")
-        
+
         do {
             try realmQuery?.continueAction(action: action, call: call, result: result)
         }catch {

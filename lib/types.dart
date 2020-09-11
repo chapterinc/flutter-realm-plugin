@@ -6,6 +6,7 @@ enum Action {
   commitWrite,
   login,
   logout,
+  logoutAll,
   allUsers,
   subscribe,
   unSubscribe,
@@ -61,6 +62,8 @@ extension ActionExtension on Action {
         return "login";
       case Action.logout:
         return "logout";
+      case Action.logoutAll:
+        return "logoutAll";
       case Action.allUsers:
         return 'allUsers';
       case Action.delete:

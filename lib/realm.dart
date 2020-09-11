@@ -92,6 +92,19 @@ class Realm {
     return linkedHashMaps;
   }
 
+  /// Logout all users
+  static Future<void> logoutAll(String appId) async {
+    LinkedHashMap<dynamic, dynamic> map =
+        await _channel.invokeMethod(Action.logoutAll.name, <String, dynamic>{
+      'appId': appId,
+    });
+    if (map["error"] != null) {
+      throw Exception("problem on logout ${map["error"]}");
+    }
+
+    return;
+  }
+
   /// Delete object from primaryKey.
   Future<void> delete<T extends RLMObject>(dynamic primaryKey) async {
     assert(_partition != null && _partition.length != 0);
