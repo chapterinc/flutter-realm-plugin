@@ -46,7 +46,7 @@ class Results<T extends RLMObject> {
 
   /// Fetch list with given parameters.
   Future<List<T>> list() async {
-    assert(_partition == null || _partition.length == 0);
+    assert(_partition != null && _partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
@@ -69,7 +69,7 @@ class Results<T extends RLMObject> {
   }
 
   Future<StreamController<List<NotificationObject>>> subscribe() async {
-    assert(_partition == null || _partition.length == 0);
+    assert(_partition != null && _partition.length != 0);
 
     // Subscribe into manager
     NotificationManager manager = NotificationManager.instance(_channel);
@@ -96,7 +96,7 @@ class Results<T extends RLMObject> {
   }
 
   unSubscribe() async {
-    assert(_partition == null || _partition.length == 0);
+    assert(_partition != null && _partition.length != 0);
 
     // Call to native method
     await _channel.invokeMethod(Action.unSubscribe.name, <String, dynamic>{

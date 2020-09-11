@@ -52,3 +52,11 @@
 ## 0.0.29+1
 
 * TODO: ADD id to syncUser
+
+## 0.0.30+1
+
+* TODO: ADD asserts
+
+## 0.0.31+1
+
+* TODO: ADD asserts

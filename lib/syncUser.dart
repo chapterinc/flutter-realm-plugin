@@ -44,7 +44,7 @@ class SyncUser {
   }
 
   Future<void> asyncOpen() async {
-    assert(_partition == null || _partition.length == 0);
+    assert(_partition != null && _partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
         Action.asyncOpen.name, <String, dynamic>{
@@ -60,7 +60,7 @@ class SyncUser {
   }
 
   Future<void> logout({credentials: SyncCredentials}) async {
-    assert(_partition == null || _partition.length == 0);
+    assert(_partition != null && _partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
         Action.logout.name, <String, dynamic>{

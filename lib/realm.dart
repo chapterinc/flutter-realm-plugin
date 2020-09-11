@@ -44,7 +44,7 @@ class Realm {
   /// [param] _creator required for make object for given generic type
   Future<T> createWithJson<T extends RLMObject>(ItemCreator _creator, Map value,
       {UpdatePolicy policy = UpdatePolicy.error}) async {
-    assert(_partition == null || _partition.length == 0);
+    assert(_partition != null && _partition.length != 0);
 
     Map<String, dynamic> values = {
       'value': value,
@@ -94,7 +94,7 @@ class Realm {
 
   /// Delete object from primaryKey.
   Future<void> delete<T extends RLMObject>(dynamic primaryKey) async {
-    assert(_partition == null || _partition.length == 0);
+    assert(_partition != null && _partition.length != 0);
 
     Map<String, dynamic> values = {
       'primaryKey': primaryKey,
