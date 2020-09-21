@@ -232,8 +232,9 @@ class RealmQuery{
         let updatedObject = realm.dynamicCreate(type, value: value, update: policy)
         try realm.commitWrite()
 
+        let d = updatedObject.toDictionary()
         main.async {
-            result(updatedObject.toDictionary())
+            result(d)
         }
     }
 

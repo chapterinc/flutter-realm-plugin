@@ -63,11 +63,18 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
         let realmQuery = rootQueries[appId]
         assert(realmQuery != nil, "Query cannot be null in this case")
 
-        global.async {
+        func continueAction(){
             do {
                 try realmQuery?.continueAction(action: action, call: call, result: result)
             }catch {
                 result(["error": "\(error)"])
+            }
+        }
+        if action == .subscribe{
+            continueAction()
+        }else{
+            global.async {
+                continueAction()
             }
         }
     }

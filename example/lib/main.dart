@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
 
     await _deletePhoto(syncUser, photo.id);
 
-    // await syncUser.logout();
+    await syncUser.logout();
   }
 
   @override

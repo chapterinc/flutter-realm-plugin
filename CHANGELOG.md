@@ -68,3 +68,7 @@
 ## 0.0.33+1
 
 * TODO: Convert realm queris into thread
+
+## 0.0.34+1
+
+* TODO: Fix compile error
