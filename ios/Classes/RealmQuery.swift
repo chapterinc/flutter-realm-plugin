@@ -17,6 +17,8 @@ class RealmQuery{
 
     var channel: FlutterMethodChannel?
 
+    let main = DispatchQueue.main
+    
     init(realmApp: App, channel: FlutterMethodChannel?){
         self.realmApp = realmApp
         self.channel = channel
@@ -61,7 +63,10 @@ class RealmQuery{
         let notification = Notification()
         notification.register(channel: channel, result: objects, id: listenId)
         notifications[listenId] = notification
-        result( ["results": [String: Any]()] )
+        
+        main.async {
+            result( ["results": [String: Any]()] )
+        }
     }
 
     private func unSubscribe(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
@@ -77,7 +82,10 @@ class RealmQuery{
         let notification = notifications[listenId]
         notification?.unRegister()
         notifications[listenId] = nil
-        result( ["results": [String: Any]()] )
+        
+        main.async {
+            result( ["results": [String: Any]()] )
+        }
     }
 
 
@@ -92,13 +100,18 @@ class RealmQuery{
         var dictionaries = [[String: Any]]()
         if let limit = dictionary["limit"] as? Int{
             objects.limited(limit).forEach { dictionaries.append($0.toDictionary())  }
-            result( ["results": dictionaries] )
+            
+            main.async {
+                result( ["results": dictionaries] )
+            }
             return
         }
 
         objects.forEach { dictionaries.append($0.toDictionary()) }
 
-        result( ["results": dictionaries] )
+        main.async {
+            result( ["results": dictionaries] )
+        }
     }
 
     private func results(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws -> Results<DynamicObject>{
@@ -183,7 +196,9 @@ class RealmQuery{
         realm.delete(requiredObject)
         try realm.commitWrite()
 
-        result([String: Any]())
+        main.async {
+            result([String: Any]())
+        }
     }
 
     private func create(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
@@ -217,7 +232,9 @@ class RealmQuery{
         let updatedObject = realm.dynamicCreate(type, value: value, update: policy)
         try realm.commitWrite()
 
-        result(updatedObject.toDictionary())
+        main.async {
+            result(updatedObject.toDictionary())
+        }
     }
 
     private func login(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
@@ -234,10 +251,12 @@ class RealmQuery{
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
             let identity = syncUser?.identities().first?.identity ?? ""
 
-            if let error = e{
-                result(["error": error.localizedDescription])
-            }else{
-                result(["identity": identity, "id": syncUser?.identity ?? ""])
+            self.main.async {
+                if let error = e{
+                    result(["error": error.localizedDescription])
+                }else{
+                    result(["identity": identity, "id": syncUser?.identity ?? ""])
+                }
             }
         }
     }
@@ -265,10 +284,12 @@ class RealmQuery{
         }
 
         Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { (realm, error) in
-            if let error = error{
-                result(["error": error.localizedDescription])
-            }else{
-                result(["identity": identity])
+            main.async {
+                if let error = error{
+                    result(["error": error.localizedDescription])
+                }else{
+                    result(["identity": identity])
+                }
             }
         }
     }
@@ -281,7 +302,9 @@ class RealmQuery{
             }
         }
 
-        result([String: Any]())
+        main.async {
+            result([String: Any]())
+        }
     }
 
 
@@ -306,7 +329,9 @@ class RealmQuery{
 
         }
 
-        result([String: Any]())
+        main.async {
+            result([String: Any]())
+        }
     }
 
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
@@ -316,7 +341,9 @@ class RealmQuery{
             return [ident: ["identity": ident, "id": syncUser.identity ?? ""]]
         }
 
-        result(["results": dictionaries])
+        main.async {
+            result(["results": dictionaries])
+        }
     }
 
 }

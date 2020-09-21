@@ -23,6 +23,7 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
     static let notFoundForGivenIdentityError = "user not found for given identity"
     static let objectNotFoundForGivenIdentity = "object not found for given identity"
 
+    let global = DispatchQueue.global()
 
     var channel: FlutterMethodChannel?
 
@@ -63,7 +64,9 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
         assert(realmQuery != nil, "Query cannot be null in this case")
 
         do {
-            try realmQuery?.continueAction(action: action, call: call, result: result)
+            global.async {
+                try realmQuery?.continueAction(action: action, call: call, result: result)
+            }
         }catch {
             result(["error": "\(error)"])
         }
