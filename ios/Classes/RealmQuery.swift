@@ -284,7 +284,7 @@ class RealmQuery{
         }
 
         Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { (realm, error) in
-            main.async {
+            self.main.async {
                 if let error = error{
                     result(["error": error.localizedDescription])
                 }else{
