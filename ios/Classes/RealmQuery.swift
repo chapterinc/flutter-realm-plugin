@@ -249,7 +249,7 @@ class RealmQuery{
         let jwtCredentials = Credentials.init(jwt: jwt)
 
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
-            let identity = syncUser?.identities().first?.id ?? ""
+            let identity = syncUser?.identities().first?.identifier ?? ""
 
             self.main.async {
                 if let error = e{
