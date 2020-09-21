@@ -64,3 +64,7 @@
 ## 0.0.32+1
 
 * TODO: ADD logout all
+
+## 0.0.33+1
+
+* TODO: Convert realm queris into thread

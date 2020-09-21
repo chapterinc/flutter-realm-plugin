@@ -27,7 +27,7 @@ extension Realm{
 
     static func user(app: App, id: String) -> User?{
         return app.allUsers().filter{ $0.value.state == .loggedIn }.first { (key: String, user: User) -> Bool in
-            return user.identity == id
+            return user.id == id
             }?.value
     }
 

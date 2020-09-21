@@ -124,7 +124,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let id = realmApp.user(id: identity)?.identity else{
+        guard let id = realmApp.user(id: identity)?.id else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
         }
 
@@ -164,7 +164,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let id = realmApp.user(id: identity)?.identity else{
+        guard let id = realmApp.user(id: identity)?.id else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
         }
 
@@ -210,7 +210,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let id = realmApp.user(id: identity)?.identity else{
+        guard let id = realmApp.user(id: identity)?.id else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
         }
 
@@ -249,13 +249,13 @@ class RealmQuery{
         let jwtCredentials = Credentials.init(jwt: jwt)
 
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
-            let identity = syncUser?.identities().first?.identity ?? ""
+            let identity = syncUser?.identities().first?.id ?? ""
 
             self.main.async {
                 if let error = e{
                     result(["error": error.localizedDescription])
                 }else{
-                    result(["identity": identity, "id": syncUser?.identity ?? ""])
+                    result(["identity": identity, "id": syncUser?.id ?? ""])
                 }
             }
         }
@@ -271,7 +271,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let id = realmApp.user(id: identity)?.identity else{
+        guard let id = realmApp.user(id: identity)?.id else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
         }
 
@@ -317,7 +317,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        guard let id = realmApp.user(id: identity)?.identity else{
+        guard let id = realmApp.user(id: identity)?.id else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
         }
 
@@ -337,8 +337,8 @@ class RealmQuery{
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         let dictionaries = realmApp.allUsers().filter{ $0.value.state == .loggedIn }.map { (key: String, syncUser: User) -> [String: [String: Any]] in
 
-            let ident = syncUser.id ?? ""
-            return [ident: ["identity": ident, "id": syncUser.identity ?? ""]]
+            let ident = syncUser.metaId ?? ""
+            return [ident: ["identity": ident, "id": syncUser.id ?? ""]]
         }
 
         main.async {
@@ -349,14 +349,14 @@ class RealmQuery{
 }
 
 private extension User{
-    var id: String? { identities().first?.identity }
+    var metaId: String? { identities().first?.identifier }
 }
 
 private extension App{
     func user(id: String) -> User?{
         return allUsers().first {
             let (_, value) = $0
-            return value.id == id
+            return value.metaId == id
             }?.value
     }
 }
