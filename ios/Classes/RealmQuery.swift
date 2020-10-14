@@ -246,11 +246,11 @@ class RealmQuery{
         guard let jwt = dictionary["jwt"] as? String else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
-
-        let jwtCredentials = Credentials.init(jwt: jwt)
+        
+        let jwtCredentials = Credentials.jwt(token: jwt)
 
         realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
-            let identity = syncUser?.identities().first?.identifier ?? ""
+            let identity = syncUser?.identities.first?.identifier ?? ""
 
             self.main.async {
                 if let error = e{
@@ -297,7 +297,7 @@ class RealmQuery{
 
 
     private func logoutAll(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
-        realmApp.allUsers().forEach { (key: String, value: RLMUser) in
+        realmApp.allUsers.forEach { (key: String, value: RLMUser) in
             value.logOut{_ in
 
             }
@@ -336,10 +336,10 @@ class RealmQuery{
     }
 
     private func allUsers(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
-        let dictionaries = realmApp.allUsers().filter{ $0.value.state == .loggedIn }.map { (key: String, syncUser: User) -> [String: [String: Any]] in
+        let dictionaries = realmApp.allUsers.filter{ $0.value.state == .loggedIn }.map { (key: String, syncUser: User) -> [String: [String: Any]] in
 
             let ident = syncUser.metaId ?? ""
-            return [ident: ["identity": ident, "id": syncUser.id ?? ""]]
+            return [ident: ["identity": ident, "id": syncUser.id ]]
         }
 
         main.async {
@@ -350,12 +350,12 @@ class RealmQuery{
 }
 
 private extension User{
-    var metaId: String? { identities().first?.identifier }
+    var metaId: String? { identities.first?.identifier }
 }
 
 private extension App{
     func user(id: String) -> User?{
-        return allUsers().first {
+        return allUsers.first {
             let (_, value) = $0
             return value.metaId == id
             }?.value

@@ -76,3 +76,7 @@
 ## 0.0.35+1
 
 * TODO: Fix crash on async load
+
+## 0.0.36+1
+
+* TODO: Update realm
