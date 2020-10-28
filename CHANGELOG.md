@@ -84,3 +84,7 @@
 ## 0.0.37+1
 
 * TODO: Update realm
+
+## 0.0.38+1
+
+* TODO: Added delete all method

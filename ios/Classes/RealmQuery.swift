@@ -46,6 +46,8 @@ class RealmQuery{
             try subscribe(call, result: result)
         case .unSubscribe:
             try unSubscribe(call, result: result)
+        case .deleteAll:
+            try deleteAll(call, result: result)
         }
     }
 
@@ -154,6 +156,39 @@ class RealmQuery{
 
         return objects
     }
+    
+    private func deleteAll(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+
+        guard let identity = dictionary["identity"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let id = realmApp.user(id: identity)?.id else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
+
+        guard let user = Realm.user(app: realmApp, id: id) else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let partition = dictionary["partition"] as? String  else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        let realm = try Realm.realm(user: user, partition: partition)
+
+        realm.beginWrite()
+        realm.deleteAll()
+        try realm.commitWrite()
+
+        main.async {
+            result([String: Any]())
+        }
+    }
+
 
     private func delete(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         guard let dictionary = call.arguments as? NSDictionary else{

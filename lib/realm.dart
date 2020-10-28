@@ -125,4 +125,23 @@ class Realm {
 
     return;
   }
+
+  /// Delete all objects from realm.
+  Future<void> deleteAll() async {
+    assert(_partition != null && _partition.length != 0);
+
+    Map<String, dynamic> values = {
+      'identity': _syncUser.identity,
+      'appId': _appId,
+      'partition': _partition
+    };
+    LinkedHashMap<dynamic, dynamic> map =
+        await _channel.invokeMethod(Action.deleteAll.name, values);
+
+    if (map["error"] != null) {
+      throw Exception("deleteall finished with exception ${map["error"]}");
+    }
+
+    return;
+  }
 }

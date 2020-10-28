@@ -10,7 +10,8 @@ enum Action {
   allUsers,
   subscribe,
   unSubscribe,
-  asyncOpen
+  asyncOpen,
+  deleteAll
 }
 
 enum UpdatePolicy {
@@ -74,6 +75,8 @@ extension ActionExtension on Action {
         return 'unSubscribe';
       case Action.asyncOpen:
         return 'asyncOpen';
+      case Action.deleteAll:
+        return 'deleteAll';
         break;
     }
 
