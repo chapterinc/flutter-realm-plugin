@@ -78,7 +78,8 @@ extension ActionExtension on Action {
         return 'asyncOpen';
       case Action.deleteAll:
         return 'deleteAll';
-        break;
+      case Action.count:
+        return 'count';
     }
 
     return "";
