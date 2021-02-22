@@ -6,6 +6,7 @@ import Realm.Private
 
 enum Action: String {
     case objects
+    case count
     case create
     case delete
     case login

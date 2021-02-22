@@ -28,6 +28,8 @@ class RealmQuery{
         switch action {
         case .objects:
             try objects(call, result: result)
+        case .count:
+            try count(call, result: result)
         case .create:
             try create(call, result: result)
         case .login:
@@ -116,6 +118,28 @@ class RealmQuery{
         }
     }
 
+    private func count(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        // open realm in autoreleasepool to create tables and then dispose
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+
+        let objects = try results(call, result: result)
+
+        if let limit = dictionary["limit"] as? Int{
+            main.async {
+                result( ["count": limit] )
+            }
+            return
+        }
+
+        let count = objects.count
+        
+        main.async {
+            result( ["count": count] )
+        }
+    }
+    
     private func results(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws -> Results<DynamicObject>{
         // open realm in autoreleasepool to create tables and then dispose
         guard let dictionary = call.arguments as? NSDictionary else{
@@ -150,8 +174,14 @@ class RealmQuery{
             objects = objects.filter(predicate)
         }
 
-        if let sorted = dictionary["sorted"] as? String, let ascending = dictionary["ascending"] as? Bool{
-            objects = objects.sorted(byKeyPath: sorted, ascending: ascending)
+        if let sorted = dictionary["sorted"] as? [Any]{
+            var descriptors = [SortDescriptor]()
+            for sort in sorted{
+                if let s = sort as? [String: Any], let sortedTitle = s["sorted"] as? String, let ascending = s["ascending"] as? Bool{
+                    descriptors.append(SortDescriptor(keyPath: sortedTitle, ascending: ascending))
+                }
+            }
+            objects = objects.sorted(by: descriptors)
         }
 
         return objects
@@ -284,17 +314,16 @@ class RealmQuery{
         
         let jwtCredentials = Credentials.jwt(token: jwt)
 
-        realmApp.login(credentials: jwtCredentials) { (syncUser, e) in
-            let identity = syncUser?.identities.first?.identifier ?? ""
-
-            self.main.async {
-                if let error = e{
-                    result(["error": error.localizedDescription])
-                }else{
-                    result(["identity": identity, "id": syncUser?.id ?? ""])
-                }
+        realmApp.login(credentials: jwtCredentials) { result1 in
+            switch result1 {
+            case .success(let syncUser):
+                let identity = syncUser.identities.first?.identifier ?? ""
+                result(["identity": identity, "id": syncUser.id])
+            case .failure(let error):
+                result(["error": error.localizedDescription])
             }
         }
+
     }
 
 
@@ -318,14 +347,13 @@ class RealmQuery{
         guard let partition = dictionary["partition"] as? String else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
-
-        Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { (realm, error) in
-            self.main.async {
-                if let error = error{
-                    result(["error": error.localizedDescription])
-                }else{
-                    result(["identity": identity])
-                }
+        
+        Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { result1 in
+            switch result1 {
+            case .success( _):
+                result(["identity": identity])
+            case .failure(let error):
+                result(["error": error.localizedDescription])
             }
         }
     }

@@ -88,3 +88,18 @@
 ## 0.0.38+1
 
 * TODO: Added delete all method
+## 0.0.39+1
+
+* TODO: Added sort array
+
+## 0.0.40+1
+
+* TODO: Crash when sorted null
+
+## 0.0.41+1
+
+* TODO: Crash when sorted null
+
+## 0.0.42+1
+
+* TODO: Add count query

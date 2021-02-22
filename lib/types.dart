@@ -1,5 +1,6 @@
 enum Action {
   objects,
+  count,
   create,
   delete,
   beginWrite,

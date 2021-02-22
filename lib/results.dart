@@ -9,6 +9,12 @@ import 'dart:collection';
 
 typedef T ItemCreator<T>();
 
+class Sort {
+  Sort({this.sorted, this.ascending = true});
+  final String sorted;
+  final bool ascending;
+}
+
 /// This class uses in swift libary as lazy array, but since we cannot use lazy list
 /// we need to call list for translate objects into flutter
 class Results<T extends RLMObject> {
@@ -18,8 +24,7 @@ class Results<T extends RLMObject> {
   SyncUser get syncUser => _syncUser;
   String query;
   int _limit;
-  String _sorted;
-  bool _ascending = true;
+  List<Sort> _sorted;
 
   String _appId;
   String _partition;
@@ -36,12 +41,8 @@ class Results<T extends RLMObject> {
     _limit = limit;
   }
 
-  set sorted(String sorted) {
+  set sorted(List<Sort> sorted) {
     _sorted = sorted;
-  }
-
-  set ascending(bool ascending) {
-    _ascending = ascending;
   }
 
   /// Fetch list with given parameters.
@@ -52,8 +53,7 @@ class Results<T extends RLMObject> {
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
-      'ascending': _ascending,
-      'sorted': _sorted,
+      'sorted': _sorted == null ? null : _sorted.sortArray(),
       'type': T.toString(),
       'identity': _syncUser.identity,
       'appId': _appId,
@@ -68,6 +68,30 @@ class Results<T extends RLMObject> {
     return results.map<T>((map) => _creator().fromJson(map)).toList();
   }
 
+
+  /// Get query result count
+  Future<int> count() async {
+    assert(_partition != null && _partition.length != 0);
+
+    LinkedHashMap<dynamic, dynamic> map =
+        await _channel.invokeMethod(Action.count.name, <String, dynamic>{
+      'query': query,
+      'limit': _limit,
+      'sorted': _sorted == null ? null : _sorted.sortArray(),
+      'type': T.toString(),
+      'identity': _syncUser.identity,
+      'appId': _appId,
+      'partition': _partition,
+    });
+
+    if (map["error"] != null) {
+      throw Exception("fetch list finished with exception ${map["error"]}");
+    }
+
+    int count = map["count"];
+    return count;
+  }
+
   Future<StreamController<List<NotificationObject>>> subscribe() async {
     assert(_partition != null && _partition.length != 0);
 
@@ -80,8 +104,7 @@ class Results<T extends RLMObject> {
       'query': query,
       'limit': _limit,
       'listenId': uniqueListenerId,
-      'ascending': _ascending,
-      'sorted': _sorted,
+      'sorted': _sorted == null ? null : _sorted.sortArray(),
       'type': T.toString(),
       'identity': _syncUser.identity,
       'appId': _appId,
@@ -189,5 +212,16 @@ class NotificationManager {
     if (result != null) {
       result.notify(call);
     }
+  }
+}
+
+extension _SortAddition on List<Sort> {
+  List<Map> sortArray() {
+    List<Map> maps = new List<Map>();
+    for (Sort sort in this) {
+      maps.add({"sorted": sort.sorted, 'ascending': sort.ascending});
+    }
+
+    return maps;
   }
 }
