@@ -126,3 +126,7 @@
 ## 0.0.50+1
 
 * TODO: ADD last element on swift code
+
+## 0.0.51+1
+
+* TODO: Fixed limit issue on last element query

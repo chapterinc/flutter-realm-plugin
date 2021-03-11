@@ -75,6 +75,7 @@ class Results<T extends RLMObject> {
     LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': query,
+      'limit': _limit,
       'sorted': _sorted == null ? null : _sorted.sortArray(),
       'type': T.toString(),
       'identity': _syncUser.identity,

@@ -144,17 +144,29 @@ class RealmQuery{
     
     
     private func last(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        // open realm in autoreleasepool to create tables and then dispose
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+
         let objects = try results(call, result: result)
 
         var dictionaries = [[String: Any]]()
-        if let dictionary = objects.last?.toDictionary(){
+        
+        if let limit = dictionary["limit"] as? Int, limit < objects.count{
+            let dictionary = objects[limit].toDictionary()
             dictionaries.append(dictionary)
+        }else{
+            if let dictionary = objects.last?.toDictionary(){
+                dictionaries.append(dictionary)
+            }
         }
 
         main.async {
             result( ["results": dictionaries] )
         }
     }
+
 
     
     private func results(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws -> Results<DynamicObject>{
