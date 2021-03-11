@@ -50,6 +50,8 @@ class RealmQuery{
             try unSubscribe(call, result: result)
         case .deleteAll:
             try deleteAll(call, result: result)
+        case .last:
+            try last(call, result: result)
         }
     }
 
@@ -139,6 +141,21 @@ class RealmQuery{
             result( ["count": count] )
         }
     }
+    
+    
+    private func last(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        let objects = try results(call, result: result)
+
+        var dictionaries = [[String: Any]]()
+        if let dictionary = objects.last?.toDictionary(){
+            dictionaries.append(dictionary)
+        }
+
+        main.async {
+            result( ["results": dictionaries] )
+        }
+    }
+
     
     private func results(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws -> Results<DynamicObject>{
         // open realm in autoreleasepool to create tables and then dispose

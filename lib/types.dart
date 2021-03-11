@@ -1,6 +1,7 @@
 enum Action {
   objects,
   count,
+  last,
   create,
   delete,
   beginWrite,
@@ -80,6 +81,8 @@ extension ActionExtension on Action {
         return 'deleteAll';
       case Action.count:
         return 'count';
+      case Action.last:
+        return 'last';
     }
 
     return "";

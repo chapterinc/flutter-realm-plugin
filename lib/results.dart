@@ -68,6 +68,27 @@ class Results<T extends RLMObject> {
     return results.map<T>((map) => _creator().fromJson(map)).toList();
   }
 
+  /// Fetch list with given parameters.
+  Future<T> last() async {
+    assert(_partition != null && _partition.length != 0);
+
+    LinkedHashMap<dynamic, dynamic> map =
+        await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
+      'query': query,
+      'sorted': _sorted == null ? null : _sorted.sortArray(),
+      'type': T.toString(),
+      'identity': _syncUser.identity,
+      'appId': _appId,
+      'partition': _partition,
+    });
+
+    if (map["error"] != null) {
+      throw Exception("fetch list finished with exception ${map["error"]}");
+    }
+
+    List results = map["results"];
+    return results.map<T>((map) => _creator().fromJson(map)).toList().last;
+  }
 
   /// Get query result count
   Future<int> count() async {
