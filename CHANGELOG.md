@@ -103,3 +103,26 @@
 ## 0.0.42+1
 
 * TODO: Add count query
+
+## 0.0.43+1
+
+* TODO: Add count query bug
+
+## 0.0.44+1
+## 0.0.45+1
+## 0.0.46+1
+## 0.0.47+1
+
+* TODO: Updated library to 10.7.1
+
+## 0.0.48+1
+
+* TODO: Added ability to get last element
+
+## 0.0.49+1
+
+* TODO: Added ability to get last element
+
+## 0.0.50+1
+
+* TODO: ADD last element on swift code
