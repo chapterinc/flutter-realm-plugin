@@ -134,3 +134,7 @@
 ## 0.0.52+1
 
 * TODO: Downgrade realm library to 10.5.1
+
+## 0.0.53+1
+
+* TODO: Updated realm to library to 10.7.2
