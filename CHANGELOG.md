@@ -130,3 +130,7 @@
 ## 0.0.51+1
 
 * TODO: Fixed limit issue on last element query
+
+## 0.0.52+1
+
+* TODO: Downgrade realm library to 10.5.1
