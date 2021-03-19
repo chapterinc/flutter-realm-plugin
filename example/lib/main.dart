@@ -50,6 +50,8 @@ class _MyAppState extends State<MyApp> {
       return null;
     });
 
+    List<Photo> photos = await _getPhotos(syncUser);
+
     if (map == null) {
       syncUser = await _login(jwt, _appId);
       syncUser.partition = syncUser.identity;
@@ -65,7 +67,6 @@ class _MyAppState extends State<MyApp> {
     Photo photo = await _createPhoto(syncUser);
     print("Photo id: ${photo.id}");
 
-    List<Photo> photos = await _getPhotos(syncUser);
     print("Photos count: ${photos.length}");
 
     await _deletePhoto(syncUser, photo.id);
@@ -132,6 +133,7 @@ class _MyAppState extends State<MyApp> {
     Results photoResult = realm.objects<Photo>(() {
       return new Photo();
     });
+    photoResult.sorted = [Sort(sorted: "id", ascending: true)];
     List<Photo> photos = await photoResult.list();
 
     return photos;

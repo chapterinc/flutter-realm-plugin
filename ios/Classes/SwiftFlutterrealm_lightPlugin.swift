@@ -73,7 +73,7 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
                 result(["error": "\(error)"])
             }
         }
-        if action == .subscribe{
+        if action == .subscribe || action == .unSubscribe{
             continueAction()
         }else{
             global.async {
