@@ -138,3 +138,9 @@
 ## 0.0.53+1
 
 * TODO: Updated realm to library to 10.7.2
+
+
+## 0.0.54+1
+
+* TODO: Fixed crash when subscription called on different threads
+
