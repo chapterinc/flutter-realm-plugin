@@ -9,8 +9,14 @@ import Foundation
 import RealmSwift
 import Realm.Dynamic
 import Realm.Private
+import Realm
 
 class RealmQuery{
+    init(realmApp: App, channel: FlutterMethodChannel?){
+        self.realmApp = realmApp
+        self.channel = channel
+    }
+
     var notifications = [Int: Notification]()
 
     var realmApp: App
@@ -19,11 +25,9 @@ class RealmQuery{
 
     let main = DispatchQueue.main
     
-    init(realmApp: App, channel: FlutterMethodChannel?){
-        self.realmApp = realmApp
-        self.channel = channel
-    }
-
+    /// Connecting state `true` when connecting, used `NSDictionary` for asynchron threads
+    let connectionState = NSMutableDictionary()
+    
     func continueAction(action: Action, call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         switch action {
         case .objects:
@@ -377,7 +381,13 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
         
+        guard !isConnecting(id: id) else{
+            throw FluterRealmError.runtimeError("This realm already opening")
+        }
+        
+        setConnectionState(id: id, state: .connecting)
         Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { result1 in
+            self.setConnectionState(id: id, state: .none)
             switch result1 {
             case .success( _):
                 result(["identity": identity])
@@ -441,6 +451,15 @@ class RealmQuery{
 
 }
 
+private extension RealmQuery{
+    func isConnecting(id: String) -> Bool {
+       return connectionState[id] as? ConnectionState == ConnectionState.connecting
+    }
+    
+    func setConnectionState(id: String, state: ConnectionState){
+        connectionState[id] = state
+    }
+}
 private extension User{
     var metaId: String? { identities.first?.identifier }
 }
@@ -452,4 +471,8 @@ private extension App{
             return value.metaId == id
             }?.value
     }
+}
+
+private enum ConnectionState{
+    case none, connecting
 }

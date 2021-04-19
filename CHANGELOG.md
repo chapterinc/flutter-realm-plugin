@@ -144,3 +144,7 @@
 
 * TODO: Fixed crash when subscription called on different threads
 
+## 0.0.55+1
+
+* TODO: Fixed multiply open connection realm
+
