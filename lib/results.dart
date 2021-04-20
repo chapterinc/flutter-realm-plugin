@@ -34,7 +34,7 @@ class Results<T extends RLMObject> {
   final ItemCreator<T> _creator;
 
   // Observer properties
-  StreamController? _streamController;
+  StreamController<List<NotificationObject>>? _streamController;
   int uniqueListenerId = new Random().nextInt(1000000000);
 
   set limit(int limit) {
@@ -50,7 +50,7 @@ class Results<T extends RLMObject> {
     assert(_partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.objects.name, <String, dynamic>{
+        await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
       'sorted': _sorted?.sortArray(),
@@ -58,7 +58,7 @@ class Results<T extends RLMObject> {
       'identity': _syncUser.identity,
       'appId': _appId,
       'partition': _partition,
-    }) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+    });
 
     if (map["error"] != null) {
       throw Exception("fetch list finished with exception ${map["error"]}");
@@ -73,7 +73,7 @@ class Results<T extends RLMObject> {
     assert(_partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.objects.name, <String, dynamic>{
+        await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
       'sorted': _sorted == null ? null : _sorted!.sortArray(),
@@ -81,7 +81,7 @@ class Results<T extends RLMObject> {
       'identity': _syncUser.identity,
       'appId': _appId,
       'partition': _partition,
-    }) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+    });
 
     if (map["error"] != null) {
       throw Exception("fetch list finished with exception ${map["error"]}");
@@ -96,7 +96,7 @@ class Results<T extends RLMObject> {
     assert(_partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.count.name, <String, dynamic>{
+        await _channel.invokeMethod(Action.count.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
       'sorted': _sorted == null ? null : _sorted!.sortArray(),
@@ -104,7 +104,7 @@ class Results<T extends RLMObject> {
       'identity': _syncUser.identity,
       'appId': _appId,
       'partition': _partition,
-    }) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+    });
 
     if (map["error"] != null) {
       throw Exception("fetch list finished with exception ${map["error"]}");
@@ -122,7 +122,7 @@ class Results<T extends RLMObject> {
     manager.addCallHandler(uniqueListenerId, this);
 
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.subscribe.name, <String, dynamic>{
+        await _channel.invokeMethod(Action.subscribe.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
       'listenId': uniqueListenerId,
@@ -131,14 +131,14 @@ class Results<T extends RLMObject> {
       'identity': _syncUser.identity,
       'appId': _appId,
       'partition': _partition,
-    }) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+    });
     if (map["error"] != null) {
       throw Exception("fetch list finished with exception ${map["error"]}");
     }
 
     _streamController = new StreamController<List<NotificationObject>>();
     return _streamController
-        as FutureOr<StreamController<List<NotificationObject<dynamic>>>?>;
+        as FutureOr<StreamController<List<NotificationObject>>>;
   }
 
   unSubscribe() async {

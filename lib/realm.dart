@@ -28,7 +28,8 @@ class Realm {
   ///
   /// [param] _creator required for make object for given generic type
   Results objects<T extends RLMObject>(ItemCreator _creator) {
-    return Results<T>(_channel, _creator as T Function(), _syncUser, _appId, _partition);
+    return Results<T>(
+        _channel, _creator as T Function(), _syncUser, _appId, _partition);
   }
 
   /// Create object by given policy.
@@ -42,7 +43,8 @@ class Realm {
   /// Create object by given policy.
   ///
   /// [param] _creator required for make object for given generic type
-  Future<T?> createWithJson<T extends RLMObject>(ItemCreator _creator, Map value,
+  Future<T?> createWithJson<T extends RLMObject>(
+      ItemCreator _creator, Map value,
       {UpdatePolicy policy = UpdatePolicy.error}) async {
     assert(_partition.length != 0);
 
@@ -55,7 +57,7 @@ class Realm {
       "type": T.toString()
     };
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.create.name, values) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+        await _channel.invokeMethod(Action.create.name, values);
 
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
@@ -70,13 +72,13 @@ class Realm {
     };
 
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.allUsers.name, values) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+        await _channel.invokeMethod(Action.allUsers.name, values);
 
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
     }
     List<dynamic> userKeyDictionaries = map["results"];
-    List linkedHashMaps = <LinkedHashMap<String, SyncUser>>[];
+    var linkedHashMaps = <LinkedHashMap<String, SyncUser>>[];
     linkedHashMaps = userKeyDictionaries.map((value) {
       LinkedHashMap<String, SyncUser> linkedHashMap = new LinkedHashMap();
       LinkedHashMap<dynamic, dynamic> map = value;
@@ -89,15 +91,15 @@ class Realm {
       return linkedHashMap;
     }).toList();
 
-    return linkedHashMaps as FutureOr<List<LinkedHashMap<String, SyncUser>>>;
+    return linkedHashMaps;
   }
 
   /// Logout all users
   static Future<void> logoutAll(String appId) async {
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.logoutAll.name, <String, dynamic>{
+        await _channel.invokeMethod(Action.logoutAll.name, <String, dynamic>{
       'appId': appId,
-    }) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+    });
     if (map["error"] != null) {
       throw Exception("problem on logout ${map["error"]}");
     }
@@ -117,7 +119,7 @@ class Realm {
       "type": T.toString()
     };
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.delete.name, values) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+        await _channel.invokeMethod(Action.delete.name, values);
 
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
@@ -136,7 +138,7 @@ class Realm {
       'partition': _partition
     };
     LinkedHashMap<dynamic, dynamic> map =
-        await (_channel.invokeMethod(Action.deleteAll.name, values) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
+        await _channel.invokeMethod(Action.deleteAll.name, values);
 
     if (map["error"] != null) {
       throw Exception("deleteall finished with exception ${map["error"]}");
