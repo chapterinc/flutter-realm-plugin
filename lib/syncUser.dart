@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/services.dart';
@@ -7,10 +8,10 @@ class SyncUser {
   static const MethodChannel _channel =
       const MethodChannel('flutterrealm_light');
 
-  String _identity;
-  String _appId;
-  String _partition;
-  String _id;
+  late String _identity;
+  late String _appId;
+  late String _partition;
+  late String _id;
 
   set partition(String partition) {
     _partition = partition;
@@ -26,9 +27,9 @@ class SyncUser {
 
   static Future<SyncUser> login(
       {credentials: SyncCredentials, appId: String}) async {
-    LinkedHashMap<dynamic, dynamic> syncUserMap = await _channel.invokeMethod(
+    LinkedHashMap<dynamic, dynamic> syncUserMap = await (_channel.invokeMethod(
         Action.login.name,
-        <String, dynamic>{'appId': appId, 'jwt': credentials.jwt});
+        <String, dynamic>{'appId': appId, 'jwt': credentials.jwt}) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
     syncUserMap["appId"] = appId;
     return SyncUser.fromMap(syncUserMap);
   }
@@ -44,14 +45,14 @@ class SyncUser {
   }
 
   Future<void> asyncOpen() async {
-    assert(_partition != null && _partition.length != 0);
+    assert(_partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+    LinkedHashMap<dynamic, dynamic> map = await (_channel.invokeMethod(
         Action.asyncOpen.name, <String, dynamic>{
       'identity': _identity,
       'appId': _appId,
       'partition': _partition
-    });
+    }) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
     }
@@ -60,14 +61,14 @@ class SyncUser {
   }
 
   Future<void> logout() async {
-    assert(_partition != null && _partition.length != 0);
+    assert(_partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+    LinkedHashMap<dynamic, dynamic> map = await (_channel.invokeMethod(
         Action.logout.name, <String, dynamic>{
       'identity': _identity,
       'appId': _appId,
       'partition': _partition
-    });
+    }) as FutureOr<LinkedHashMap<dynamic, dynamic>>);
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
     }

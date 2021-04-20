@@ -45,8 +45,6 @@ extension UpdatePolicyExtension on UpdatePolicy {
       case UpdatePolicy.all:
         return 2;
     }
-
-    return 1;
   }
 }
 
@@ -84,7 +82,5 @@ extension ActionExtension on Action {
       case Action.last:
         return 'last';
     }
-
-    return "";
   }
 }

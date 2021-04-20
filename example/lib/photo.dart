@@ -41,7 +41,7 @@ class Photo extends RLMObject {
   String country;
   String city;
 
-  var albums = List<Album>();
+  var albums = <Album>[];
 
   @override
   Photo fromJson(Map json) {
