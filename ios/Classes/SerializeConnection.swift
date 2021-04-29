@@ -21,6 +21,8 @@ class SerializeConnection{
     private final var alreadySuspendedSession = NSMutableDictionary()
     private final var observers = NSMutableArray()
     
+    private var lastConnectionTime: TimeInterval = 0
+    
     /// Current session
     private var currentSession: RLMSyncSession?
     
@@ -80,6 +82,12 @@ class SerializeConnection{
             return
         }
         
+        guard Date().timeIntervalSince1970 - lastConnectionTime > 3 else{
+            runAfterDelay()
+            return
+        }
+        print("resume")
+        lastConnectionTime = Date().timeIntervalSince1970
         currentSession = session
         session.resume()
     }
