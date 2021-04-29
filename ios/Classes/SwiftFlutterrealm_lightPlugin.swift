@@ -31,7 +31,8 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
     var channel: FlutterMethodChannel?
 
     var rootQueries = [String: RealmQuery]()
-
+    
+    var serializeConnection: SerializeConnection?
     public init(channel: FlutterMethodChannel? = nil) {
         self.channel = channel
     }
@@ -60,11 +61,15 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
         }
 
         if(rootQueries[appId] == nil){
-            rootQueries[appId] = RealmQuery(realmApp: RLMApp(id: appId), channel: channel)
+            let app = RLMApp(id: appId)
+            rootQueries[appId] = RealmQuery(realmApp: app, channel: channel)
+            serializeConnection = SerializeConnection(app: app)
         }
-
+            
         let realmQuery = rootQueries[appId]
         assert(realmQuery != nil, "Query cannot be null in this case")
+
+        serializeConnection?.restartSessions()
 
         func continueAction(){
             do {
@@ -81,4 +86,6 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
             }
         }
     }
+    
 }
+
