@@ -12,22 +12,21 @@ import Realm.Private
 import Realm
 
 class RealmQuery{
-    init(realmApp: App, channel: FlutterMethodChannel?){
+    init(realmApp: App, channel: FlutterMethodChannel?, searializeConnection: SerializeConnection?){
         self.realmApp = realmApp
         self.channel = channel
+        self.searializeConnection = searializeConnection
     }
 
-    var notifications = [Int: Notification]()
 
-    var realmApp: App
+    let realmApp: App
+    var searializeConnection: SerializeConnection?
 
-    var channel: FlutterMethodChannel?
+    private let channel: FlutterMethodChannel?
+    private var notifications = [Int: Notification]()
 
-    let main = DispatchQueue.main
-    
-    /// Connecting state `true` when connecting, used `NSDictionary` for asynchron threads
-    let connectionState = NSMutableDictionary()
-    
+    private let main = DispatchQueue.main
+        
     func continueAction(action: Action, call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         switch action {
         case .objects:
@@ -381,13 +380,8 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
         
-        guard !isConnecting(id: id) else{
-            throw FluterRealmError.runtimeError("This realm already opening")
-        }
         
-        setConnectionState(id: id, state: .connecting)
         Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { result1 in
-            self.setConnectionState(id: id, state: .none)
             switch result1 {
             case .success( _):
                 result(["identity": identity])
@@ -451,15 +445,6 @@ class RealmQuery{
 
 }
 
-private extension RealmQuery{
-    func isConnecting(id: String) -> Bool {
-       return connectionState[id] as? ConnectionState == ConnectionState.connecting
-    }
-    
-    func setConnectionState(id: String, state: ConnectionState){
-        connectionState[id] = state
-    }
-}
 private extension User{
     var metaId: String? { identities.first?.identifier }
 }
