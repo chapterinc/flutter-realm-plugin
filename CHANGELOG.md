@@ -160,3 +160,10 @@
 
 * TODO: Fix crash when we have multiply realms
 
+## 0.0.59+1
+
+* TODO: Don't spam session resume
+
+## 0.0.60+1
+
+* TODO: Run suspension only on start app
