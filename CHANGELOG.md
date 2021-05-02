@@ -167,3 +167,7 @@
 ## 0.0.60+1
 
 * TODO: Run suspension only on start app
+
+## 0.0.61+1
+
+* TODO: Update realm version to 10.7.4
