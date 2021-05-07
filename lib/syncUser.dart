@@ -31,6 +31,7 @@ class SyncUser {
         Action.login.name,
         <String, dynamic>{'appId': appId, 'jwt': credentials.jwt});
     syncUserMap["appId"] = appId;
+    syncUserMap["partition"] = syncUserMap["id"];
     return SyncUser.fromMap(syncUserMap);
   }
 

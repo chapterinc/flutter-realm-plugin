@@ -171,3 +171,7 @@
 ## 0.0.61+1
 
 * TODO: Update realm version to 10.7.4
+
+## 0.0.62+1
+
+* TODO: Assign partition automatically
