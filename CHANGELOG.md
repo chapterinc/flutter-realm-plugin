@@ -175,3 +175,7 @@
 ## 0.0.62+1
 
 * TODO: Assign partition automatically
+
+## 0.0.63+1
+
+* TODO: Assign partition automatically
