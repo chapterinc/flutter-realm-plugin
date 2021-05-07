@@ -35,7 +35,7 @@ class Realm {
   /// Create object by given policy.
   ///
   /// [param] _creator required for make object for given generic type
-  Future<T?> create<T extends RLMObject>(ItemCreator _creator, T value,
+  Future<T> create<T extends RLMObject>(ItemCreator _creator, T value,
       {UpdatePolicy policy = UpdatePolicy.error}) async {
     return createWithJson(_creator, value.toJson(), policy: policy);
   }
@@ -43,8 +43,7 @@ class Realm {
   /// Create object by given policy.
   ///
   /// [param] _creator required for make object for given generic type
-  Future<T?> createWithJson<T extends RLMObject>(
-      ItemCreator _creator, Map value,
+  Future<T> createWithJson<T extends RLMObject>(ItemCreator _creator, Map value,
       {UpdatePolicy policy = UpdatePolicy.error}) async {
     assert(_partition.length != 0);
 
