@@ -27,7 +27,7 @@ class Realm {
   /// Fetch list of objects.
   ///
   /// [param] _creator required for make object for given generic type
-  Results objects<T extends RLMObject>(ItemCreator _creator) {
+  Results<T> objects<T extends RLMObject>(ItemCreator _creator) {
     return Results<T>(
         _channel, _creator as T Function(), _syncUser, _appId, _partition);
   }

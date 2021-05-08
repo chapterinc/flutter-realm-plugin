@@ -187,3 +187,9 @@
 ## 0.0.65+1
 
 * TODO: Use parameterized methods
+
+## 0.0.66+1
+
+* TODO: Use right return type
+
+
