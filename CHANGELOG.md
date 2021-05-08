@@ -183,3 +183,7 @@
 ## 0.0.64+1
 
 * TODO: Use required parameterized types
+
+## 0.0.65+1
+
+* TODO: Use parameterized methods

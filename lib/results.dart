@@ -46,7 +46,7 @@ class Results<T extends RLMObject> {
   }
 
   /// Fetch list with given parameters.
-  Future<List<T>> list() async {
+  Future<List<T>> list<T>() async {
     assert(_partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map =
@@ -69,7 +69,7 @@ class Results<T extends RLMObject> {
   }
 
   /// Fetch list with given parameters.
-  Future<T> last() async {
+  Future<T> last<T>() async {
     assert(_partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map =
