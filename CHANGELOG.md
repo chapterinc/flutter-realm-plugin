@@ -196,4 +196,7 @@
 
 * TODO: Update realm library to 10.7.6
 
+## 1.0.0+1
+
+* TODO: Remove SerializeConnection since it's not needed after update library to 10.7.6
 

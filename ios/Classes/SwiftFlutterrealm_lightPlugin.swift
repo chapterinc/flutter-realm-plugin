@@ -61,15 +61,12 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
 
         if(rootQueries[appId] == nil){
             let app = RLMApp(id: appId)
-            rootQueries[appId] = RealmQuery(realmApp: app, channel: channel, searializeConnection: app.searializeConnection())
+            rootQueries[appId] = RealmQuery(realmApp: app, channel: channel)
         }
             
         let realmQuery = rootQueries[appId]
         assert(realmQuery != nil, "Query cannot be null in this case")
 
-        if let query = anyQuery(){
-            restartSessionWhenNeeded(action: action, realmQuery: query)
-        }
         
         func continueAction(){
             do {
@@ -86,69 +83,4 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
             }
         }
     }
-    
-    
-    
-    private func restartSessionWhenNeeded(action: Action, realmQuery: RealmQuery){
-        switch action {
-        case .allUsers:
-            break
-        case .objects:
-            break
-        case .count:
-            break
-        case .last:
-            break
-        case .create:
-            break
-        case .delete:
-            break
-        case .subscribe:
-            break
-        case .unSubscribe:
-            break
-        case .asyncOpen:
-            break
-        case .login:
-            realmQuery.searializeConnection = nil
-        case .logout:
-            realmQuery.searializeConnection = nil
-        case .logoutAll:
-            realmQuery.searializeConnection = nil
-        case .deleteAll:
-            realmQuery.searializeConnection = nil
-        }
-        guard realmQuery.realmApp.loggedInUsersCount() > 1 else {
-            return
-        }
-        realmQuery.searializeConnection?.restartSessions()
-    }
-    
-    private func anyQuery() -> RealmQuery?{
-        return rootQueries.first?.value
-    }
 }
-
-private extension App{
-    func loggedInUsersCount() -> Int{
-        return allUsers.reduce(0) { (result, arg1) -> Int in
-            let (_, value) = arg1
-            
-            if value.isLoggedIn{
-                return result + 1
-            }else{
-                return result
-            }
-        }
-    }
-    
-    
-    func searializeConnection() -> SerializeConnection?{
-        guard loggedInUsersCount() > 1 else {
-            return nil
-        }
-
-        return SerializeConnection(app: self)
-    }
-}
-

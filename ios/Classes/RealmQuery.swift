@@ -12,15 +12,13 @@ import Realm.Private
 import Realm
 
 class RealmQuery{
-    init(realmApp: App, channel: FlutterMethodChannel?, searializeConnection: SerializeConnection?){
+    init(realmApp: App, channel: FlutterMethodChannel?){
         self.realmApp = realmApp
         self.channel = channel
-        self.searializeConnection = searializeConnection
     }
 
 
     let realmApp: App
-    var searializeConnection: SerializeConnection?
 
     private let channel: FlutterMethodChannel?
     private var notifications = [Int: Notification]()
