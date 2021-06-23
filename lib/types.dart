@@ -3,6 +3,7 @@ enum Action {
   count,
   last,
   create,
+  createList,
   delete,
   beginWrite,
   commitWrite,
@@ -81,6 +82,8 @@ extension ActionExtension on Action {
         return 'count';
       case Action.last:
         return 'last';
+      case Action.createList:
+        return 'createList';
     }
   }
 }

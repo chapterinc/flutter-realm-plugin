@@ -33,6 +33,8 @@ class RealmQuery{
             try count(call, result: result)
         case .create:
             try create(call, result: result)
+        case .createList:
+            try createList(call, result: result)
         case .login:
             try login(call, result: result)
         case .logout:
@@ -289,6 +291,43 @@ class RealmQuery{
 
         realm.beginWrite()
         realm.delete(requiredObject)
+        try realm.commitWrite()
+
+        main.async {
+            result([String: Any]())
+        }
+    }
+
+    private func createList(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+
+        guard let identity = dictionary["identity"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let id = realmApp.user(id: identity)?.id else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
+
+        guard let user = Realm.user(app: realmApp, id: id) else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let policyInteger = dictionary["policy"] as? Int, let policy = Realm.UpdatePolicy.init(rawValue: policyInteger), let value = dictionary["value"] as? [Dictionary<String, Any>], let type = dictionary["type"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        guard let partition = dictionary["partition"] as? String  else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+        let realm = try Realm.realm(user: user, partition: partition)
+        realm.beginWrite()
+        value.forEach { value in
+            realm.dynamicCreate(type, value: value, update: policy)
+        }
         try realm.commitWrite()
 
         main.async {

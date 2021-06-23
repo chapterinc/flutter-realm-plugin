@@ -9,6 +9,7 @@ enum Action: String {
     case count
     case last
     case create
+    case createList
     case delete
     case login
     case logout
@@ -67,7 +68,6 @@ public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {
         let realmQuery = rootQueries[appId]
         assert(realmQuery != nil, "Query cannot be null in this case")
 
-        
         func continueAction(){
             do {
                 try realmQuery?.continueAction(action: action, call: call, result: result)

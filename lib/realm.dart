@@ -40,11 +40,31 @@ class Realm {
     return createWithJson(_creator, value.toJson(), policy: policy);
   }
 
+  /// Create object list given policy.
+  ///
+  /// [param] _creator required for make object for given generic type
+  Future<void> createList<T extends RLMObject>(
+      ItemCreator _creator, List<T> value,
+      {UpdatePolicy policy = UpdatePolicy.error}) async {
+    await createWithJsonImpl<T>(value.map((t) => t.toJson()).toList(),
+        policy: policy);
+  }
+
   /// Create object by given policy.
   ///
   /// [param] _creator required for make object for given generic type
   Future<T> createWithJson<T extends RLMObject>(ItemCreator _creator, Map value,
       {UpdatePolicy policy = UpdatePolicy.error}) async {
+    var map = await createWithJsonImpl<T>(value, policy: policy);
+    return _creator().fromJson(map);
+  }
+
+  /// Create object by given policy.
+  ///
+  /// [param] _creator required for make object for given generic type
+  Future<LinkedHashMap<dynamic, dynamic>>
+      createWithJsonImpl<T extends RLMObject>(dynamic value,
+          {UpdatePolicy policy = UpdatePolicy.error}) async {
     assert(_partition.length != 0);
 
     Map<String, dynamic> values = {
@@ -55,14 +75,14 @@ class Realm {
       'partition': _partition,
       "type": T.toString()
     };
-    LinkedHashMap<dynamic, dynamic> map =
-        await _channel.invokeMethod(Action.create.name, values);
+    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+        value is List ? Action.createList.name : Action.create.name, values);
 
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
     }
 
-    return _creator().fromJson(map);
+    return map;
   }
 
   static Future<List<LinkedHashMap<String, SyncUser>>> all(String appId) async {
