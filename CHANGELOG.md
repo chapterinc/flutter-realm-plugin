@@ -212,3 +212,7 @@
 
 * TODO: Fixed key load issue
 
+## 1.0.4+1
+
+* TODO: Update version
+
