@@ -216,3 +216,7 @@
 
 * TODO: Update version
 
+## 1.0.5+1
+
+* TODO: Make public user partition property
+
