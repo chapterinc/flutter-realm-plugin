@@ -21,7 +21,7 @@ class RealmQuery{
     let realmApp: App
 
     private let channel: FlutterMethodChannel?
-    private var notifications = [Int: Notification]()
+    private var notifications = [Int: Notifiable]()
 
     private let main = DispatchQueue.main
         
@@ -69,7 +69,7 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let notification = Notification()
+        let notification = NotificationProducer.newInstance(type: .result)
         notification.register(channel: channel, result: objects, id: listenId)
         notifications[listenId] = notification
         
@@ -77,6 +77,40 @@ class RealmQuery{
             result( ["results": [String: Any]()] )
         }
     }
+    
+    private func watch(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+        guard let listenId = dictionary["listenId"] as? Int else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        guard let database = dictionary["database"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        guard let collection = dictionary["collection"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        guard let identity = dictionary["identity"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        guard let id = realmApp.user(id: identity)?.id else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
+        guard let user = Realm.user(app: realmApp, id: id) else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+
+
+        let notification = NotificationProducer.newInstance(type: .watch)
+        notification.register(channel: channel, user: user, database: database, collection: collection, id: listenId)
+        notifications[listenId] = notification
+        
+        main.async {
+            result( ["results": [String: Any]()] )
+        }
+    }
+
 
     private func unSubscribe(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         guard let dictionary = call.arguments as? NSDictionary else{

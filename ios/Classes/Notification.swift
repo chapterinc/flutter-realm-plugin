@@ -8,8 +8,30 @@
 import Foundation
 import RealmSwift
 
-class Notification{
+enum NotifieTypeEnum: String {
+    case result, watch
+}
+
+protocol Notifiable {
+    func register(channel: FlutterMethodChannel?, result: Results<DynamicObject>, id: Int)
+    func register(channel: FlutterMethodChannel?, user: User, database: String, collection: String, id: Int);
+    func unRegister();
+}
+
+class NotificationProducer {
+    static func newInstance(type: NotifieTypeEnum) -> Notifiable{
+        switch type {
+        case .result:
+            return Notification()
+        case .watch:
+            return WatchNotification()
+        }
+    }
+}
+
+fileprivate class Notification: Notifiable{
     var notificationToken: NotificationToken?
+    
     func register(channel: FlutterMethodChannel?, result: Results<DynamicObject>, id: Int) {
         notificationToken = result.observe({ (change) in
             switch change {
@@ -41,6 +63,10 @@ class Notification{
         })
     }
     
+    func register(channel: FlutterMethodChannel?, user: User, database: String, collection: String, id: Int){
+        assert(true, "This method not implemented")
+    }
+    
     func unRegister(){
         notificationToken?.invalidate()
     }
@@ -50,3 +76,55 @@ class Notification{
     }
 
 }
+
+
+fileprivate class WatchNotification: Notifiable{
+    private var mongoCollection: MongoCollection?
+    private var stream: ChangeStream?
+    private var delegate: ChangeDelegate?
+    
+    func register(channel: FlutterMethodChannel?, result: Results<DynamicObject>, id: Int){
+        assert(true, "This method not implemented")
+    }
+
+    func register(channel: FlutterMethodChannel?, user: User, database: String, collection: String, id: Int){
+        let deleg = ChangeDelegate(channel: channel)
+        
+        mongoCollection = user.mongoClient("mongodb-atlas").database(named: database).collection(withName: collection)
+        stream = mongoCollection?.watch(matchFilter:[:], delegate: deleg)
+        
+        // Initialize global parameter
+        delegate = deleg
+    }
+
+    func unRegister(){
+        stream?.close()
+    }
+}
+
+
+fileprivate class ChangeDelegate: ChangeEventDelegate {
+    init(channel: FlutterMethodChannel?){
+        self.channel = channel
+    }
+    
+    var channel: FlutterMethodChannel?
+    func changeStreamDidOpen(_ changeStream: ChangeStream) {
+        
+    }
+    
+    func changeStreamDidClose(with error: Error?) {
+        
+    }
+    
+    func changeStreamDidReceive(error: Error) {
+        
+    }
+    
+    func changeStreamDidReceive(changeEvent: AnyBSON?) {
+        print(changeEvent)
+    }
+    
+}
+
+
