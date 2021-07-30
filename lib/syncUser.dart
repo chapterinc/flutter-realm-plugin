@@ -10,12 +10,10 @@ class SyncUser {
 
   late String _identity;
   late String _appId;
-  late String _partition;
   late String _id;
 
-  set partition(String partition) {
-    _partition = partition;
-  }
+  /// partition can be changed in specific cases
+  late String partition;
 
   String get identity {
     return _identity;
@@ -39,20 +37,20 @@ class SyncUser {
     SyncUser syncUser = SyncUser();
     syncUser._identity = map["identity"];
     syncUser._appId = map["appId"];
-    syncUser._partition = map["partition"];
+    syncUser.partition = map["partition"];
     syncUser._id = map["id"];
 
     return syncUser;
   }
 
   Future<void> asyncOpen() async {
-    assert(_partition.length != 0);
+    assert(partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
         Action.asyncOpen.name, <String, dynamic>{
       'identity': _identity,
       'appId': _appId,
-      'partition': _partition
+      'partition': partition
     });
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
@@ -62,13 +60,13 @@ class SyncUser {
   }
 
   Future<void> logout() async {
-    assert(_partition.length != 0);
+    assert(partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
         Action.logout.name, <String, dynamic>{
       'identity': _identity,
       'appId': _appId,
-      'partition': _partition
+      'partition': partition
     });
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
