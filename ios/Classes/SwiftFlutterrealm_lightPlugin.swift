@@ -15,6 +15,7 @@ enum Action: String {
     case logout
     case logoutAll
     case allUsers
+    case watch
     case subscribe
     case unSubscribe
     case asyncOpen

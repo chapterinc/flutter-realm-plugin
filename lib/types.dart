@@ -12,6 +12,7 @@ enum Action {
   logoutAll,
   allUsers,
   subscribe,
+  watch,
   unSubscribe,
   asyncOpen,
   deleteAll
@@ -84,6 +85,8 @@ extension ActionExtension on Action {
         return 'last';
       case Action.createList:
         return 'createList';
+      case Action.watch:
+        return 'watch';
     }
   }
 }

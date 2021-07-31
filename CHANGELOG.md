@@ -220,3 +220,8 @@
 
 * TODO: Make public user partition property
 
+
+## 1.0.6+1
+
+* TODO: Add watch mongodb
+

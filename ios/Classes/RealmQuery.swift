@@ -49,6 +49,8 @@ class RealmQuery{
             try delete(call, result: result)
         case .subscribe:
             try subscribe(call, result: result)
+        case .watch:
+            try watch(call, result: result)
         case .unSubscribe:
             try unSubscribe(call, result: result)
         case .deleteAll:

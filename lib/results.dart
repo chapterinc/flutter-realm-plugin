@@ -121,16 +121,42 @@ class Results<T extends RLMObject> {
     NotificationManager manager = NotificationManager.instance(_channel)!;
     manager.addCallHandler(uniqueListenerId, this);
 
+    var sorted = _sorted;
     LinkedHashMap<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.subscribe.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
       'listenId': uniqueListenerId,
-      'sorted': _sorted == null ? null : _sorted!.sortArray(),
+      'sorted': sorted == null ? null : sorted.sortArray(),
       'type': T.toString(),
       'identity': _syncUser.identity,
       'appId': _appId,
       'partition': _partition,
+    });
+    if (map["error"] != null) {
+      throw Exception("fetch list finished with exception ${map["error"]}");
+    }
+
+    _streamController = new StreamController<List<NotificationObject>>();
+    return _streamController
+        as FutureOr<StreamController<List<NotificationObject>>>;
+  }
+
+  Future<StreamController<List<NotificationObject>>?> watch(
+      String database) async {
+    assert(_partition.length != 0);
+
+    // Subscribe into manager
+    NotificationManager manager = NotificationManager.instance(_channel)!;
+    manager.addCallHandler(uniqueListenerId, this);
+
+    LinkedHashMap<dynamic, dynamic> map =
+        await _channel.invokeMethod(Action.subscribe.name, <String, dynamic>{
+      'listenId': uniqueListenerId,
+      'collection': T.toString(),
+      'database': database,
+      'identity': _syncUser.identity,
+      'appId': _appId,
     });
     if (map["error"] != null) {
       throw Exception("fetch list finished with exception ${map["error"]}");
