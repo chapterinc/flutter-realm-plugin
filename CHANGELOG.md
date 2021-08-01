@@ -228,3 +228,7 @@
 ## 1.0.7+1
 
 * TODO: Fix bugs
+
+## 1.0.8+1
+
+* TODO: Add filter to watch query
