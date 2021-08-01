@@ -103,9 +103,9 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-
+        let filter = dictionary["filter"] as? [String: Any] ?? [:]
         let notification = NotificationProducer.newInstance(type: .watch)
-        notification.register(channel: channel, user: user, database: database, collection: collection, id: listenId)
+        notification.register(channel: channel, user: user, database: database, collection: collection, id: listenId, filter: filter)
         notifications[listenId] = notification
         
         main.async {
