@@ -151,7 +151,7 @@ class Results<T extends RLMObject> {
     manager.addCallHandler(uniqueListenerId, this);
 
     LinkedHashMap<dynamic, dynamic> map =
-        await _channel.invokeMethod(Action.subscribe.name, <String, dynamic>{
+        await _channel.invokeMethod(Action.watch.name, <String, dynamic>{
       'listenId': uniqueListenerId,
       'collection': T.toString(),
       'database': database,

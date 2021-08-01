@@ -225,3 +225,6 @@
 
 * TODO: Add watch mongodb
 
+## 1.0.7+1
+
+* TODO: Fix bugs
