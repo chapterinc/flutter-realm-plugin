@@ -59,13 +59,17 @@ extension Object {
         var mutabledic = self.dictionaryWithValues(forKeys: properties)
 
         for prop in self.objectSchema.properties as [Property] {
+            let value = self[prop.name]
             // find lists
-            if let relationShip = self[prop.name] as? Object {
+            if let relationShip = value as? Object {
                 mutabledic[prop.name] = relationShip.toDictionary()
-            } else if let list = self[prop.name] as? ListBase {
+            } else if prop.isSet || prop.isArray {
                 var dictionaries = [[String: Any]]()
-                for i in 0..<list.count{
-                    dictionaries.append((list._rlmArray.object(at: UInt(i)) as! Object).toDictionary())
+                
+                let list = self.dynamicList(prop.name)
+                
+                for val in list{
+                    dictionaries.append(val.toDictionary())
                 }
                 mutabledic[prop.name] = dictionaries
 
