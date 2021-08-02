@@ -232,3 +232,11 @@
 ## 1.0.8+1
 
 * TODO: Add filter to watch query
+
+## 1.0.9+1
+
+* TODO: Update realm to 10.11.0
+
+## 1.0.10+1
+
+* TODO: FIX parsing issue
