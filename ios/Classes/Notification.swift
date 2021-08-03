@@ -31,9 +31,9 @@ class NotifieParent: Notifiable {
         assert(true, "This method not implemented")
     }
     
-    fileprivate static let insertKey = "insertions"
-    fileprivate static let deleteKey = "deletions"
-    fileprivate static let modifieKey = "modifications"
+    static let insertKey = "insertions"
+    static let deleteKey = "deletions"
+    static let modifieKey = "modifications"
 }
 
 class NotificationProducer {
@@ -165,74 +165,6 @@ fileprivate class ChangeDelegate: ChangeEventDelegate {
     }
 }
 
-fileprivate extension RealmSwift.Document{
-    var presentableDictionary: [String: Any?]{
-        get{
-            var result = [String: Any]()
-            self.forEach { (key: String, value: AnyBSON?) in
-                result[key] = value?.presentableValue
-            }
-            return result
-        }
-    }
-}
-
-
-fileprivate extension AnyBSON{
-    var presentableValue: Any?{
-        switch self{
-        case .double:
-            return self.doubleValue
-        case .int32:
-            return self.int32Value
-        case .int64:
-            return self.int64Value
-        case .bool:
-            return self.boolValue
-        case .datetime:
-            return self.dateValue
-        default:
-            return self.stringValue
-        }
-    }
-    
-     init(value: Any){
-        switch value {
-        case let val as Int:
-           self = AnyBSON(val)
-        case let val as Int32:
-            self = AnyBSON(val)
-        case let val as Int64:
-            self = AnyBSON(val)
-        case let val as Double:
-            self = AnyBSON(val)
-        case let val as String:
-            self = AnyBSON(val)
-        case let val as Data:
-            self = AnyBSON(val)
-        case let val as Date:
-            self = AnyBSON(val)
-        case let val as Decimal128:
-            self = AnyBSON(val)
-        case let val as ObjectId:
-            self = AnyBSON(val)
-        case let val as Document:
-            self = AnyBSON(val)
-        case let val as Array<AnyBSON?>:
-            self = AnyBSON(val)
-        case let val as Bool:
-            self = AnyBSON(val)
-        default:
-            self = .null
-        }
-        
-    }
-
-}
-
-
-
-
 fileprivate extension String{
     var outOperationType: String? {
         switch self {
@@ -245,16 +177,5 @@ fileprivate extension String{
         default:
             return nil
         }
-    }
-    
-}
-
-fileprivate extension Dictionary where Key == String{
-    func bsonConvert() -> [String: AnyBSON]{
-        var out = [String: AnyBSON]()
-        self.forEach { (key: String, value: Any) in
-            out[key] = AnyBSON(value: value)
-        }
-        return out
     }
 }

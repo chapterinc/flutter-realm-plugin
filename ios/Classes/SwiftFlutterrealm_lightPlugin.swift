@@ -6,6 +6,7 @@ import Realm.Private
 
 enum Action: String {
     case objects
+    case internalObjects
     case count
     case last
     case create

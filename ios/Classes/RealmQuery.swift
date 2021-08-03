@@ -29,6 +29,8 @@ class RealmQuery{
         switch action {
         case .objects:
             try objects(call, result: result)
+        case .internalObjects:
+            try internalObjects(call, result: result)
         case .count:
             try count(call, result: result)
         case .create:
@@ -132,16 +134,56 @@ class RealmQuery{
             result( ["results": [String: Any]()] )
         }
     }
+    
+    
+    private func internalObjects(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+        guard let database = dictionary["database"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        guard let collection = dictionary["collection"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        guard let identity = dictionary["identity"] as? String else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        guard let id = realmApp.user(id: identity)?.id else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.notFoundForGivenIdentityError)
+        }
+        guard let user = Realm.user(app: realmApp, id: id) else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
+        }
+        let filter = dictionary["filter"] as? [String: Any] ?? [:]
+        let sort = dictionary["sort"] as? [String: Any]
+        let limit = dictionary["limit"] as? Int
+        let findOptions = FindOptions(limit: limit, projection: nil, sort: sort?.bsonConvert())
 
-
+        let mongoCollection = user.mongoClient("mongodb-atlas").database(named: database).collection(withName: collection)
+        mongoCollection.find(filter:filter.bsonConvert(), options: findOptions, { (res) in
+            switch res {
+            case .failure(let error):
+                print(error)
+                break
+            case .success(let documents):
+                let dictionaries = documents.map{ $0.presentableDictionary }
+                self.main.async {
+                    result( ["results": dictionaries] )
+                }
+            }
+        })
+    }
+    
+    
     private func objects(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         // open realm in autoreleasepool to create tables and then dispose
         guard let dictionary = call.arguments as? NSDictionary else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
         }
-
+        
         let objects = try results(call, result: result)
-
+        
         var dictionaries = [[String: Any]]()
         if let limit = dictionary["limit"] as? Int{
             objects.limited(limit).forEach { dictionaries.append($0.toDictionary())  }
