@@ -1,5 +1,6 @@
 enum Action {
   objects,
+  internalObjects,
   count,
   last,
   create,
@@ -53,6 +54,8 @@ extension UpdatePolicyExtension on UpdatePolicy {
 extension ActionExtension on Action {
   String get name {
     switch (this) {
+      case Action.internalObjects:
+        return 'internalObjects';
       case Action.objects:
         return 'objects';
       case Action.create:

@@ -240,3 +240,7 @@
 ## 1.0.10+1
 
 * TODO: FIX parsing issue
+
+## 1.0.11+1
+
+* TODO: Add internal objects query

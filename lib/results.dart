@@ -46,6 +46,30 @@ class Results<T extends RLMObject> {
   }
 
   /// Fetch list with given parameters.
+  Future<List<T>> listInternal<T>(String database, {Map? filter, Map? sort}) async {
+    assert(_partition.length != 0);
+
+    LinkedHashMap<dynamic, dynamic> map = await _channel
+        .invokeMethod(Action.internalObjects.name, <String, dynamic>{
+      'database': database,
+      'collection': T.toString(),
+      'identity': _syncUser.identity,
+      'appId': _appId,
+      'partition': _partition,
+      'filter': filter,
+      'sort': sort,
+      'limit': _limit,
+    });
+
+    if (map["error"] != null) {
+      throw Exception("fetch list finished with exception ${map["error"]}");
+    }
+
+    List results = map["results"];
+    return results.map<T>((map) => _creator().fromJson(map) as T).toList();
+  }
+
+  /// Fetch list with given parameters.
   Future<List<T>> list<T>() async {
     assert(_partition.length != 0);
 
@@ -142,8 +166,8 @@ class Results<T extends RLMObject> {
         as FutureOr<StreamController<List<NotificationObject>>>;
   }
 
-  Future<StreamController<List<NotificationObject>>?> watch(
-      String database) async {
+  Future<StreamController<List<NotificationObject>>?> watch(String database,
+      {Map? filter}) async {
     assert(_partition.length != 0);
 
     // Subscribe into manager
@@ -155,6 +179,7 @@ class Results<T extends RLMObject> {
       'listenId': uniqueListenerId,
       'collection': T.toString(),
       'database': database,
+      'filter': filter,
       'identity': _syncUser.identity,
       'appId': _appId,
     });
