@@ -68,9 +68,8 @@ extension AnyBSON{
         default:
             self = .null
         }
-        
      }
-    
+
 }
 
 
@@ -86,9 +85,23 @@ extension Dictionary where Key == String{
             case let val as [Any]:
                 out[key] = AnyBSON(val.map { AnyBSON(value: $0) })
             default:
-                out[key] = AnyBSON(value: value)
+                if let val = value as? NSNumber, isBoolNumber(num: val){
+                    out[key] = AnyBSON(value: val.boolValue)
+                }else{
+                    out[key] = AnyBSON(value: value)
+                }
             }
         }
         return out
     }
+    
+    
+    
+    
+    func isBoolNumber(num:NSNumber) -> Bool{
+        let boolID = CFBooleanGetTypeID() // the type ID of CFBoolean
+        let numID = CFGetTypeID(num) // the type ID of num
+        return numID == boolID
+    }
+
 }
