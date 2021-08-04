@@ -83,6 +83,8 @@ extension Dictionary where Key == String{
                 out[key] = AnyBSON(val.map { AnyBSON($0.bsonConvert()) })
             case let val as [String: Any]:
                 out[key] =  AnyBSON(val.bsonConvert())
+            case let val as [Any]:
+                out[key] = AnyBSON(val.map { AnyBSON(value: $0) })
             default:
                 out[key] = AnyBSON(value: value)
             }

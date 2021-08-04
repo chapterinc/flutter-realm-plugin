@@ -45,8 +45,10 @@ class Results<T extends RLMObject> {
     _sorted = sorted;
   }
 
-  /// Fetch list with given parameters.
-  Future<List<T>> listInternal<T>(String database, {Map? filter, Map? sort}) async {
+  /// Fetch list with given parameters. this method working over partitions. 
+  /// it can work slower since in this case you need internet connection
+  Future<List<T>> listInternal<T>(String database,
+      {Map? filter, Map? sort}) async {
     assert(_partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map = await _channel

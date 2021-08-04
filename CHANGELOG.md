@@ -244,3 +244,7 @@
 ## 1.0.11+1
 
 * TODO: Add internal objects query
+
+## 1.0.12+1
+
+* TODO: Add internal objects query

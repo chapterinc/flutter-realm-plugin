@@ -161,7 +161,8 @@ class RealmQuery{
         let findOptions = FindOptions(limit: limit, projection: nil, sort: sort?.bsonConvert())
 
         let mongoCollection = user.mongoClient("mongodb-atlas").database(named: database).collection(withName: collection)
-        mongoCollection.find(filter:filter.bsonConvert(), options: findOptions, { (res) in
+        let bson = filter.bsonConvert()
+        mongoCollection.find(filter:bson, options: findOptions, { (res) in
             switch res {
             case .failure(let error):
                 print(error)

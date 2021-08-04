@@ -104,7 +104,7 @@ class Realm {
       if (map.keys.length > 0) {
         Map m = map[map.keys.first];
         m['appId'] = appId;
-        m['partition'] = m['id'];
+        m['partition'] = m['identity'];
         linkedHashMap[map.keys.first] = SyncUser.fromMap(m);
       }
 
