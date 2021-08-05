@@ -45,8 +45,9 @@ class Results<T extends RLMObject> {
     _sorted = sorted;
   }
 
-  /// Fetch list with given parameters. this method working over partitions. 
+  /// Fetch list with given parameters. this method working over partitions.
   /// it can work slower since in this case you need internet connection
+  /// Return result not included nested object / list
   Future<List<T>> listInternal<T>(String database,
       {Map? filter, Map? sort}) async {
     assert(_partition.length != 0);
@@ -168,6 +169,7 @@ class Results<T extends RLMObject> {
         as FutureOr<StreamController<List<NotificationObject>>>;
   }
 
+  /// Return result not included nested object / list
   Future<StreamController<List<NotificationObject>>?> watch(String database,
       {Map? filter}) async {
     assert(_partition.length != 0);

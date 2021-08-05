@@ -248,3 +248,11 @@
 ## 1.0.12+1
 
 * TODO: Add internal objects query
+
+## 1.0.13+1
+
+* TODO: Pars bool value with right way
+
+## 1.0.14+1
+
+* TODO: Add error handling in internal query, update docs

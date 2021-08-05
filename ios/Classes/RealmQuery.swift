@@ -165,7 +165,7 @@ class RealmQuery{
         mongoCollection.find(filter:bson, options: findOptions, { (res) in
             switch res {
             case .failure(let error):
-                print(error)
+                result(["error": error.localizedDescription])
                 break
             case .success(let documents):
                 let dictionaries = documents.map{ $0.presentableDictionary }
