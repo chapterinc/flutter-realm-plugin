@@ -20,33 +20,33 @@ public final class Photo: Object {
     @objc dynamic var subType: Int = 0
     @objc dynamic var type: Int = 1
 
-    let isUploaded = RealmOptional<Bool>()
-    let isTrashed = RealmOptional<Bool>()
-    let isSorted = RealmOptional<Bool>()
+    let isUploaded = RealmProperty<Bool?>()
+    let isTrashed = RealmProperty<Bool?>()
+    let isSorted = RealmProperty<Bool?>()
 
     @objc dynamic var photoDetail: PhotoDetail?
     @objc dynamic var userPhotoDetail: PhotoDetail?
 
-    let userId = RealmOptional<Int>()
+    let userId = RealmProperty<Int?>()
 
-    let sortIndex = RealmOptional<Double>()
-    let duration = RealmOptional<Double>()
-    let pixelWidth = RealmOptional<Int>()
-    let pixelHeight = RealmOptional<Int>()
-    let startTime = RealmOptional<Double>()
-    let endTime = RealmOptional<Double>()
-    let timeScale = RealmOptional<Int>()
-    let year = RealmOptional<Int>()
-    let month = RealmOptional<Int>()
-    let latitude = RealmOptional<Double>()
-    let longitude = RealmOptional<Double>()
+    let sortIndex = RealmProperty<Double?>()
+    let duration = RealmProperty<Double?>()
+    let pixelWidth = RealmProperty<Int?>()
+    let pixelHeight = RealmProperty<Int?>()
+    let startTime = RealmProperty<Double?>()
+    let endTime = RealmProperty<Double?>()
+    let timeScale = RealmProperty<Int?>()
+    let year = RealmProperty<Int?>()
+    let month = RealmProperty<Int?>()
+    let latitude = RealmProperty<Double?>()
+    let longitude = RealmProperty<Double?>()
 
     // Dates
-    let createdDateTimestamp = RealmOptional<Int32>()
-    let creationDateTimestamp = RealmOptional<Int32>()
-    let sortedDateTimeStamp = RealmOptional<Int32>()
-    let putBackDateTimeStamp = RealmOptional<Int32>()
-    let modificationDate = RealmOptional<Int32>()
+    let createdDateTimestamp = RealmProperty<Int32?>()
+    let creationDateTimestamp = RealmProperty<Int32?>()
+    let sortedDateTimeStamp = RealmProperty<Int32?>()
+    let putBackDateTimeStamp = RealmProperty<Int32?>()
+    let modificationDate = RealmProperty<Int32?>()
 
     var albums = List<Album>()
 

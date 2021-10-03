@@ -256,3 +256,7 @@
 ## 1.0.14+1
 
 * TODO: Add error handling in internal query, update docs
+
+## 1.0.15+1
+
+* TODO: Updated flutter library

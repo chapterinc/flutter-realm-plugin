@@ -20,8 +20,8 @@ public final class Album: Object {
 
     @objc dynamic var tag: Tag?
 
-    let createdTimestamp = RealmOptional<Int32>()
-    let timestamp = RealmOptional<Int32>()
+    let createdTimestamp = RealmProperty<Int32?>()
+    let timestamp = RealmProperty<Int32?>()
 
     let photos = LinkingObjects(fromType: Photo.self, property: "albums")
 

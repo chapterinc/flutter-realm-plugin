@@ -25,18 +25,18 @@ public final class User: Object {
     @objc dynamic var firstName: String?
     @objc dynamic var lastName: String?
 
-    let recentsPhotosSortedPartsCount = RealmOptional<Int32>()
+    let recentsPhotosSortedPartsCount = RealmProperty<Int32?>()
     
-    let mediaArchivedCount = RealmOptional<Int32>()
-    let mediaKeptCount = RealmOptional<Int32>()
+    let mediaArchivedCount = RealmProperty<Int32?>()
+    let mediaKeptCount = RealmProperty<Int32?>()
  
     @objc dynamic var photo: Photo?
 
     // Dates
-    let birthDayTimestamp = RealmOptional<Int32>()
-    let createdDateTimestamp = RealmOptional<Int32>()
-    let recentsSortedDateTimestamp = RealmOptional<Int32>()
-    let recentsNewPhotoDateTimestamp = RealmOptional<Int32>()
+    let birthDayTimestamp = RealmProperty<Int32?>()
+    let createdDateTimestamp = RealmProperty<Int32?>()
+    let recentsSortedDateTimestamp = RealmProperty<Int32?>()
+    let recentsNewPhotoDateTimestamp = RealmProperty<Int32?>()
 
     override public class func primaryKey() -> String? {
         return "_id"

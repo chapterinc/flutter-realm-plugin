@@ -11,6 +11,8 @@ import Realm.Dynamic
 import Realm.Private
 import Realm
 
+typealias SortDescriptor = RealmSwift.SortDescriptor
+
 class RealmQuery{
     init(realmApp: App, channel: FlutterMethodChannel?){
         self.realmApp = realmApp
