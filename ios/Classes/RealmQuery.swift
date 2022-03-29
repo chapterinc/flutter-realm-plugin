@@ -61,6 +61,8 @@ class RealmQuery{
             try deleteAll(call, result: result)
         case .last:
             try last(call, result: result)
+        case .indexObject:
+            try indexObject(call, result: result)
         }
     }
 
@@ -244,6 +246,26 @@ class RealmQuery{
             if let dictionary = objects.last?.toDictionary(){
                 dictionaries.append(dictionary)
             }
+        }
+
+        main.async {
+            result( ["results": dictionaries] )
+        }
+    }
+
+    private func indexObject(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
+        // open realm in autoreleasepool to create tables and then dispose
+        guard let dictionary = call.arguments as? NSDictionary else{
+            throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.noArgumentsWasPassesError)
+        }
+
+        let objects = try results(call, result: result)
+
+        var dictionaries = [[String: Any]]()
+        
+        if let index = dictionary["index"] as? Int, index < objects.count{
+            let dictionary = objects[index].toDictionary()
+            dictionaries.append(dictionary)
         }
 
         main.async {

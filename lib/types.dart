@@ -16,7 +16,8 @@ enum Action {
   watch,
   unSubscribe,
   asyncOpen,
-  deleteAll
+  deleteAll,
+  indexObject
 }
 
 enum UpdatePolicy {
@@ -90,6 +91,8 @@ extension ActionExtension on Action {
         return 'createList';
       case Action.watch:
         return 'watch';
+      case Action.indexObject:
+        return 'indexObject';
     }
   }
 }

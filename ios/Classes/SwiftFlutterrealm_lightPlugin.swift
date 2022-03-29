@@ -21,6 +21,7 @@ enum Action: String {
     case unSubscribe
     case asyncOpen
     case deleteAll
+    case indexObject
 }
 
 public class SwiftFlutterrealm_lightPlugin: NSObject, FlutterPlugin {

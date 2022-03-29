@@ -24,6 +24,7 @@ class Results<T extends RLMObject> {
   SyncUser get syncUser => _syncUser;
   String? query;
   int? _limit;
+  int? _index;
   List<Sort>? _sorted;
 
   String _appId;
@@ -39,6 +40,10 @@ class Results<T extends RLMObject> {
 
   set limit(int limit) {
     _limit = limit;
+  }
+
+  set index(int? index) {
+    _index = index;
   }
 
   set sorted(List<Sort> sorted) {
@@ -96,7 +101,7 @@ class Results<T extends RLMObject> {
   }
 
   /// Fetch list with given parameters.
-  Future<T> last<T>() async {
+  Future<List<T>> last<T>() async {
     assert(_partition.length != 0);
 
     LinkedHashMap<dynamic, dynamic> map =
@@ -115,7 +120,31 @@ class Results<T extends RLMObject> {
     }
 
     List results = map["results"];
-    return results.map<T>((map) => _creator().fromJson(map) as T).toList().last;
+    return results.map<T>((map) => _creator().fromJson(map) as T).toList();
+  }
+
+  /// Fetch list with given parameters.
+  Future<List<T>> indexObject<T>() async {
+    assert(_partition.length != 0);
+
+    LinkedHashMap<dynamic, dynamic> map =
+        await _channel.invokeMethod(Action.indexObject.name, <String, dynamic>{
+      'query': query,
+      'limit': _limit,
+      'index': _index,
+      'sorted': _sorted == null ? null : _sorted!.sortArray(),
+      'type': T.toString(),
+      'identity': _syncUser.identity,
+      'appId': _appId,
+      'partition': _partition,
+    });
+
+    if (map["error"] != null) {
+      throw Exception("fetch list finished with exception ${map["error"]}");
+    }
+
+    List results = map["results"];
+    return results.map<T>((map) => _creator().fromJson(map) as T).toList();
   }
 
   /// Get query result count
