@@ -263,3 +263,7 @@
 ## 1.0.17+1
 
 - TODO: Add query for index
+
+## 1.0.18+1
+
+- TODO: Update realm library to v10.25.2
