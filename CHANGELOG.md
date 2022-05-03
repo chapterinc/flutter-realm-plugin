@@ -267,3 +267,7 @@
 ## 1.0.18+1
 
 - TODO: Update realm library to v10.25.2
+
+## 1.0.19+1
+
+- TODO: Update realm library to v10.18.0
