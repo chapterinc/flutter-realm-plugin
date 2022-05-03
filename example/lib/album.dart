@@ -22,14 +22,14 @@ enum AlbumType {
 
 class Album extends RLMObject {
   String id = '';
-  String coverPhotoId;
+  String? coverPhotoId;
 
-  String name;
-  String type;
+  String? name;
+  String? type;
 
   bool isSorted = false;
 
-  int createdTimestamp;
+  int? createdTimestamp;
 
   @override
   Album fromJson(Map json) {

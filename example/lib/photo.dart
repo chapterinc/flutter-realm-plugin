@@ -4,42 +4,42 @@ import 'photo_detail.dart';
 
 class Photo extends RLMObject {
   String id = '';
-  String burstIdentifier;
+  String? burstIdentifier;
 
   int type = 1;
   int subType = 0;
-  String mediaType;
+  String? mediaType;
 
   bool isUploaded = false;
   bool isTrashed = false;
   bool isSorted = false;
 
-  int userId;
+  int? userId;
 
-  double duration;
-  int pixelWidth;
-  int pixelHeight;
-  double startTime;
-  double endTime;
-  int timeScale;
-  double latitude;
-  double longitude;
+  double? duration;
+  int? pixelWidth;
+  int? pixelHeight;
+  double? startTime;
+  double? endTime;
+  int? timeScale;
+  double? latitude;
+  double? longitude;
 
-  int year;
-  int month;
+  int? year;
+  int? month;
 
-  int createdDateTimestamp;
-  int creationDateTimestamp;
-  int sortedDateTimeStamp;
-  int putBackDateTimeStamp;
-  int modificationDate;
+  int? createdDateTimestamp;
+  int? creationDateTimestamp;
+  int? sortedDateTimeStamp;
+  int? putBackDateTimeStamp;
+  int? modificationDate;
 
-  PhotoDetail photoDetail;
-  PhotoDetail userPhotoDetail;
+  PhotoDetail? photoDetail;
+  PhotoDetail? userPhotoDetail;
 
-  String state;
-  String country;
-  String city;
+  String? state;
+  String? country;
+  String? city;
 
   var albums = <Album>[];
 
@@ -131,22 +131,14 @@ class Photo extends RLMObject {
 
     map['modificationDate'] = modificationDate;
     if (photoDetail != null) {
-      map['photoDetail'] = photoDetail.toJson();
+      map['photoDetail'] = photoDetail?.toJson();
     }
     if (userPhotoDetail != null) {
-      map['userPhotoDetail'] = userPhotoDetail.toJson();
+      map['userPhotoDetail'] = userPhotoDetail?.toJson();
     }
     if (albums != null) {
       map['albums'] = albums.map((album) => album.toJson()).toList();
     }
     return map;
   }
-
-  @override
-  bool operator ==(other) {
-    return id == other.id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
 }

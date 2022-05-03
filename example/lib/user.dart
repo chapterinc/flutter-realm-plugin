@@ -9,18 +9,18 @@ class User extends RLMObject {
   String password = '';
   String username = '';
 
-  String email;
-  String phone;
+  String? email;
+  String? phone;
 
-  String countryCode;
-  String emoji;
-  String firstName;
-  String surname;
+  String? countryCode;
+  String? emoji;
+  String? firstName;
+  String? surname;
 
-  int birthDayTimestamp;
-  int createdDateTimestamp;
-  int recentsSortedDateTimestamp;
-  int recentsNewPhotoDateTimestamp;
+  int? birthDayTimestamp;
+  int? createdDateTimestamp;
+  int? recentsSortedDateTimestamp;
+  int? recentsNewPhotoDateTimestamp;
 
   int recentsPhotosSortedPartsCount = 0;
   int totalMediaSortedCount = 0;
@@ -32,7 +32,7 @@ class User extends RLMObject {
 
   bool isMe = true;
 
-  Photo photo;
+  Photo? photo;
 
   @override
   User fromJson(Map json) {
@@ -100,7 +100,7 @@ class User extends RLMObject {
     map['isMe'] = isMe;
 
     if (photo != null) {
-      map['photo'] = photo.toJson();
+      map['photo'] = photo?.toJson();
     }
 
     return map;

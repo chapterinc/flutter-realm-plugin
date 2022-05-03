@@ -15,7 +15,7 @@ import 'package:flutterrealm_light/syncUser.dart';
 import 'dart:collection';
 
 class Photo extends RLMObject {
-  String id;
+  String? id;
 
   @override
   Map toJson() {
@@ -28,7 +28,7 @@ class Photo extends RLMObject {
 
 void main() {
   group('Realm plugin', () {
-    FlutterDriver driver;
+    FlutterDriver? driver;
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
@@ -37,7 +37,7 @@ void main() {
     // Close the connection to the driver after the tests have completed.
     tearDownAll(() async {
       if (driver != null) {
-        driver.close();
+        driver?.close();
       }
     });
 
@@ -54,7 +54,6 @@ void main() {
           await SyncUser.login(credentials: syncCredentials, appId: "");
 
       assert(user != null);
-      return user;
     });
 
     testWidgets('Create photo', (WidgetTester tester) async {
@@ -76,8 +75,6 @@ void main() {
       }, photo);
 
       assert(createdPhoto.id != photo.id);
-
-      return createdPhoto;
     });
   });
 }

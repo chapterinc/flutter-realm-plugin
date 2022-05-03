@@ -20,15 +20,9 @@ void main() {
     });
 
     // Close the connection to the driver after the tests have completed.
-    tearDownAll(() {
-      if (driver != null) {
-        driver.close();
-      }
-    });
+    tearDownAll(() {});
 
-    test('Fetch all users', () {
-
-    });
+    test('Fetch all users', () {});
 
     test('Login with jwt', () {
       String jwt = "";
@@ -38,7 +32,6 @@ void main() {
     test('Create photo', () {
       String jwt = "";
       String server = "";
-
     });
   });
 }

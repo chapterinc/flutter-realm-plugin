@@ -44,23 +44,20 @@ class _MyAppState extends State<MyApp> {
     // Check all users
     List<LinkedHashMap<String, SyncUser>> fetchAllUsers = await fetchAll();
     print("${fetchAllUsers.length}");
-    SyncUser syncUser;
-    LinkedHashMap<String, SyncUser> map = fetchAllUsers
-        .firstWhere((element) => element[userId] != null, orElse: () {
-      return null;
-    });
+    SyncUser? syncUser;
+    LinkedHashMap<String, SyncUser> map =
+        fetchAllUsers.firstWhere((element) => element[userId] != null);
 
+    if (syncUser == null) {
+      return;
+    }
     List<Photo> photos = await _getPhotos(syncUser);
 
-    if (map == null) {
-      syncUser = await _login(jwt, _appId);
-      syncUser.partition = syncUser.identity;
+    syncUser = await _login(jwt, _appId);
+    syncUser.partition = syncUser.identity;
 
-      await syncUser.asyncOpen();
-      print("${syncUser.identity}");
-    } else {
-      syncUser = map.values.first;
-    }
+    await syncUser.asyncOpen();
+    print("${syncUser.identity}");
 
     _listenPhotoChange(syncUser);
 
@@ -139,8 +136,8 @@ class _MyAppState extends State<MyApp> {
     return photos;
   }
 
-  Results _listener;
-  StreamController<List<NotificationObject>> controller;
+  Results? _listener;
+  StreamController<List<NotificationObject>>? controller;
   _listenPhotoChange(SyncUser syncUser) async {
     Realm realm = Realm(syncUser, _appId, syncUser.identity);
 
@@ -148,10 +145,15 @@ class _MyAppState extends State<MyApp> {
       return new Photo();
     });
 
-    controller = await _listener.subscribe();
-    controller.stream.listen((event) async {
+    final listener = _listener;
+    if (listener == null) {
+      return;
+    }
+
+    controller = (await listener.subscribe())!;
+    controller?.stream.listen((event) async {
       print(event);
-      await _listener.unSubscribe();
+      await _listener?.unSubscribe();
     });
   }
 }
