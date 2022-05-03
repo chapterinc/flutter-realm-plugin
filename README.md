@@ -10,7 +10,7 @@ Android and iOS Library for Realm
 
 ```yaml
 # add this line to your dependencies
-fluterrealm: ^0.0.3
+fluterrealm: ^1.0.18+1
 ```
 
 ```dart
