@@ -1,10 +1,10 @@
 name: flutterrealm_light
 description: Flutter plugin which mostly like native sdk of iOS
-version: 1.0.19+1
+version: 1.0.20+1
 homepage: https://sortedhq.com
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
   flutter: ">=1.12.0"
 
 dependencies:
