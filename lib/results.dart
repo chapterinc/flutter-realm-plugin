@@ -170,7 +170,7 @@ class Results<T extends RLMObject> {
     return count;
   }
 
-  Future<StreamController<List<NotificationObject>>?> subscribe() async {
+  Future<Stream<List<NotificationObject>>?> subscribe() async {
     assert(_partition.length != 0);
 
     // Subscribe into manager
@@ -194,12 +194,11 @@ class Results<T extends RLMObject> {
     }
 
     _streamController = new StreamController<List<NotificationObject>>();
-    return _streamController
-        as FutureOr<StreamController<List<NotificationObject>>>;
+    return _streamController?.stream;
   }
 
   /// Return result not included nested object / list
-  Future<StreamController<List<NotificationObject>>?> watch(String database,
+  Future<Stream<List<NotificationObject>>?> watch(String database,
       {Map? filter}) async {
     assert(_partition.length != 0);
 
@@ -221,8 +220,7 @@ class Results<T extends RLMObject> {
     }
 
     _streamController = new StreamController<List<NotificationObject>>();
-    return _streamController
-        as FutureOr<StreamController<List<NotificationObject>>>;
+    return _streamController?.stream;
   }
 
   unSubscribe() async {
