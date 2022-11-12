@@ -150,10 +150,10 @@ class _MyAppState extends State<MyApp> {
       return;
     }
 
-    controller = (await listener.subscribe())!;
-    controller?.stream.listen((event) async {
-      print(event);
-      await _listener?.unSubscribe();
-    });
+    // controller = (await listener.subscribe())!;
+    // controller?.stream.listen((event) async {
+    //   print(event);
+    //   await _listener?.unSubscribe();
+    // });
   }
 }
