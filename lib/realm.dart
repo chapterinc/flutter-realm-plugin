@@ -62,7 +62,7 @@ class Realm {
   /// Create object by given policy.
   ///
   /// [param] _creator required for make object for given generic type
-  Future<LinkedHashMap<dynamic, dynamic>>
+  Future<Map<dynamic, dynamic>>
       createWithJsonImpl<T extends RLMObject>(dynamic value,
           {UpdatePolicy policy = UpdatePolicy.error}) async {
     assert(_partition.length != 0);
@@ -75,7 +75,7 @@ class Realm {
       'partition': _partition,
       "type": T.toString()
     };
-    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+    Map<dynamic, dynamic> map = await _channel.invokeMethod(
         value is List ? Action.createList.name : Action.create.name, values);
 
     if (map["error"] != null) {
@@ -85,38 +85,38 @@ class Realm {
     return map;
   }
 
-  static Future<List<LinkedHashMap<String, SyncUser>>> all(String appId) async {
+  static Future<List<Map<String, SyncUser>>> all(String appId) async {
     Map<String, dynamic> values = {
       'appId': appId,
     };
 
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.allUsers.name, values);
 
     if (map["error"] != null) {
       throw Exception("create object finished with exception ${map["error"]}");
     }
     List<dynamic> userKeyDictionaries = map["results"];
-    var linkedHashMaps = <LinkedHashMap<String, SyncUser>>[];
-    linkedHashMaps = userKeyDictionaries.map((value) {
-      LinkedHashMap<String, SyncUser> linkedHashMap = new LinkedHashMap();
-      LinkedHashMap<dynamic, dynamic> map = value;
+    var Maps = <Map<String, SyncUser>>[];
+    Maps = userKeyDictionaries.map((value) {
+      Map<String, SyncUser> Map = new Map();
+      Map<dynamic, dynamic> map = value;
       if (map.keys.length > 0) {
         Map m = map[map.keys.first];
         m['appId'] = appId;
         m['partition'] = m['identity'];
-        linkedHashMap[map.keys.first] = SyncUser.fromMap(m);
+        Map[map.keys.first] = SyncUser.fromMap(m);
       }
 
-      return linkedHashMap;
+      return Map;
     }).toList();
 
-    return linkedHashMaps;
+    return Maps;
   }
 
   /// Logout all users
   static Future<void> logoutAll(String appId) async {
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.logoutAll.name, <String, dynamic>{
       'appId': appId,
     });
@@ -138,7 +138,7 @@ class Realm {
       'partition': _partition,
       "type": T.toString()
     };
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.delete.name, values);
 
     if (map["error"] != null) {
@@ -157,7 +157,7 @@ class Realm {
       'appId': _appId,
       'partition': _partition
     };
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.deleteAll.name, values);
 
     if (map["error"] != null) {

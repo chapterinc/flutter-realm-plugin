@@ -42,7 +42,7 @@ void main() {
     });
 
     testWidgets('Fetch all users', (WidgetTester tester) async {
-      List<LinkedHashMap<String, SyncUser>> users = await Realm.all("");
+      List<Map<String, SyncUser>> users = await Realm.all("");
     });
 
     testWidgets('Login with jwt', (WidgetTester tester) async {

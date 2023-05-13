@@ -25,7 +25,7 @@ class SyncUser {
 
   static Future<SyncUser> login(
       {credentials: SyncCredentials, appId: String}) async {
-    LinkedHashMap<dynamic, dynamic> syncUserMap = await _channel.invokeMethod(
+    Map<dynamic, dynamic> syncUserMap = await _channel.invokeMethod(
         Action.login.name,
         <String, dynamic>{'appId': appId, 'jwt': credentials.jwt});
     syncUserMap["appId"] = appId;
@@ -46,7 +46,7 @@ class SyncUser {
   Future<void> asyncOpen() async {
     assert(partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+    Map<dynamic, dynamic> map = await _channel.invokeMethod(
         Action.asyncOpen.name, <String, dynamic>{
       'identity': _identity,
       'appId': _appId,
@@ -62,7 +62,7 @@ class SyncUser {
   Future<void> logout() async {
     assert(partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map = await _channel.invokeMethod(
+    Map<dynamic, dynamic> map = await _channel.invokeMethod(
         Action.logout.name, <String, dynamic>{
       'identity': _identity,
       'appId': _appId,

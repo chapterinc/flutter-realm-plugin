@@ -42,10 +42,10 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> testWithJwt(String jwt, String userId) async {
     // Check all users
-    List<LinkedHashMap<String, SyncUser>> fetchAllUsers = await fetchAll();
+    List<Map<String, SyncUser>> fetchAllUsers = await fetchAll();
     print("${fetchAllUsers.length}");
     SyncUser? syncUser;
-    LinkedHashMap<String, SyncUser> map =
+    Map<String, SyncUser> map =
         fetchAllUsers.firstWhere((element) => element[userId] != null);
 
     if (syncUser == null) {
@@ -85,8 +85,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<List<LinkedHashMap<String, SyncUser>>> fetchAll() async {
-    List<LinkedHashMap<String, SyncUser>> users = await Realm.all(_appId);
+  Future<List<Map<String, SyncUser>>> fetchAll() async {
+    List<Map<String, SyncUser>> users = await Realm.all(_appId);
     return users;
   }
 
