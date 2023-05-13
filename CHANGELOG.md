@@ -287,3 +287,7 @@
 ## 1.2.0+1
 
 - TODO: Update realm library to v10.32.3
+
+## 1.2.1+1
+
+- TODO: Use Map instead of LinkedHashMap

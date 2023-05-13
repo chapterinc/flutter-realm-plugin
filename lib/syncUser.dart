@@ -23,7 +23,7 @@ class SyncUser {
   }
 
   static Future<SyncUser> login(
-      {credentials: SyncCredentials, appId: String}) async {
+      {credentials = SyncCredentials, appId = String}) async {
     Map<dynamic, dynamic> syncUserMap = await _channel.invokeMethod(
         Action.login.name,
         <String, dynamic>{'appId': appId, 'jwt': credentials.jwt});
