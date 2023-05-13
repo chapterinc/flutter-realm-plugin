@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'object.dart';
 import 'types.dart';
 import 'syncUser.dart';
-import 'dart:collection';
 
 typedef T ItemCreator<T>();
 
@@ -57,7 +56,7 @@ class Results<T extends RLMObject> {
       {Map? filter, Map? sort}) async {
     assert(_partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map = await _channel
+    Map<dynamic, dynamic> map = await _channel
         .invokeMethod(Action.internalObjects.name, <String, dynamic>{
       'database': database,
       'collection': T.toString(),
@@ -81,7 +80,7 @@ class Results<T extends RLMObject> {
   Future<List<T>> list<T>() async {
     assert(_partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
@@ -104,7 +103,7 @@ class Results<T extends RLMObject> {
   Future<List<T>> last<T>() async {
     assert(_partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.objects.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
@@ -127,7 +126,7 @@ class Results<T extends RLMObject> {
   Future<List<T>> indexObject<T>() async {
     assert(_partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.indexObject.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
@@ -151,7 +150,7 @@ class Results<T extends RLMObject> {
   Future<int?> count() async {
     assert(_partition.length != 0);
 
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.count.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
@@ -178,7 +177,7 @@ class Results<T extends RLMObject> {
     manager.addCallHandler(uniqueListenerId, this);
 
     var sorted = _sorted;
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.subscribe.name, <String, dynamic>{
       'query': query,
       'limit': _limit,
@@ -206,7 +205,7 @@ class Results<T extends RLMObject> {
     NotificationManager manager = NotificationManager.instance(_channel)!;
     manager.addCallHandler(uniqueListenerId, this);
 
-    LinkedHashMap<dynamic, dynamic> map =
+    Map<dynamic, dynamic> map =
         await _channel.invokeMethod(Action.watch.name, <String, dynamic>{
       'listenId': uniqueListenerId,
       'collection': T.toString(),
