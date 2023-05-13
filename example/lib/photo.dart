@@ -49,14 +49,10 @@ class Photo extends RLMObject {
     burstIdentifier = json['burstIdentifier'];
 
     int t = json['type'];
-    if (t != null) {
-      type = t;
-    }
+    type = t;
 
     int st = json['subType'];
-    if (st != null) {
-      subType = st;
-    }
+    subType = st;
     mediaType = json['mediaType'];
     isUploaded = json['isUploaded'];
     isTrashed = json['isTrashed'];
@@ -82,19 +78,13 @@ class Photo extends RLMObject {
     modificationDate = json['modificationDate'];
 
     Map photoDetailMap = json['photoDetail'];
-    if (photoDetailMap != null) {
-      photoDetail = PhotoDetail().fromJson(photoDetailMap);
-    }
+    photoDetail = PhotoDetail().fromJson(photoDetailMap);
 
     Map userPhotoDetailMap = json['userPhotoDetail'];
-    if (userPhotoDetailMap != null) {
-      userPhotoDetail = PhotoDetail().fromJson(userPhotoDetailMap);
-    }
+    userPhotoDetail = PhotoDetail().fromJson(userPhotoDetailMap);
 
     List<dynamic> albums = json['albums'];
-    if (albums != null) {
-      this.albums = albums.map((map) => Album().fromJson(map)).toList();
-    }
+    this.albums = albums.map((map) => Album().fromJson(map)).toList();
 
     return this;
   }

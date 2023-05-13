@@ -12,8 +12,6 @@ import 'package:flutterrealm_light/realm.dart';
 import 'package:flutterrealm_light/object.dart';
 import 'package:flutterrealm_light/syncUser.dart';
 
-import 'dart:collection';
-
 class Photo extends RLMObject {
   String? id;
 
@@ -42,14 +40,13 @@ void main() {
     });
 
     testWidgets('Fetch all users', (WidgetTester tester) async {
-      List<LinkedHashMap<String, SyncUser>> users = await Realm.all("");
+      List<Map<String, SyncUser>> users = await Realm.all("");
     });
 
     testWidgets('Login with jwt', (WidgetTester tester) async {
       String jwt = "";
       String server = "";
-      SyncCredentials syncCredentials =
-          SyncCredentials(jwt, SyncCredentialsType.jwt);
+      SyncCredentials syncCredentials = SyncCredentials(jwt);
       SyncUser user =
           await SyncUser.login(credentials: syncCredentials, appId: "");
 
@@ -60,8 +57,7 @@ void main() {
       String jwt = "";
       String server = "";
 
-      SyncCredentials syncCredentials =
-          SyncCredentials(jwt, SyncCredentialsType.jwt);
+      SyncCredentials syncCredentials = SyncCredentials(jwt);
       SyncUser user =
           await SyncUser.login(credentials: syncCredentials, appId: "");
 

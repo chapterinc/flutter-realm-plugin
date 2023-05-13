@@ -7,7 +7,6 @@ import 'package:flutterrealm_light/results.dart';
 import 'package:flutterrealm_light/types.dart';
 import 'package:flutterrealm_light_example/photo_detail.dart';
 
-import 'dart:collection';
 import 'photo.dart';
 
 void main() => runApp(MyApp());
@@ -42,18 +41,14 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> testWithJwt(String jwt, String userId) async {
     // Check all users
-    List<LinkedHashMap<String, SyncUser>> fetchAllUsers = await fetchAll();
+    List<Map<String, SyncUser>> fetchAllUsers = await fetchAll();
     print("${fetchAllUsers.length}");
-    SyncUser? syncUser;
-    LinkedHashMap<String, SyncUser> map =
+    SyncUser? syncUser = await _login(jwt, _appId);
+    Map<String, SyncUser> map =
         fetchAllUsers.firstWhere((element) => element[userId] != null);
 
-    if (syncUser == null) {
-      return;
-    }
     List<Photo> photos = await _getPhotos(syncUser);
 
-    syncUser = await _login(jwt, _appId);
     syncUser.partition = syncUser.identity;
 
     await syncUser.asyncOpen();
@@ -85,18 +80,16 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<List<LinkedHashMap<String, SyncUser>>> fetchAll() async {
-    List<LinkedHashMap<String, SyncUser>> users = await Realm.all(_appId);
+  Future<List<Map<String, SyncUser>>> fetchAll() async {
+    List<Map<String, SyncUser>> users = await Realm.all(_appId);
     return users;
   }
 
   Future<SyncUser> _login(String jwt, String _appId) async {
-    SyncCredentials syncCredentials =
-        SyncCredentials(jwt, SyncCredentialsType.jwt);
+    SyncCredentials syncCredentials = SyncCredentials(jwt);
     SyncUser user =
         await SyncUser.login(credentials: syncCredentials, appId: _appId);
 
-    assert(user != null);
     return user;
   }
 
