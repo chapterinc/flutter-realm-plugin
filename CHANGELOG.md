@@ -295,3 +295,7 @@
 ## 1.2.2+1
 
 - TODO: Update realm library to v10.39.1
+
+## 1.2.3+1
+
+- TODO: Fixed user.configuration massive call issue
