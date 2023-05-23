@@ -9,16 +9,10 @@ import Foundation
 import RealmSwift
 import Realm.Dynamic
 
-extension Realm{
-    static func configuration(user: User, partition: String) -> Realm.Configuration {
-        let configuration = user.configuration(partitionValue: partition)
-        return configuration
-    }
-
-    static func realm(user: User, partition: String) throws -> Realm{
+extension Realm {
+    static func realm(user: User, configuration: Realm.Configuration) throws -> Realm{
         do {
-            let conf = configuration(user: user, partition: partition)
-            let realm = try Realm(configuration: conf)
+            let realm = try Realm(configuration: configuration)
             return realm
         } catch {
             throw FluterRealmError.runtimeError("Was not able create realm \(error)")

@@ -24,6 +24,7 @@ class RealmQuery{
 
     private let channel: FlutterMethodChannel?
     private var notifications = [Int: Notifiable]()
+    private var configurations = [String: Realm.Configuration]()
 
     private let main = DispatchQueue.main
         
@@ -300,8 +301,8 @@ class RealmQuery{
         guard let partition = dictionary["partition"] as? String  else{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
-
-        let realm = try Realm.realm(user: user, partition: partition)
+        let configuration = prepareConfiguration(user: user, partition: partition)
+        let realm = try Realm.realm(user: user, configuration: configuration)
         var objects = realm.dynamicObjects(type)
 
         if let query = dictionary["query"] as? String{
@@ -343,7 +344,8 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let realm = try Realm.realm(user: user, partition: partition)
+        let configuration = prepareConfiguration(user: user, partition: partition)
+        let realm = try Realm.realm(user: user, configuration: configuration)
 
         realm.beginWrite()
         realm.deleteAll()
@@ -385,7 +387,8 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let realm = try Realm.realm(user: user, partition: partition)
+        let configuration = prepareConfiguration(user: user, partition: partition)
+        let realm = try Realm.realm(user: user, configuration: configuration)
         let object = realm.dynamicObject(ofType: type, forPrimaryKey: primaryKey!)
 
         guard let requiredObject = object else{
@@ -426,7 +429,8 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let realm = try Realm.realm(user: user, partition: partition)
+        let configuration = prepareConfiguration(user: user, partition: partition)
+        let realm = try Realm.realm(user: user, configuration: configuration)
         realm.beginWrite()
         value.forEach { value in
             realm.dynamicCreate(type, value: value, update: policy)
@@ -463,7 +467,8 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
 
-        let realm = try Realm.realm(user: user, partition: partition)
+        let configuration = prepareConfiguration(user: user, partition: partition)
+        let realm = try Realm.realm(user: user, configuration: configuration)
 
         realm.beginWrite()
         let updatedObject = realm.dynamicCreate(type, value: value, update: policy)
@@ -520,8 +525,8 @@ class RealmQuery{
             throw FluterRealmError.runtimeError(SwiftFlutterrealm_lightPlugin.oneOffArgumentsNotPassesError)
         }
         
-        
-        Realm.asyncOpen(configuration: Realm.configuration(user: user, partition: partition), callbackQueue: DispatchQueue.main) { result1 in
+        let configuration = prepareConfiguration(user: user, partition: partition)
+        Realm.asyncOpen(configuration: configuration, callbackQueue: DispatchQueue.main) { result1 in
             switch result1 {
             case .success( _):
                 result(["identity": identity])
@@ -534,8 +539,12 @@ class RealmQuery{
 
     private func logoutAll(_ call: FlutterMethodCall, result: @escaping FlutterResult) throws{
         realmApp.allUsers.forEach { (key: String, value: RLMUser) in
-            value.logOut{_ in
-
+            value.logOut{ error in
+                if let error {
+                    print("Problem on logoutAll \(error), userId: \(value.id)")
+                } else {
+                    self.configurations[value.id] = nil
+                }
             }
         }
 
@@ -563,7 +572,11 @@ class RealmQuery{
         }
 
         user.logOut { (error) in
-
+            if let error {
+                print("Problem on logoutAll \(error), userId: \(user.id)")
+            } else {
+                self.configurations[user.id] = nil
+            }
         }
 
         main.async {
@@ -581,6 +594,18 @@ class RealmQuery{
         main.async {
             result(["results": dictionaries])
         }
+    }
+    
+    /// We get configuration from user object then save it to local variable for future usage since `user.configuration` is heavy operation
+    private func prepareConfiguration(user: User, partition: String) -> Realm.Configuration {
+        if let storedConfig = configurations[user.id] {
+            return storedConfig
+        }
+        let configuration = user.configuration(partitionValue: partition)
+
+        // Store config for future usage
+        configurations[user.id] = configuration
+        return configuration
     }
 
 }
